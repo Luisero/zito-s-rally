@@ -1,8 +1,10 @@
 #include <glad/glad.h>
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
-#include "./Mesh.h"
-#include "./Shader.h"
+#include "./Mesh.hpp"
+#include "./Shader.hpp"
+#include "./Camera.hpp"
+#include <glm/glm.hpp>
 
 class Game{
     public:
@@ -18,6 +20,9 @@ class Game{
 
     Mesh* triangle;
     Shader* shader;
+    Camera* camera;
+    glm::vec3 carDummyPosition; // Simulando a posição do carro
+    glm::vec3 carDummyForward;
     private:
     bool isActive= true;
 };

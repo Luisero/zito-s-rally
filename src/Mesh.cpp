@@ -1,4 +1,4 @@
-#include "../include/Mesh.h"
+#include "../include/Mesh.hpp"
 #include <glad/glad.h>
 
 Mesh::Mesh()
@@ -22,6 +22,7 @@ void Mesh::setupMesh()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 }
+
 
 void Mesh::draw()
 {

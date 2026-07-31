@@ -1,8 +1,11 @@
 #include "../include/Game.hpp"
-#include "../include/Mesh.h"
-#include "../include/Shader.h"
-#include "iostream"
+#include "../include/Mesh.hpp"
+#include "../include/Shader.hpp"
+#include <iostream>
+#include <cmath>
 Game::Game() {};
+
+int ticks = 0;
 
 void Game::setup()
 {
@@ -27,6 +30,12 @@ void Game::setup()
 
     triangle = new Mesh();
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
+
+    camera = new Camera(1280.0f / 720.0f);
+
+    // mockup car position (just a test)
+    carDummyPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
 
     triangle->vertices = {
         -0.5f, -0.5f, 0.0f,
@@ -54,6 +63,10 @@ void Game::handleEvents()
 }
 void Game::update(float deltaTime)
 {
+    ticks++;
+    carDummyPosition += carDummyForward * (deltaTime * 0.001f);
+
+    camera->updateChase(carDummyPosition, carDummyForward);
 }
 void Game::render()
 {
@@ -61,6 +74,21 @@ void Game::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader->use();
+
+    shader->setMat4("view", camera->getViewMatrix());
+    shader->setMat4("projection", camera->getProjectionMatrix());
+
+    glm::mat4 model = glm::mat4(1.0f);
+
+    model = glm::translate(model, carDummyPosition);
+    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks/100.f),std::cos(ticks/100.f)));
+    
+    float rotationAngle = glm::radians(ticks * 0.5f);
+
+    model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+
+   
+    shader->setMat4("model", model);
 
     triangle->draw();
     window.display();
