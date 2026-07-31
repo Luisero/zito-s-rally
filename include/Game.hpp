@@ -1,6 +1,10 @@
 #include <glad/glad.h>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp> 
 #include <SFML/OpenGL.hpp>
+#include <SFML/System/Clock.hpp>
+#include <imgui.h>               
+#include <imgui-SFML.h>
 #include "./Mesh.hpp"
 #include "./Shader.hpp"
 #include "./Camera.hpp"
@@ -16,7 +20,9 @@ class Game{
     void render();
 
     sf::ContextSettings contextSettings;
-    sf::Window  window;
+    sf::RenderWindow window;
+    sf::Clock clock;
+    float deltaTime, carSpeed;
 
     Mesh* triangle, *floor;
     Shader* shader;

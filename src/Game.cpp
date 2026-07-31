@@ -13,7 +13,7 @@ void Game::setup()
     contextSettings.stencilBits = 8;  // Request 8-bit stencil buffer
     contextSettings.majorVersion = 3; // Request OpenGL 3.x
     contextSettings.minorVersion = 3; // Request OpenGL 3.3
-    contextSettings.attributeFlags = sf::ContextSettings::Core;
+    contextSettings.attributeFlags = sf::ContextSettings::Default;
     window.create(
         sf::VideoMode({1280, 720}),
         "My SFML Window",
@@ -28,6 +28,8 @@ void Game::setup()
     std::cout << glGetString(GL_VERSION) << "\n";
     glViewport(0, 0, 1280, 720);
 
+
+    ImGui::SFML::Init(window);
     triangle = new Mesh();
     floor = new Mesh();
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
@@ -67,6 +69,7 @@ void Game::handleEvents()
 
     while (window.pollEvent(event))
     {
+        ImGui::SFML::ProcessEvent(window, event);
 
         // 1. Handle Window Close
         if (event.type == sf::Event::Closed)
@@ -79,8 +82,27 @@ void Game::handleEvents()
 void Game::update(float deltaTime)
 {
     ticks++;
+
+    ImGui::SFML::Update(window, sf::seconds(deltaTime));
+
+    ImGui::Begin("Zito-s-rally control panel"); 
+    
+    
+    ImGui::Text("FPS: %.1f", 1.0f / deltaTime); 
+    
+    ImGui::SliderFloat("Car speed", &carSpeed, 0.0f, 1.0f);
+    
+   
+    ImGui::Text("Position: X:%.2f  Y:%.2f  Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
+    
+    if (ImGui::Button("Reset Position")) {
+        carDummyPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    }
+    ImGui::End();
+
+
     carDummyPosition += carDummyForward * (deltaTime * 0.001f);
-    carDummyPosition.z += .01f;
+    carDummyPosition.z += carSpeed;
     camera->updateChase(carDummyPosition, carDummyForward);
 }
 void Game::render()
@@ -110,6 +132,24 @@ void Game::render()
 
     shader->setMat4("model", model);
     floor->draw();
+
+    glUseProgram(0); 
+
+
+
+
+    // 3. Desliga os Buffers e VAOs 
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    window.pushGLStates();
+
+    
+    ImGui::SFML::Render(window);
+
+    window.popGLStates();
+
     window.display();
 }
 
@@ -117,11 +157,16 @@ void Game::run()
 {
     Game::setup();
 
+    
+
     while (isActive)
     {
-
+        sf::Time dt = clock.restart();
+        float deltaTime = dt.asSeconds();
         Game::handleEvents();
+        Game::update(deltaTime);
         Game::render();
-        Game::update(3.f);
     }
+
+    ImGui::SFML::Shutdown();
 }

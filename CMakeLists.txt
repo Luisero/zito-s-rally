@@ -8,12 +8,6 @@ find_package(OpenGL REQUIRED)
 
 include(FetchContent)
 
-message("Downloading GLM")
-FetchContent_Declare(glm
-    GIT_REPOSITORY https://github.com/g-truc/glm.git
-    GIT_TAG        master
-)
-
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE) 
 set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 message("Downloading SFML")
@@ -21,6 +15,32 @@ FetchContent_Declare(sfml
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG        2.6.1
 )
+
+message("Downloading ImGui")
+FetchContent_Declare(imgui
+    GIT_REPOSITORY https://github.com/ocornut/imgui.git
+    GIT_TAG        v1.90.9
+)
+FetchContent_MakeAvailable(imgui)
+set(IMGUI_DIR ${imgui_SOURCE_DIR})
+
+set(IMGUI_SFML_FIND_SFML OFF CACHE BOOL "" FORCE)
+message("Downloading ImGui-SFML")
+FetchContent_Declare(imgui_sfml
+    GIT_REPOSITORY https://github.com/SFML/imgui-sfml.git
+    GIT_TAG        v2.6 # A tag 2.6 é a ideal para usar com o seu SFML 2.6.1
+)
+
+FetchContent_MakeAvailable(imgui_sfml)
+
+
+
+message("Downloading GLM")
+FetchContent_Declare(glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG        master
+)
+
 
 set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
@@ -62,7 +82,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Jolt
     glad
     OpenGL::GL
-    
+    ImGui-SFML::ImGui-SFML
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

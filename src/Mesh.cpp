@@ -30,6 +30,6 @@ void Mesh::draw()
 {
     glBindVertexArray(VAO);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+  //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
