@@ -29,6 +29,7 @@ void Game::setup()
     glViewport(0, 0, 1280, 720);
 
     triangle = new Mesh();
+    floor = new Mesh();
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
 
     camera = new Camera(1280.0f / 720.0f);
@@ -42,9 +43,23 @@ void Game::setup()
         0.5f, -0.5f, 0.0f,
         0.0f, 0.5f, 0.0f};
 
-    std::cout << triangle->vertices[0];
+    triangle->indices = {
+        0, 1, 2};
+
+    floor->vertices = {
+       -1.f,0.f, 0.f,
+       1.f,0.f,0.f,
+       1.f,0.f, 3.f,
+       -1.f, 0.f, 3.f
+    };
+
+    floor->indices = {
+      0,1,2,
+      0,2,3
+    };
 
     triangle->setupMesh();
+    floor->setupMesh();
 }
 void Game::handleEvents()
 {
@@ -65,7 +80,7 @@ void Game::update(float deltaTime)
 {
     ticks++;
     carDummyPosition += carDummyForward * (deltaTime * 0.001f);
-
+    carDummyPosition.z += .01f;
     camera->updateChase(carDummyPosition, carDummyForward);
 }
 void Game::render()
@@ -81,16 +96,20 @@ void Game::render()
     glm::mat4 model = glm::mat4(1.0f);
 
     model = glm::translate(model, carDummyPosition);
-    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks/100.f),std::cos(ticks/100.f)));
-    
+    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks / 100.f), std::cos(ticks / 100.f)));
+
     float rotationAngle = glm::radians(ticks * 0.5f);
 
     model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 1.0f, 0.0f));
 
-   
     shader->setMat4("model", model);
 
     triangle->draw();
+
+    model = glm::mat4(1.0f);
+
+    shader->setMat4("model", model);
+    floor->draw();
     window.display();
 }
 

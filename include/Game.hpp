@@ -18,10 +18,10 @@ class Game{
     sf::ContextSettings contextSettings;
     sf::Window  window;
 
-    Mesh* triangle;
+    Mesh* triangle, *floor;
     Shader* shader;
     Camera* camera;
-    glm::vec3 carDummyPosition; // Simulando a posição do carro
+    glm::vec3 carDummyPosition; 
     glm::vec3 carDummyForward;
     private:
     bool isActive= true;

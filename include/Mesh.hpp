@@ -6,7 +6,8 @@ class Mesh{
     public:
     Mesh();
     std::vector<float> vertices;
-    unsigned int VAO, VBO, UVS;
+    std::vector<unsigned int> indices;
+    unsigned int VAO, VBO, EBO;
     
     void setupMesh();
     void generateBuffers();
