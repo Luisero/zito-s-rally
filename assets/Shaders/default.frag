@@ -6,6 +6,13 @@ out vec4 FragColor;
 // The color input received from the vertex shader
 in vec3 ourColor;
 in vec2 TexCoord;
+in vec3 normal;
+in vec3 FragPos;
+
+uniform vec3 objectColor;
+uniform vec3 lightColor;
+uniform vec3 lightPos;  
+
 
 
 uniform sampler2D ourTexture;
@@ -14,5 +21,14 @@ void main() {
    
     //FragColor = vec4(ourColor, 1.0);
    // FragColor = texture(ourTexture, TexCoord) * vec4(ourColor, 1.0);  
-    FragColor = texture(ourTexture, TexCoord);
+    vec3 norm = normalize(normal);
+    vec3 lightDir = normalize(lightPos - FragPos);  
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = diff * lightColor;
+
+    float ambientStrength = 0.5;
+    vec3 ambient = ambientStrength * lightColor;
+
+    vec3 result = ambient + diffuse;
+    FragColor = texture(ourTexture, TexCoord) * vec4(result,1.0);
 }

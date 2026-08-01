@@ -3,7 +3,7 @@
 #define MESH_HPP
 #include <glad/glad.h>
 #include "./Texture.hpp"
-
+#include "./Shader.hpp"
 class Mesh{
     public:
     Mesh();
@@ -19,7 +19,7 @@ class Mesh{
     
     void setupMesh();
     void generateBuffers();
-    void draw();
+    void draw(Shader *shader);
 };
 
 #endif

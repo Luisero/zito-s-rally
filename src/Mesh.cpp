@@ -54,8 +54,9 @@ void Mesh::setupMesh()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 }
 
-void Mesh::draw()
+void Mesh::draw(Shader *shader)
 {
+    shader->use();
    
     glBindTexture(GL_TEXTURE_2D, this->texture->ID);
     glBindVertexArray(VAO);

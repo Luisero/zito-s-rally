@@ -28,13 +28,13 @@ void Game::setup()
     }
     std::cout << glGetString(GL_VERSION) << "\n";
     glViewport(0, 0, 1280, 720);
-    
+
     ImGui::SFML::Init(window);
 
     assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
-    assetsManager->loadImage("../assets/Textures/cobblestone.jpg","cobble");
-    assetsManager->loadImage("../assets/Textures/grass.jpg","grass");
-    assetsManager->loadImage("../assets/Textures/red_checker.png","checker");
+    assetsManager->loadImage("../assets/Textures/cobblestone.jpg", "cobble");
+    assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
+    assetsManager->loadImage("../assets/Textures/red_checker.png", "checker");
 
     Texture *ground_dir = new Texture(assetsManager->getImage("dirt_ground"));
     Texture *cobblestone = new Texture(assetsManager->getImage("cobble"));
@@ -45,6 +45,8 @@ void Game::setup()
     floor = new Mesh(grass);
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
 
+    lightSourceShader = new Shader("../assets/Shaders/lightsource.vert", "../assets/Shaders/lightsource.frag");
+    globalLightPos = glm::vec3(1.2f, 2.0f, 10.0f);
     camera = new Camera(1280.0f / 720.0f);
 
     // mockup car position (just a test)
@@ -87,15 +89,50 @@ void Game::setup()
         0.f, 0.f, 1.f};
 
     floor->UVs = {
-        0.0f, 0.0f, // Vértice 0: Canto inferior esquerdo
-        30.0f, 0.0f, // Vértice 1: Canto inferior direito (Repete 2x no X)
+        0.0f, 0.0f,   // Vértice 0: Canto inferior esquerdo
+        30.0f, 0.0f,  // Vértice 1: Canto inferior direito (Repete 2x no X)
         30.0f, 30.0f, // Vértice 2: Canto superior direito (Repete 3x no Z)
-        0.0f, 30.0f  // Vértice 3: Canto superior esquerdo
+        0.0f, 30.0f   // Vértice 3: Canto superior esquerdo
     };
+
+    cube = new Mesh(cobblestone);
+
+    cube->vertices = {
+        -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
+        0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f,
+        0.5f, -0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
+        -0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f};
+
+    cube->colors = {
+        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
+        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f};
+
+    cube->indices = {
+        0, 1, 2, 0, 2, 3,
+        4, 5, 6, 4, 6, 7,
+        8, 9, 10, 8, 10, 11,
+        12, 13, 14, 12, 14, 15,
+        16, 17, 18, 16, 18, 19,
+        20, 21, 22, 20, 22, 23};
+
+    cube->UVs = {
+        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};
+
+    cube->setupMesh();
 
     triangle->setupMesh();
     floor->setupMesh();
-
 }
 void Game::handleEvents()
 {
@@ -116,6 +153,7 @@ void Game::handleEvents()
 void Game::update(float deltaTime)
 {
     ticks++;
+    float zdistance = camera->offset.z;
 
     ImGui::SFML::Update(window, sf::seconds(deltaTime));
 
@@ -124,6 +162,7 @@ void Game::update(float deltaTime)
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
 
     ImGui::SliderFloat("Car speed", &carSpeed, 0.0f, 1.0f);
+    ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 7.0f);
 
     ImGui::Text("Position: X:%.2f  Y:%.2f  Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
 
@@ -135,7 +174,10 @@ void Game::update(float deltaTime)
 
     carDummyPosition += carDummyForward * (deltaTime * 0.001f);
     carDummyPosition.z += carSpeed;
-    //carDummyForward.x +=.001f;
+    if (zdistance == 0)
+        zdistance = 3;
+    camera->offset.z = zdistance;
+    // carDummyForward.x +=.001f;
     camera->updateChase(carDummyPosition, carDummyForward, deltaTime);
 }
 void Game::render()
@@ -149,11 +191,13 @@ void Game::render()
     shader->setMat4("view", camera->getViewMatrix());
     shader->setMat4("projection", camera->getProjectionMatrix());
 
+    shader->setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+    shader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+    shader->setVec3("lightPos",globalLightPos);
     glm::mat4 model = glm::mat4(1.0f);
 
-
     model = glm::translate(model, carDummyPosition);
-    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks / 100.f)/10.f, std::cos(ticks / 100.f)));
+    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks / 100.f) / 10.f, std::cos(ticks / 100.f)));
 
     float rotationAngle = glm::radians(ticks * 0.5f);
 
@@ -161,12 +205,23 @@ void Game::render()
 
     shader->setMat4("model", model);
 
-    triangle->draw();
+    triangle->draw(shader);
 
     model = glm::mat4(1.0f);
 
     shader->setMat4("model", model);
-    floor->draw();
+    floor->draw(shader);
+
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, globalLightPos);
+    model = glm::scale(model, glm::vec3(0.2f));
+    lightSourceShader->use();
+    lightSourceShader->setMat4("model", model);
+
+    lightSourceShader->setMat4("view", camera->getViewMatrix());
+    lightSourceShader->setMat4("projection", camera->getProjectionMatrix());
+
+    cube->draw(lightSourceShader);
 
     glUseProgram(0);
 
@@ -174,6 +229,9 @@ void Game::render()
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_DEPTH_TEST);
 
     window.pushGLStates();
 
@@ -196,6 +254,7 @@ void Game::run()
         Game::update(deltaTime);
         Game::render();
     }
+    glDeleteProgram(shader->ID);
 
     ImGui::SFML::Shutdown();
 }

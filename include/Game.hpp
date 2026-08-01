@@ -28,11 +28,12 @@ class Game{
 
     AssetsManager *assetsManager = new AssetsManager();
 
-    Mesh* triangle, *floor;
-    Shader* shader;
+    Mesh* triangle, *floor, *cube;
+    Shader* shader, *lightSourceShader;
     Camera* camera;
     glm::vec3 carDummyPosition; 
     glm::vec3 carDummyForward;
+    glm::vec3 globalLightPos;
     private:
     bool isActive= true;
 };
