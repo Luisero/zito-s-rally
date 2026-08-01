@@ -7,6 +7,7 @@ class Mesh{
     Mesh();
     std::vector<float> vertices;
     std::vector<unsigned int> indices;
+    std::vector<float> colors;
     unsigned int VAO, VBO, EBO;
     
     void setupMesh();

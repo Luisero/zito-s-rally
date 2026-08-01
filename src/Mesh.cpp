@@ -11,25 +11,47 @@ void Mesh::generateBuffers()
     glGenBuffers(1, &EBO);
     glGenVertexArrays(1, &VAO);
 }
-
 void Mesh::setupMesh()
 {
     Mesh::generateBuffers();
     glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vertices.size(), vertices.data(), GL_DYNAMIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    //temporary vector to vertex and color interleaving
+    std::vector<float> vertexData;
+    for (size_t i = 0; i < vertices.size() / 3; ++i)
+    {
+       
+        vertexData.push_back(vertices[i * 3]);
+        vertexData.push_back(vertices[i * 3 + 1]);
+        vertexData.push_back(vertices[i * 3 + 2]);
+
+        
+        vertexData.push_back(colors[i * 3]);
+        vertexData.push_back(colors[i * 3 + 1]);
+        vertexData.push_back(colors[i * 3 + 2]);
+    }
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+   
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexData.size(), vertexData.data(), GL_DYNAMIC_DRAW);
+
+  
+    // Vertex
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
+    // Colors
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int)* indices.size(), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 }
 
 void Mesh::draw()
 {
     glBindVertexArray(VAO);
 
-  //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }

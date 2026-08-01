@@ -28,7 +28,6 @@ void Game::setup()
     std::cout << glGetString(GL_VERSION) << "\n";
     glViewport(0, 0, 1280, 720);
 
-
     ImGui::SFML::Init(window);
     triangle = new Mesh();
     floor = new Mesh();
@@ -45,23 +44,35 @@ void Game::setup()
         0.5f, -0.5f, 0.0f,
         0.0f, 0.5f, 0.0f};
 
-    triangle->indices = {
-        0, 1, 2};
+    triangle->colors = {
+        1.0f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+        0.f, 0.f, 1.f};
+
+    triangle->indices = {0, 1, 2};
 
     floor->vertices = {
-       -1.f,0.f, 0.f,
-       1.f,0.f,0.f,
-       1.f,0.f, 3.f,
-       -1.f, 0.f, 3.f
-    };
+        -1.f, 0.f, 30.f,
+        1.f, 0.f, 30.f,
+        1.f, 0.f, -3.f,
+        -1.f, 0.f, -3.f};
 
     floor->indices = {
-      0,1,2,
-      0,2,3
-    };
+        0, 1, 2,
+        0, 2, 3};
+
+    floor->colors = {
+        1.0f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+        0.f, 0.f, 1.f,
+        1.0f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+        0.f, 0.f, 1.f};
 
     triangle->setupMesh();
     floor->setupMesh();
+
+    assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
 }
 void Game::handleEvents()
 {
@@ -85,21 +96,19 @@ void Game::update(float deltaTime)
 
     ImGui::SFML::Update(window, sf::seconds(deltaTime));
 
-    ImGui::Begin("Zito-s-rally control panel"); 
-    
-    
-    ImGui::Text("FPS: %.1f", 1.0f / deltaTime); 
-    
+    ImGui::Begin("Zito-s-rally control panel");
+
+    ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
+
     ImGui::SliderFloat("Car speed", &carSpeed, 0.0f, 1.0f);
-    
-   
+
     ImGui::Text("Position: X:%.2f  Y:%.2f  Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
-    
-    if (ImGui::Button("Reset Position")) {
+
+    if (ImGui::Button("Reset Position"))
+    {
         carDummyPosition = glm::vec3(0.0f, 0.0f, 0.0f);
     }
     ImGui::End();
-
 
     carDummyPosition += carDummyForward * (deltaTime * 0.001f);
     carDummyPosition.z += carSpeed;
@@ -109,6 +118,7 @@ void Game::render()
 {
     glClearColor(0.f, 0.46f, 0.91f, 1.0f); // Dark Teal Background
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
 
     shader->use();
 
@@ -133,19 +143,15 @@ void Game::render()
     shader->setMat4("model", model);
     floor->draw();
 
-    glUseProgram(0); 
+    glUseProgram(0);
 
-
-
-
-    // 3. Desliga os Buffers e VAOs 
+    // 3. Desliga os Buffers e VAOs
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
+
     window.pushGLStates();
 
-    
     ImGui::SFML::Render(window);
 
     window.popGLStates();
@@ -156,8 +162,6 @@ void Game::render()
 void Game::run()
 {
     Game::setup();
-
-    
 
     while (isActive)
     {

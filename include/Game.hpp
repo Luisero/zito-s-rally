@@ -8,6 +8,8 @@
 #include "./Mesh.hpp"
 #include "./Shader.hpp"
 #include "./Camera.hpp"
+#include "./AssetsManager.hpp"
+
 #include <glm/glm.hpp>
 
 class Game{
@@ -23,6 +25,8 @@ class Game{
     sf::RenderWindow window;
     sf::Clock clock;
     float deltaTime, carSpeed;
+
+    AssetsManager *assetsManager = new AssetsManager();
 
     Mesh* triangle, *floor;
     Shader* shader;
