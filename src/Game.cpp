@@ -1,6 +1,7 @@
 #include "../include/Game.hpp"
 #include "../include/Mesh.hpp"
 #include "../include/Shader.hpp"
+#include "../include/Texture.hpp"
 #include <iostream>
 #include <cmath>
 Game::Game() {};
@@ -27,16 +28,27 @@ void Game::setup()
     }
     std::cout << glGetString(GL_VERSION) << "\n";
     glViewport(0, 0, 1280, 720);
-
+    
     ImGui::SFML::Init(window);
-    triangle = new Mesh();
-    floor = new Mesh();
+
+    assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
+    assetsManager->loadImage("../assets/Textures/cobblestone.jpg","cobble");
+    assetsManager->loadImage("../assets/Textures/grass.jpg","grass");
+    assetsManager->loadImage("../assets/Textures/red_checker.png","checker");
+
+    Texture *ground_dir = new Texture(assetsManager->getImage("dirt_ground"));
+    Texture *cobblestone = new Texture(assetsManager->getImage("cobble"));
+    Texture *grass = new Texture(assetsManager->getImage("grass"));
+    Texture *checker = new Texture(assetsManager->getImage("checker"));
+
+    triangle = new Mesh(checker);
+    floor = new Mesh(grass);
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
 
     camera = new Camera(1280.0f / 720.0f);
 
     // mockup car position (just a test)
-    carDummyPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
     carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
 
     triangle->vertices = {
@@ -51,10 +63,15 @@ void Game::setup()
 
     triangle->indices = {0, 1, 2};
 
+    triangle->UVs = {
+        1.0f, 1.0f,
+        1.0f, 0.f,
+        0.f, 0.f};
+
     floor->vertices = {
         -1.f, 0.f, 30.f,
-        1.f, 0.f, 30.f,
-        1.f, 0.f, -3.f,
+        3.f, 0.f, 30.f,
+        3.f, 0.f, -3.f,
         -1.f, 0.f, -3.f};
 
     floor->indices = {
@@ -69,10 +86,16 @@ void Game::setup()
         0.f, 1.f, 0.f,
         0.f, 0.f, 1.f};
 
+    floor->UVs = {
+        0.0f, 0.0f, // Vértice 0: Canto inferior esquerdo
+        2.0f, 0.0f, // Vértice 1: Canto inferior direito (Repete 2x no X)
+        2.0f, 3.0f, // Vértice 2: Canto superior direito (Repete 3x no Z)
+        0.0f, 3.0f  // Vértice 3: Canto superior esquerdo
+    };
+
     triangle->setupMesh();
     floor->setupMesh();
 
-    assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
 }
 void Game::handleEvents()
 {
@@ -128,7 +151,7 @@ void Game::render()
     glm::mat4 model = glm::mat4(1.0f);
 
     model = glm::translate(model, carDummyPosition);
-    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks / 100.f), std::cos(ticks / 100.f)));
+    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks / 100.f)/10.f, std::cos(ticks / 100.f)));
 
     float rotationAngle = glm::radians(ticks * 0.5f);
 
