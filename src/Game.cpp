@@ -69,10 +69,10 @@ void Game::setup()
         0.f, 0.f};
 
     floor->vertices = {
-        -1.f, 0.f, 30.f,
-        3.f, 0.f, 30.f,
-        3.f, 0.f, -3.f,
-        -1.f, 0.f, -3.f};
+        -30.f, 0.f, 30.f,
+        30.f, 0.f, 30.f,
+        30.f, 0.f, -3.f,
+        -30.f, 0.f, -3.f};
 
     floor->indices = {
         0, 1, 2,
@@ -88,9 +88,9 @@ void Game::setup()
 
     floor->UVs = {
         0.0f, 0.0f, // Vértice 0: Canto inferior esquerdo
-        2.0f, 0.0f, // Vértice 1: Canto inferior direito (Repete 2x no X)
-        2.0f, 3.0f, // Vértice 2: Canto superior direito (Repete 3x no Z)
-        0.0f, 3.0f  // Vértice 3: Canto superior esquerdo
+        30.0f, 0.0f, // Vértice 1: Canto inferior direito (Repete 2x no X)
+        30.0f, 30.0f, // Vértice 2: Canto superior direito (Repete 3x no Z)
+        0.0f, 30.0f  // Vértice 3: Canto superior esquerdo
     };
 
     triangle->setupMesh();
@@ -129,13 +129,14 @@ void Game::update(float deltaTime)
 
     if (ImGui::Button("Reset Position"))
     {
-        carDummyPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+        carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
     }
     ImGui::End();
 
     carDummyPosition += carDummyForward * (deltaTime * 0.001f);
     carDummyPosition.z += carSpeed;
-    camera->updateChase(carDummyPosition, carDummyForward);
+    //carDummyForward.x +=.001f;
+    camera->updateChase(carDummyPosition, carDummyForward, deltaTime);
 }
 void Game::render()
 {
@@ -149,6 +150,7 @@ void Game::render()
     shader->setMat4("projection", camera->getProjectionMatrix());
 
     glm::mat4 model = glm::mat4(1.0f);
+
 
     model = glm::translate(model, carDummyPosition);
     model = glm::translate(model, glm::vec3(0.f, std::sin(ticks / 100.f)/10.f, std::cos(ticks / 100.f)));
