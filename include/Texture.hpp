@@ -2,7 +2,10 @@
 #define TEXTURE_HPP
 
 #include <glad/glad.h>
+#include <string>
 #include "../include/Image.hpp"
+
+
 
 class Texture
 {
@@ -10,7 +13,7 @@ public:
     unsigned int ID;
     Image *image;
     unsigned int textureRepeatPattern = GL_REPEAT;
-
+    std::string type;
     Texture(Image *image)
     {
         this->image = image;

@@ -20,8 +20,8 @@ void AssetsManager::loadImage(std::string path, std::string key)
 }
 Image *AssetsManager::getImage(std::string key)
 {
-    auto it = this->images.find(key);
-    if (it == this->images.end())
+    auto it = images.find(key);
+    if (it == images.end())
     {
         std::cerr << "ERROR: image key not found: " << key << std::endl;
         return nullptr;

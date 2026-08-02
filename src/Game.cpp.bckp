@@ -4,7 +4,6 @@
 #include "../include/Texture.hpp"
 #include <iostream>
 #include <cmath>
-#include <cstdlib>
 Game::Game() {};
 
 int ticks = 0;
@@ -22,30 +21,16 @@ void Game::setup()
         sf::Style::Fullscreen,
         contextSettings);
     window.setVerticalSyncEnabled(true);
-
-    // Retry loop: em fullscreen o contexto pode levar um instante
-    // para ficar de fato "current" na thread, dependendo do driver/compositor.
-    bool contextReady = false;
-    for (int attempt = 0; attempt < 10 && !contextReady; ++attempt)
+    if (!window.setActive(true))
     {
-        contextReady = window.setActive(true);
-        if (!contextReady)
-        {
-            std::cerr << "Context not active yet, retrying... (" << attempt << ")" << std::endl;
-            sf::sleep(sf::milliseconds(50));
-        }
-    }
-
-    if (!contextReady)
-    {
-        std::cerr << "FATAL: Could not activate OpenGL context after retries" << std::endl;
+        std::cerr << "ERROR: Could not activate OpenGL context" << std::endl;
         std::exit(EXIT_FAILURE);
     }
 
     if (!gladLoadGL())
     {
-        std::cerr << "FATAL: Failed to initialize GLAD" << std::endl;
-        std::exit(EXIT_FAILURE);
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        std::exit(EXIT_FAILURE); 
     }
     std::cout << glGetString(GL_VERSION) << "\n";
     glViewport(0, 0, 1280, 720);
@@ -214,7 +199,7 @@ void Game::render()
 
     shader->setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
     shader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-    shader->setVec3("lightPos",globalLightPos);
+    shader->setVec3("lightPos", globalLightPos);
     glm::mat4 model = glm::mat4(1.0f);
 
     model = glm::translate(model, carDummyPosition);
