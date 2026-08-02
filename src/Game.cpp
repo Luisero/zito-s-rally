@@ -2,6 +2,7 @@
 #include "../include/Mesh.hpp"
 #include "../include/Shader.hpp"
 #include "../include/Texture.hpp"
+
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
@@ -62,8 +63,6 @@ void Game::setup()
     Texture *grass = new Texture(assetsManager->getImage("grass"));
     Texture *checker = new Texture(assetsManager->getImage("checker"));
 
-    triangle = new Mesh(checker);
-    floor = new Mesh(grass);
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
 
     lightSourceShader = new Shader("../assets/Shaders/lightsource.vert", "../assets/Shaders/lightsource.frag");
@@ -74,86 +73,32 @@ void Game::setup()
     carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
     carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
 
-    triangle->vertices = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f};
+    std::vector<Vertex> vertices;
+    Vertex v1 = {
+        glm::vec3(-.5f, 0.f, 0.f),
+        glm::vec3(0.f, 0.f, -1.f),
+        glm::vec2(1.f, 1.f)};
+    vertices.push_back(v1);
+    Vertex v2 = {
+        glm::vec3(.5f, 0.f, 0.f),
+        glm::vec3(0.f, 0.f, -1.f),
+        glm::vec2(1.f, 0.f)};
+    vertices.push_back(v2);
+    Vertex v3 = {
+        glm::vec3(.0f, 1.f, 0.f),
+        glm::vec3(0.f, 0.f, -1.f),
+        glm::vec2(0.f, 0.f)};
+    vertices.push_back(v3);
 
-    triangle->colors = {
-        1.0f, 0.f, 0.f,
-        0.f, 1.f, 0.f,
-        0.f, 0.f, 1.f};
+    std::vector<unsigned int> indices = {0, 1, 2};
+    std::vector<Texture> textures;
+    textures.push_back(*checker);
+    triangle = new Mesh(vertices,indices,textures);
+   
 
-    triangle->indices = {0, 1, 2};
 
-    triangle->UVs = {
-        1.0f, 1.0f,
-        1.0f, 0.f,
-        0.f, 0.f};
 
-    floor->vertices = {
-        -30.f, 0.f, 30.f,
-        30.f, 0.f, 30.f,
-        30.f, 0.f, -3.f,
-        -30.f, 0.f, -3.f};
-
-    floor->indices = {
-        0, 1, 2,
-        0, 2, 3};
-
-    floor->colors = {
-        1.0f, 0.f, 0.f,
-        0.f, 1.f, 0.f,
-        0.f, 0.f, 1.f,
-        1.0f, 0.f, 0.f,
-        0.f, 1.f, 0.f,
-        0.f, 0.f, 1.f};
-
-    floor->UVs = {
-        0.0f, 0.0f,   // Vértice 0: Canto inferior esquerdo
-        30.0f, 0.0f,  // Vértice 1: Canto inferior direito (Repete 2x no X)
-        30.0f, 30.0f, // Vértice 2: Canto superior direito (Repete 3x no Z)
-        0.0f, 30.0f   // Vértice 3: Canto superior esquerdo
-    };
-
-    cube = new Mesh(cobblestone);
-
-    cube->vertices = {
-        -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-        0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f,
-        0.5f, -0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
-        -0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f};
-
-    cube->colors = {
-        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f,
-        1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f, 1.f};
-
-    cube->indices = {
-        0, 1, 2, 0, 2, 3,
-        4, 5, 6, 4, 6, 7,
-        8, 9, 10, 8, 10, 11,
-        12, 13, 14, 12, 14, 15,
-        16, 17, 18, 16, 18, 19,
-        20, 21, 22, 20, 22, 23};
-
-    cube->UVs = {
-        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};
-
-    cube->setupMesh();
-
-    triangle->setupMesh();
-    floor->setupMesh();
+   
 }
 void Game::handleEvents()
 {
@@ -214,7 +159,7 @@ void Game::render()
 
     shader->setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
     shader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-    shader->setVec3("lightPos",globalLightPos);
+    shader->setVec3("lightPos", globalLightPos);
     glm::mat4 model = glm::mat4(1.0f);
 
     model = glm::translate(model, carDummyPosition);
@@ -226,23 +171,17 @@ void Game::render()
 
     shader->setMat4("model", model);
 
-    triangle->draw(shader);
+    triangle->draw(*shader);
 
     model = glm::mat4(1.0f);
 
     shader->setMat4("model", model);
-    floor->draw(shader);
+    
 
     model = glm::mat4(1.0f);
     model = glm::translate(model, globalLightPos);
     model = glm::scale(model, glm::vec3(0.2f));
-    lightSourceShader->use();
-    lightSourceShader->setMat4("model", model);
-
-    lightSourceShader->setMat4("view", camera->getViewMatrix());
-    lightSourceShader->setMat4("projection", camera->getProjectionMatrix());
-
-    cube->draw(lightSourceShader);
+   
 
     glUseProgram(0);
 

@@ -1,11 +1,14 @@
 #include "../include/Mesh.hpp"
 #include <glad/glad.h>
 
-Mesh::Mesh(Texture* texture)
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
 {
-    this->texture = texture;
-}
+    this->vertices = vertices;
+    this->indices = indices;
+    this->textures = textures;
 
+    setupMesh();
+}
 void Mesh::generateBuffers()
 {
     glGenBuffers(1, &VBO);
@@ -17,50 +20,56 @@ void Mesh::setupMesh()
     Mesh::generateBuffers();
     glBindVertexArray(VAO);
 
-    // temporary vector to vertex and color interleaving
-    std::vector<float> vertexData;
-    for (size_t i = 0; i < vertices.size() / 3; ++i)
-    {
-
-        vertexData.push_back(vertices[i * 3]);
-        vertexData.push_back(vertices[i * 3 + 1]);
-        vertexData.push_back(vertices[i * 3 + 2]);
-
-        vertexData.push_back(colors[i * 3]);
-        vertexData.push_back(colors[i * 3 + 1]);
-        vertexData.push_back(colors[i * 3 + 2]);
-
-        vertexData.push_back(UVs[i * 2]);
-        vertexData.push_back(UVs[i * 2 + 1]);
-    }
-
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexData.size(), vertexData.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(),&vertices[0], GL_DYNAMIC_DRAW);
+
+    // EBO
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), &indices[0], GL_STATIC_DRAW);
 
     // Vertex
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)0);
 
-    // Colors
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+    // Normals
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, Normal));
 
-    //UVs
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+    // UVs
     glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, TexCoords));
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
+    glBindVertexArray(0);
 }
 
-void Mesh::draw(Shader *shader)
+void Mesh::draw(Shader &shader)
 {
-    shader->use();
-   
-    glBindTexture(GL_TEXTURE_2D, this->texture->ID);
-    glBindVertexArray(VAO);
+    shader.use();
 
-    //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
+
+
+    unsigned int diffuseNr = 1;
+    unsigned int specularNr = 1;
+    for(unsigned int i = 0; i < textures.size(); i++)
+    {
+        glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
+        // retrieve texture number (the N in diffuse_textureN)
+        std::string number;
+        std::string name = textures[i].type;
+        if(name == "texture_diffuse")
+            number = std::to_string(diffuseNr++);
+        else if(name == "texture_specular")
+            number = std::to_string(specularNr++);
+
+        shader.setInt(("material." + name + number).c_str(), i);
+        textures[i].bind();
+    }
+    glActiveTexture(GL_TEXTURE0);
+
+    // draw mesh
+    glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }

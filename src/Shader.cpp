@@ -73,6 +73,10 @@ Shader::~Shader() {
 void Shader::use() const {
     glUseProgram(ID);
 }
+void Shader::setInt(const std::string &name, int value) const {
+    // glGetUniformLocation acha onde a variável está no shader, glUniform1f envia o valor
+    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+}
 
 void Shader::setFloat(const std::string &name, float value) const {
     // glGetUniformLocation acha onde a variável está no shader, glUniform1f envia o valor
