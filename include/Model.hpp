@@ -6,7 +6,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <assimp/DefaultLogger.hpp>
-#include <assimp/LogStream.hpp>
+#include <assimp/LogStream.hpp> 
 #include "./Shader.hpp"
 #include "./Mesh.hpp"
 class Model{

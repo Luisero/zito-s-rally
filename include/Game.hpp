@@ -1,19 +1,21 @@
 #include <glad/glad.h>
 #include <SFML/Window.hpp>
-#include <SFML/Graphics/RenderWindow.hpp> 
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/OpenGL.hpp>
 #include <SFML/System/Clock.hpp>
-#include <imgui.h>               
+#include <imgui.h>
 #include <imgui-SFML.h>
 #include "./Mesh.hpp"
 #include "./Shader.hpp"
 #include "./Camera.hpp"
 #include "./AssetsManager.hpp"
+#include "./Model.hpp"
 
 #include <glm/glm.hpp>
 
-class Game{
-    public:
+class Game
+{
+public:
     Game();
     void setup();
     void run();
@@ -27,13 +29,14 @@ class Game{
     float deltaTime, carSpeed;
 
     AssetsManager *assetsManager = new AssetsManager();
-
-    Mesh* triangle, *floor, *cube;
-    Shader* shader, *lightSourceShader;
-    Camera* camera;
-    glm::vec3 carDummyPosition; 
+    Model *car;
+    Mesh *triangle, *floor, *cube;
+    Shader *shader, *lightSourceShader;
+    Camera *camera;
+    glm::vec3 carDummyPosition;
     glm::vec3 carDummyForward;
     glm::vec3 globalLightPos;
-    private:
-    bool isActive= true;
+
+private:
+    bool isActive = true;
 };

@@ -3,9 +3,8 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <iostream>
 #include "../include/Image.hpp"
-
-
 
 class Texture
 {
@@ -24,7 +23,27 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->textureRepeatPattern);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+
+        GLenum format;
+        switch (image->nrChannels)
+        {
+        case 1:
+            format = GL_RED;
+            break;
+        case 3:
+            format = GL_RGB;
+            break;
+        case 4:
+            format = GL_RGBA;
+            break;
+        default:
+            std::cerr << "ERROR: unsupported channel count: " << image->nrChannels << std::endl;
+            format = GL_RGB; // fallback, mas idealmente trate como erro
+        }
+
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, format, image->width, image->height, 0, format, GL_UNSIGNED_BYTE, image->data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 

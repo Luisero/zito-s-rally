@@ -2,7 +2,7 @@
 #include "../include/Mesh.hpp"
 #include "../include/Shader.hpp"
 #include "../include/Texture.hpp"
-
+#include "../include/Model.hpp"
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
@@ -62,6 +62,8 @@ void Game::setup()
     Texture *cobblestone = new Texture(assetsManager->getImage("cobble"));
     Texture *grass = new Texture(assetsManager->getImage("grass"));
     Texture *checker = new Texture(assetsManager->getImage("checker"));
+
+    car = new Model("../assets/Models/old_rusty_car/scene.gltf");
 
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
 
@@ -157,9 +159,9 @@ void Game::render()
     shader->setMat4("view", camera->getViewMatrix());
     shader->setMat4("projection", camera->getProjectionMatrix());
 
-    shader->setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
     shader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
     shader->setVec3("lightPos", globalLightPos);
+
     glm::mat4 model = glm::mat4(1.0f);
 
     model = glm::translate(model, carDummyPosition);
@@ -177,10 +179,10 @@ void Game::render()
 
     shader->setMat4("model", model);
     
-
-    model = glm::mat4(1.0f);
-    model = glm::translate(model, globalLightPos);
-    model = glm::scale(model, glm::vec3(0.2f));
+    car->Draw(*shader);
+    // model = glm::mat4(1.0f);
+    // model = glm::translate(model, globalLightPos);
+    // model = glm::scale(model, glm::vec3(0.2f));
    
 
     glUseProgram(0);
