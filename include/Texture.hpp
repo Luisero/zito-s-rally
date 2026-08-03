@@ -30,6 +30,9 @@ public:
         case 1:
             format = GL_RED;
             break;
+        case 2:
+            format = GL_RG;
+            break;
         case 3:
             format = GL_RGB;
             break;
@@ -38,7 +41,7 @@ public:
             break;
         default:
             std::cerr << "ERROR: unsupported channel count: " << image->nrChannels << std::endl;
-            format = GL_RGB; // fallback, mas idealmente trate como erro
+            format = GL_RGB;
         }
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

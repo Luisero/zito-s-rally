@@ -29,7 +29,7 @@ public:
     float deltaTime, carSpeed;
 
     AssetsManager *assetsManager = new AssetsManager();
-    Model *car;
+    Model *car, *terrain;
     Mesh *triangle, *floor, *cube;
     Shader *shader, *lightSourceShader;
     Camera *camera;

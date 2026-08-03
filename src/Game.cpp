@@ -6,6 +6,8 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include <SFML/Graphics.hpp>
+
 Game::Game() {};
 
 int ticks = 0;
@@ -53,6 +55,9 @@ void Game::setup()
 
     ImGui::SFML::Init(window);
 
+   
+
+
     assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
     assetsManager->loadImage("../assets/Textures/cobblestone.jpg", "cobble");
     assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
@@ -63,12 +68,14 @@ void Game::setup()
     Texture *grass = new Texture(assetsManager->getImage("grass"));
     Texture *checker = new Texture(assetsManager->getImage("checker"));
 
-    car = new Model("../assets/Models/old_rusty_car/scene.gltf");
+    // car = new Model("../assets/Models/old_rusty_car/scene.gltf", assetsManager);
+    car = new Model("../assets/Models/renault_5_alpine_cup_1976/scene.gltf", assetsManager);
+    terrain = new Model("../assets/Models/89-terrain/uploads_files_2708212_terrain.fbx", assetsManager);
 
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
 
     lightSourceShader = new Shader("../assets/Shaders/lightsource.vert", "../assets/Shaders/lightsource.frag");
-    globalLightPos = glm::vec3(1.2f, 2.0f, 10.0f);
+    globalLightPos = glm::vec3(0.2f, 4.0f, 0.0f);
     camera = new Camera(1280.0f / 720.0f);
 
     // mockup car position (just a test)
@@ -95,12 +102,7 @@ void Game::setup()
     std::vector<unsigned int> indices = {0, 1, 2};
     std::vector<Texture> textures;
     textures.push_back(*checker);
-    triangle = new Mesh(vertices,indices,textures);
-   
-
-
-
-   
+    triangle = new Mesh(vertices, indices, textures);
 }
 void Game::handleEvents()
 {
@@ -129,7 +131,7 @@ void Game::update(float deltaTime)
 
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
 
-    ImGui::SliderFloat("Car speed", &carSpeed, 0.0f, 1.0f);
+    ImGui::SliderFloat("Car speed", &carSpeed, -1.0f, 1.0f);
     ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 7.0f);
 
     ImGui::Text("Position: X:%.2f  Y:%.2f  Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
@@ -153,7 +155,8 @@ void Game::render()
     glClearColor(0.f, 0.46f, 0.91f, 1.0f); // Dark Teal Background
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
-
+    glEnable(GL_BLEND);
+    
     shader->use();
 
     shader->setMat4("view", camera->getViewMatrix());
@@ -177,13 +180,17 @@ void Game::render()
 
     model = glm::mat4(1.0f);
 
-    shader->setMat4("model", model);
-    
-    car->Draw(*shader);
+    // model = glm::scale(model, glm::vec3(.01f, .01f, .01f));
+    model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 1.f));
+
+    car->Draw(*shader, model);
+
+    model = glm::mat4(1.0f);
+    model = glm::translate(model,glm::vec3(0.f,-40.f,0.f));
+    terrain->Draw(*shader,model);
     // model = glm::mat4(1.0f);
     // model = glm::translate(model, globalLightPos);
     // model = glm::scale(model, glm::vec3(0.2f));
-   
 
     glUseProgram(0);
 
@@ -196,7 +203,7 @@ void Game::render()
     glDisable(GL_DEPTH_TEST);
 
     window.pushGLStates();
-
+    
     ImGui::SFML::Render(window);
 
     window.popGLStates();
