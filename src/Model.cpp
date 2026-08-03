@@ -31,10 +31,10 @@ Model::Model(char *path, AssetsManager *am)
 
 void Model::Draw(Shader &shader, glm::mat4 &model)
 {
-    
+
     for (unsigned int i = 0; i < meshes.size(); i++)
     {
-        
+
         shader.setMat4("model", model * meshTransforms[i]);
         meshes[i].draw(shader);
     }
@@ -99,10 +99,10 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
     {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
         std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
-                                                                aiTextureType_DIFFUSE, "texture_diffuse");
+                                                           aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         std::vector<Texture> specularMaps = loadMaterialTextures(material,
-                                                                 aiTextureType_SPECULAR, "texture_specular");
+                                                            aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
 
@@ -139,6 +139,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
 
         Texture textureCopy = *texture;
         textureCopy.type = typeName; // mesma GLuint ID, tipo diferente pro shader
+        
         textures.push_back(textureCopy);
     }
     return textures;

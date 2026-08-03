@@ -11,6 +11,7 @@
 Game::Game() {};
 
 int ticks = 0;
+bool wireframeMode = false;
 
 void Game::setup()
 {
@@ -55,9 +56,6 @@ void Game::setup()
 
     ImGui::SFML::Init(window);
 
-   
-
-
     assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
     assetsManager->loadImage("../assets/Textures/cobblestone.jpg", "cobble");
     assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
@@ -69,13 +67,13 @@ void Game::setup()
     Texture *checker = new Texture(assetsManager->getImage("checker"));
 
     // car = new Model("../assets/Models/old_rusty_car/scene.gltf", assetsManager);
-    car = new Model("../assets/Models/renault_5_alpine_cup_1976/scene.gltf", assetsManager);
-    terrain = new Model("../assets/Models/89-terrain/uploads_files_2708212_terrain.fbx", assetsManager);
+    car = new Model("../assets/Models/survival_guitar_backpack/scene.gltf", assetsManager);
+    terrain = new Model("../assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", assetsManager);
 
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
 
     lightSourceShader = new Shader("../assets/Shaders/lightsource.vert", "../assets/Shaders/lightsource.frag");
-    globalLightPos = glm::vec3(0.2f, 4.0f, 0.0f);
+    globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
     camera = new Camera(1280.0f / 720.0f);
 
     // mockup car position (just a test)
@@ -132,7 +130,7 @@ void Game::update(float deltaTime)
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
 
     ImGui::SliderFloat("Car speed", &carSpeed, -1.0f, 1.0f);
-    ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 7.0f);
+    ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 10.0f);
 
     ImGui::Text("Position: X:%.2f  Y:%.2f  Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
 
@@ -140,6 +138,8 @@ void Game::update(float deltaTime)
     {
         carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
     }
+
+    ImGui::Checkbox("Wireframe mode: ", &wireframeMode);
     ImGui::End();
 
     carDummyPosition += carDummyForward * (deltaTime * 0.001f);
@@ -156,14 +156,25 @@ void Game::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
-    
+    if (wireframeMode)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+
     shader->use();
 
     shader->setMat4("view", camera->getViewMatrix());
     shader->setMat4("projection", camera->getProjectionMatrix());
 
-    shader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-    shader->setVec3("lightPos", globalLightPos);
+    shader->setVec3("light.position", globalLightPos);
+    shader->setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+    shader->setVec3("light.diffuse", glm::vec3(.5f, .5f, .5f));
+    shader->setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+    shader->setVec3("viewPos", camera->position);
 
     glm::mat4 model = glm::mat4(1.0f);
 
@@ -176,21 +187,21 @@ void Game::render()
 
     shader->setMat4("model", model);
 
-    triangle->draw(*shader);
+    // triangle->draw(*shader);
 
     model = glm::mat4(1.0f);
-
-    // model = glm::scale(model, glm::vec3(.01f, .01f, .01f));
-    model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 1.f));
+    model = glm::translate(model, glm::vec3(2.f, 1.f, 0.f));
+    model = glm::scale(model, glm::vec3(.008f, .008f, .008f));
+    model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
 
     car->Draw(*shader, model);
 
     model = glm::mat4(1.0f);
-    model = glm::translate(model,glm::vec3(0.f,-40.f,0.f));
-    terrain->Draw(*shader,model);
-    // model = glm::mat4(1.0f);
-    // model = glm::translate(model, globalLightPos);
-    // model = glm::scale(model, glm::vec3(0.2f));
+    model = glm::translate(model, glm::vec3(-2.f, 1.f, 0.f));
+    model = glm::scale(model, glm::vec3(.01f, .01f, .01f));
+    model = glm::rotate(model, -glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
+
+    terrain->Draw(*shader, model);
 
     glUseProgram(0);
 
@@ -203,7 +214,7 @@ void Game::render()
     glDisable(GL_DEPTH_TEST);
 
     window.pushGLStates();
-    
+
     ImGui::SFML::Render(window);
 
     window.popGLStates();

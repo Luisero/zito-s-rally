@@ -1,0 +1,11 @@
+Model Information:
+* title:	lil Cow - Harvest Moon: Back To Nature
+* source:	https://sketchfab.com/3d-models/lil-cow-harvest-moon-back-to-nature-3b2db26a99584daca66ec3a0c731c620
+* author:	thomaseh_ (https://sketchfab.com/thomaseh_)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "lil Cow - Harvest Moon: Back To Nature" (https://sketchfab.com/3d-models/lil-cow-harvest-moon-back-to-nature-3b2db26a99584daca66ec3a0c731c620) by thomaseh_ (https://sketchfab.com/thomaseh_) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
