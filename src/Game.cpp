@@ -53,21 +53,20 @@ void Game::setup()
     }
     std::cout << glGetString(GL_VERSION) << "\n";
     glViewport(0, 0, 1280, 720);
-    
+
     ImGui::SFML::Init(window);
-    
+
     window.pushGLStates();
     sf::Texture loadingTex;
     if (loadingTex.loadFromFile("../assets/Textures/loading.png"))
     {
         sf::Sprite loadingSprite(loadingTex);
-        loadingSprite.setScale(sf::Vector2(.65f,.65f));
-        loadingSprite.setPosition(0,0);
+        loadingSprite.setScale(sf::Vector2(.65f, .65f));
+        loadingSprite.setPosition(0, 0);
         window.draw(loadingSprite);
     }
     window.popGLStates();
 
-    
     window.display();
 
     physicsManager = new PhysicsManager();
@@ -82,7 +81,7 @@ void Game::setup()
     Texture *grass = new Texture(assetsManager->getImage("grass"));
     Texture *checker = new Texture(assetsManager->getImage("checker"));
 
-   // sf::sleep(sf::milliseconds(2000));
+    // sf::sleep(sf::milliseconds(2000));
 
     // car = new Model("../assets/Models/old_rusty_car/scene.gltf", assetsManager);
     car = new Model("../assets/Models/survival_guitar_backpack/scene.gltf", assetsManager);
@@ -119,6 +118,15 @@ void Game::setup()
     std::vector<Texture> textures;
     textures.push_back(*checker);
     triangle = new Mesh(vertices, indices, textures);
+
+    Model *ballModel = assetsManager->loadModel("../assets/Models/Beach_Ball/13517_Beach_Ball_v2_L3.obj", "ball");
+
+    Entity ballEntity;
+    ballEntity.model = ballModel;
+    ballEntity.hasPhysics = true;
+    ballEntity.bodyId = physicsManager->sphere->GetID();
+    ballEntity.transform.scale = glm::vec3(0.05f); // ajuste o valor até o tamanho visual bater com o raio 0.5 da física
+    entities.push_back(ballEntity);
 }
 void Game::handleEvents()
 {
@@ -222,6 +230,13 @@ void Game::render()
 
     terrain->Draw(*shader, model);
 
+    model = glm::mat4(1.f);
+    for (auto &entity : entities)
+    {
+        shader->setMat4("model", model);
+        entity.draw(*shader, physicsManager->body_interface);
+    }
+
     glUseProgram(0);
 
     // 3. Desliga os Buffers e VAOs
@@ -242,7 +257,7 @@ void Game::render()
 }
 
 void Game::run()
-{   
+{
     Game::setup();
     clock.restart();
 

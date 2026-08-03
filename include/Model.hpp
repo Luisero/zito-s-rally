@@ -9,7 +9,8 @@
 #include <assimp/LogStream.hpp>
 #include "./Shader.hpp"
 #include "./Mesh.hpp"
-#include "./AssetsManager.hpp"
+
+class AssetsManager; // forward declaration 
 
 class Model
 {
@@ -23,7 +24,7 @@ private:
     std::string directory;
     std::vector<glm::mat4> meshTransforms;
     void loadModel(std::string path);
-    void processNode(aiNode *node, const aiScene *scene,glm::mat4 parentTransform);
+    void processNode(aiNode *node, const aiScene *scene, glm::mat4 parentTransform);
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type,
                                               std::string typeName);

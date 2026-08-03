@@ -1,7 +1,17 @@
 #include "../include/AssetsManager.hpp"
+#include "../include/Model.hpp"
 #include <iostream>
-
 AssetsManager::AssetsManager() {}
+
+AssetsManager::~AssetsManager()
+{
+    for (auto &[key, img] : images)
+        delete img;
+    for (auto &[key, tex] : textures)
+        delete tex;
+    for (auto &[key, model] : models)
+        delete model;
+}
 
 void AssetsManager::loadImage(std::string path, std::string key)
 {
@@ -32,7 +42,7 @@ Image *AssetsManager::getImage(std::string key)
     return it->second;
 }
 
-Texture* AssetsManager::loadTexture(std::string path, std::string key)
+Texture *AssetsManager::loadTexture(std::string path, std::string key)
 {
     auto it = this->textures.find(key);
     if (it != this->textures.end())
@@ -48,12 +58,34 @@ Texture* AssetsManager::loadTexture(std::string path, std::string key)
     return texture;
 }
 
-Texture* AssetsManager::getTexture(std::string key)
+Texture *AssetsManager::getTexture(std::string key)
 {
     auto it = this->textures.find(key);
     if (it == this->textures.end())
     {
         std::cerr << "ERROR: texture key not found: " << key << std::endl;
+        return nullptr;
+    }
+    return it->second;
+}
+
+Model *AssetsManager::loadModel(std::string path, std::string key)
+{
+    auto it = models.find(key);
+    if (it != models.end())
+        return it->second; 
+
+    Model *model = new Model(const_cast<char *>(path.c_str()), this);
+    models.insert({key, model});
+    return model;
+}
+
+Model *AssetsManager::getModel(std::string key)
+{
+    auto it = models.find(key);
+    if (it == models.end())
+    {
+        std::cerr << "ERROR: model key not found: " << key << std::endl;
         return nullptr;
     }
     return it->second;

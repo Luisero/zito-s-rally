@@ -11,8 +11,10 @@
 #include "./AssetsManager.hpp"
 #include "./Model.hpp"
 #include "./PhysicsManager.hpp"
+#include "./Entity.hpp"
 
 #include <glm/glm.hpp>
+#include <vector>
 
 class Game
 {
@@ -28,9 +30,10 @@ public:
     sf::RenderWindow window;
     sf::Clock clock;
     float deltaTime, carSpeed;
-
+    
     AssetsManager *assetsManager = new AssetsManager();
-    Model *car, *terrain;
+    std::vector<Entity> entities;
+    Model *car, *terrain, *ballModel;
     Mesh *triangle, *floor, *cube;
     Shader *shader, *lightSourceShader;
     Camera *camera;

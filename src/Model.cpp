@@ -1,4 +1,7 @@
 #include "../include/Model.hpp"
+#include "../include/AssetsManager.hpp" 
+#include <iostream>
+
 #include <iostream>
 
 glm::mat4 AiToGlm(const aiMatrix4x4 &from)
