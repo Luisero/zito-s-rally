@@ -66,6 +66,21 @@ void Game::setup()
     Texture *grass = new Texture(assetsManager->getImage("grass"));
     Texture *checker = new Texture(assetsManager->getImage("checker"));
 
+    window.pushGLStates();
+    sf::Texture loadingTex;
+    if (loadingTex.loadFromFile("../assets/Textures/loading.png"))
+    {
+        sf::Sprite loadingSprite(loadingTex);
+        loadingSprite.setScale(sf::Vector2(.65f,.65f));
+        loadingSprite.setPosition(0,0);
+        window.draw(loadingSprite);
+    }
+    window.popGLStates();
+
+    
+    window.display();
+    sf::sleep(sf::milliseconds(2000));
+
     // car = new Model("../assets/Models/old_rusty_car/scene.gltf", assetsManager);
     car = new Model("../assets/Models/survival_guitar_backpack/scene.gltf", assetsManager);
     terrain = new Model("../assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", assetsManager);
