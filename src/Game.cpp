@@ -53,19 +53,9 @@ void Game::setup()
     }
     std::cout << glGetString(GL_VERSION) << "\n";
     glViewport(0, 0, 1280, 720);
-
+    
     ImGui::SFML::Init(window);
-
-    assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
-    assetsManager->loadImage("../assets/Textures/cobblestone.jpg", "cobble");
-    assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
-    assetsManager->loadImage("../assets/Textures/red_checker.png", "checker");
-
-    Texture *ground_dir = new Texture(assetsManager->getImage("dirt_ground"));
-    Texture *cobblestone = new Texture(assetsManager->getImage("cobble"));
-    Texture *grass = new Texture(assetsManager->getImage("grass"));
-    Texture *checker = new Texture(assetsManager->getImage("checker"));
-
+    
     window.pushGLStates();
     sf::Texture loadingTex;
     if (loadingTex.loadFromFile("../assets/Textures/loading.png"))
@@ -79,7 +69,20 @@ void Game::setup()
 
     
     window.display();
-    sf::sleep(sf::milliseconds(2000));
+
+    physicsManager = new PhysicsManager();
+
+    assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
+    assetsManager->loadImage("../assets/Textures/cobblestone.jpg", "cobble");
+    assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
+    assetsManager->loadImage("../assets/Textures/red_checker.png", "checker");
+
+    Texture *ground_dir = new Texture(assetsManager->getImage("dirt_ground"));
+    Texture *cobblestone = new Texture(assetsManager->getImage("cobble"));
+    Texture *grass = new Texture(assetsManager->getImage("grass"));
+    Texture *checker = new Texture(assetsManager->getImage("checker"));
+
+   // sf::sleep(sf::milliseconds(2000));
 
     // car = new Model("../assets/Models/old_rusty_car/scene.gltf", assetsManager);
     car = new Model("../assets/Models/survival_guitar_backpack/scene.gltf", assetsManager);
@@ -137,6 +140,7 @@ void Game::update(float deltaTime)
 {
     ticks++;
     float zdistance = camera->offset.z;
+    physicsManager->update(deltaTime);
 
     ImGui::SFML::Update(window, sf::seconds(deltaTime));
 
@@ -238,8 +242,9 @@ void Game::render()
 }
 
 void Game::run()
-{
+{   
     Game::setup();
+    clock.restart();
 
     while (isActive)
     {

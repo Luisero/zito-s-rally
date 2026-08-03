@@ -10,6 +10,7 @@
 #include "./Camera.hpp"
 #include "./AssetsManager.hpp"
 #include "./Model.hpp"
+#include "./PhysicsManager.hpp"
 
 #include <glm/glm.hpp>
 
@@ -36,7 +37,9 @@ public:
     glm::vec3 carDummyPosition;
     glm::vec3 carDummyForward;
     glm::vec3 globalLightPos;
+    
 
 private:
     bool isActive = true;
+    PhysicsManager *physicsManager;
 };
