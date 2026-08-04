@@ -11,9 +11,11 @@
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
 #include <Jolt/Physics/Body/BodyActivationListener.h>
+#include <Jolt/Physics/Body/BodyLockInterface.h>
 #include <iostream>
 #include <cstdarg>
 #include <thread>
+#include <glm/vec3.hpp>
 
 JPH_SUPPRESS_WARNINGS
 
@@ -187,9 +189,17 @@ public:
     PhysicsManager();
     void update(float deltaTime);
     PhysicsSystem *physics_system;
-    BodyInterface *body_interface ;
+    BodyInterface *body_interface;
 
-    Body* floor, *sphere;
+    Body *floor, *sphere;
+
+    JPH::BodyID createSphere(glm::vec3 position, float radius,
+                             JPH::EMotionType motionType, JPH::ObjectLayer layer,
+                             float restitution = 0.0f, float friction = 0.5f);
+
+    JPH::BodyID createBox(glm::vec3 position, glm::vec3 halfExtents,
+                          JPH::EMotionType motionType, JPH::ObjectLayer layer,
+                          float restitution = 0.0f, float friction = 0.5f);
 
 private:
     const uint cMaxBodies = 65536;

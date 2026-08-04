@@ -42,7 +42,7 @@ PhysicsManager::PhysicsManager()
     ShapeRefC floor_shape = floor_shape_result.Get(); // We don't expect an error here, but you can check floor_shape_result for HasError() / GetError()
     BodyCreationSettings floor_settings(floor_shape, RVec3(0.0_r, -1.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Static, Layers::NON_MOVING);
     floor = body_interface->CreateBody(floor_settings);
-    body_interface->AddBody(floor->GetID(), EActivation::DontActivate);
+    //body_interface->AddBody(floor->GetID(), EActivation::DontActivate);
 
 
 
@@ -96,4 +96,60 @@ void PhysicsManager::update(float deltaTime)
         JPH::Vec3 position = body_interface->GetCenterOfMassPosition(sphere->GetID());
         std::cout << "Bola Pos Y: " << position.GetY() << std::endl;
     }
+}
+
+
+JPH::BodyID PhysicsManager::createSphere(glm::vec3 position, float radius,
+                                          EMotionType motionType, ObjectLayer layer,
+                                          float restitution, float friction)
+{
+    SphereShapeSettings shapeSettings(radius);
+    ShapeSettings::ShapeResult shapeResult = shapeSettings.Create();
+    ShapeRefC shape = shapeResult.Get();
+
+    BodyCreationSettings settings(
+        shape,
+        RVec3(position.x, position.y, position.z),
+        Quat::sIdentity(),
+        motionType,
+        layer
+    );
+    settings.mRestitution = restitution;
+    settings.mFriction = friction;
+
+    Body* body = body_interface->CreateBody(settings);
+    EActivation activation = (motionType == EMotionType::Static)
+        ? EActivation::DontActivate
+        : EActivation::Activate;
+    body_interface->AddBody(body->GetID(), activation);
+
+    return body->GetID();
+}
+
+JPH::BodyID PhysicsManager::createBox(glm::vec3 position, glm::vec3 halfExtents,
+                                       EMotionType motionType, ObjectLayer layer,
+                                       float restitution, float friction)
+{
+    BoxShapeSettings shapeSettings(Vec3(halfExtents.x, halfExtents.y, halfExtents.z));
+    shapeSettings.SetEmbedded();
+    ShapeSettings::ShapeResult shapeResult = shapeSettings.Create();
+    ShapeRefC shape = shapeResult.Get();
+
+    BodyCreationSettings settings(
+        shape,
+        RVec3(position.x, position.y, position.z),
+        Quat::sIdentity(),
+        motionType,
+        layer
+    );
+    settings.mRestitution = restitution;
+    settings.mFriction = friction;
+
+    Body* body = body_interface->CreateBody(settings);
+    EActivation activation = (motionType == EMotionType::Static)
+        ? EActivation::DontActivate
+        : EActivation::Activate;
+    body_interface->AddBody(body->GetID(), activation);
+
+    return body->GetID();
 }

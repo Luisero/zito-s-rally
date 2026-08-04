@@ -147,3 +147,41 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
     }
     return textures;
 }
+
+float Model::getBoundingRadius()
+{
+    glm::vec3 minBounds(std::numeric_limits<float>::max());
+    glm::vec3 maxBounds(std::numeric_limits<float>::lowest());
+    bool anyVertex = false;
+
+    for (unsigned int m = 0; m < meshes.size(); m++)
+    {
+        for (const auto &vertex : meshes[m].vertices)
+        {
+            glm::vec4 worldPos = meshTransforms[m] * glm::vec4(vertex.Position, 1.0f);
+            glm::vec3 pos = glm::vec3(worldPos);
+
+            minBounds = glm::min(minBounds, pos);
+            maxBounds = glm::max(maxBounds, pos);
+            anyVertex = true;
+        }
+    }
+
+    if (!anyVertex)
+        return 0.0f;
+
+    glm::vec3 center = (minBounds + maxBounds) * 0.5f;
+    float radius = 0.0f;
+
+    for (unsigned int m = 0; m < meshes.size(); m++)
+    {
+        for (const auto &vertex : meshes[m].vertices)
+        {
+            glm::vec4 worldPos = meshTransforms[m] * glm::vec4(vertex.Position, 1.0f);
+            float dist = glm::length(glm::vec3(worldPos) - center);
+            radius = std::max(radius, dist);
+        }
+    }
+
+    return radius;
+}

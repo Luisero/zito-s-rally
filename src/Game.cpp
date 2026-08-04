@@ -97,36 +97,45 @@ void Game::setup()
     carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
     carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
 
-    std::vector<Vertex> vertices;
-    Vertex v1 = {
-        glm::vec3(-.5f, 0.f, 0.f),
-        glm::vec3(0.f, 0.f, -1.f),
-        glm::vec2(1.f, 1.f)};
-    vertices.push_back(v1);
-    Vertex v2 = {
-        glm::vec3(.5f, 0.f, 0.f),
-        glm::vec3(0.f, 0.f, -1.f),
-        glm::vec2(1.f, 0.f)};
-    vertices.push_back(v2);
-    Vertex v3 = {
-        glm::vec3(.0f, 1.f, 0.f),
-        glm::vec3(0.f, 0.f, -1.f),
-        glm::vec2(0.f, 0.f)};
-    vertices.push_back(v3);
+    Model *floorModel = assetsManager->loadModel("../assets/Models/checkered-tile-floor/source/Floor-Sketchfab/Floor.obj", "floor");
 
-    std::vector<unsigned int> indices = {0, 1, 2};
-    std::vector<Texture> textures;
-    textures.push_back(*checker);
-    triangle = new Mesh(vertices, indices, textures);
+    JPH::BodyID floorId = physicsManager->createBox(
+        glm::vec3(0.0f, -1.0f, 0.0f),
+        glm::vec3(100.0f, 1.0f, 100.0f),
+        JPH::EMotionType::Static,
+        Layers::NON_MOVING);
+    Entity floor;
+    floor.model = floorModel;
+    floor.hasPhysics = true;
+    floor.bodyId = floorId;
+    floor.transform.scale = glm::vec3(2.f);
+    entities.push_back(floor);
 
-    Model *ballModel = assetsManager->loadModel("../assets/Models/Beach_Ball/13517_Beach_Ball_v2_L3.obj", "ball");
+    Model *ballModel = assetsManager->loadModel("../assets/Models/ball_v1_L2.123cdd42b392-7662-4894-8373-2859764e3528/futbol.obj", "ball");
 
-    Entity ballEntity;
-    ballEntity.model = ballModel;
-    ballEntity.hasPhysics = true;
-    ballEntity.bodyId = physicsManager->sphere->GetID();
-    ballEntity.transform.scale = glm::vec3(0.05f); // ajuste o valor até o tamanho visual bater com o raio 0.5 da física
-    entities.push_back(ballEntity);
+    float physicsRadius = 0.4f;
+    float modelRadius = ballModel->getBoundingRadius();
+    float ballScale = physicsRadius / modelRadius;
+
+    std::cout << "Beach ball raw radius: " << modelRadius << ", escala calculada: " << ballScale << std::endl;
+
+    for (int i = -10; i < 10; i++)
+    {
+        JPH::BodyID sphereId = physicsManager->createSphere(
+            glm::vec3(-((float)i) * 1.5, 10.0f, 0.f),
+            physicsRadius,
+            JPH::EMotionType::Dynamic,
+            Layers::MOVING,
+            0.8f,
+            0.5f);
+
+        Entity ballEntity;
+        ballEntity.model = ballModel;
+        ballEntity.hasPhysics = true;
+        ballEntity.bodyId = sphereId;
+        ballEntity.transform.scale = glm::vec3(ballScale * .9f);
+        entities.push_back(ballEntity);
+    }
 }
 void Game::handleEvents()
 {
@@ -136,46 +145,97 @@ void Game::handleEvents()
     {
         ImGui::SFML::ProcessEvent(window, event);
 
-        // 1. Handle Window Close
         if (event.type == sf::Event::Closed)
         {
             isActive = false;
             window.close();
+        }
+
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::C)
+        {
+            camera->toggleMode();
+            bool freeMode = (camera->mode == CameraMode::FREE);
+
+            window.setMouseCursorVisible(!freeMode);
+            window.setMouseCursorGrabbed(freeMode);
+
+            if (freeMode)
+            {
+                sf::Vector2i center((int)window.getSize().x / 2, (int)window.getSize().y / 2);
+                sf::Mouse::setPosition(center, window);
+            }
         }
     }
 }
 void Game::update(float deltaTime)
 {
     ticks++;
-    float zdistance = camera->offset.z;
     physicsManager->update(deltaTime);
+    float zdistance = camera->offset.z;
+    // JPH::BodyLockRead lock(physicsManager->physics_system->GetBodyLockInterface(), entities.at(3).bodyId);
+
+    // if (lock.Succeeded())
+    // {
+    //     const JPH::Body &body = lock.GetBody();
+    //     JPH::Vec3 position = body.GetCenterOfMassPosition();
+    //     carDummyPosition = glm::vec3(position.GetX(), position.GetY(),position.GetZ());
+    // }
 
     ImGui::SFML::Update(window, sf::seconds(deltaTime));
 
     ImGui::Begin("Zito-s-rally control panel");
-
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
-
     ImGui::SliderFloat("Car speed", &carSpeed, -1.0f, 1.0f);
     ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 10.0f);
-
     ImGui::Text("Position: X:%.2f  Y:%.2f  Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
-
     if (ImGui::Button("Reset Position"))
-    {
         carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
-    }
-
     ImGui::Checkbox("Wireframe mode: ", &wireframeMode);
+    ImGui::Text("Camera: %s (C to change)",
+                camera->mode == CameraMode::FREE ? "Free" : "Chasing car");
     ImGui::End();
 
-    carDummyPosition += carDummyForward * (deltaTime * 0.001f);
-    carDummyPosition.z += carSpeed;
-    if (zdistance == 0)
-        zdistance = 3;
-    camera->offset.z = zdistance;
-    // carDummyForward.x +=.001f;
-    camera->updateChase(carDummyPosition, carDummyForward, deltaTime);
+    if (camera->mode == CameraMode::CHASE)
+    {
+
+        carDummyPosition += carDummyForward * (deltaTime * 0.001f);
+        carDummyPosition.z += carSpeed;
+        if (zdistance == 0)
+            zdistance = 3;
+        camera->offset.z = zdistance;
+        camera->updateChase(carDummyPosition, carDummyForward, deltaTime);
+    }
+    else // CameraMode::FREE
+    {
+        if (window.hasFocus())
+        {
+            sf::Vector2i center((int)window.getSize().x / 2, (int)window.getSize().y / 2);
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            sf::Vector2i delta = mousePos - center;
+
+            camera->processMouseMovement((float)delta.x, -(float)delta.y); // Y invertido: mouse pra cima = olhar pra cima
+
+            sf::Mouse::setPosition(center, window);
+        }
+
+        glm::vec3 moveInput(0.0f);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            moveInput.z += 1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            moveInput.z -= 1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            moveInput.x += 1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            moveInput.x -= 1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            moveInput.y += 1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            moveInput.y -= 1.0f;
+
+        camera->updateFreeMove(deltaTime, moveInput);
+    }
+
+    globalLightPos.x -= sin(ticks / 100.f) * 2;
 }
 void Game::render()
 {

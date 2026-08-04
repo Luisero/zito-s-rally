@@ -17,6 +17,8 @@ class Model
 public:
     Model(char *path, AssetsManager *assetsManager);
     void Draw(Shader &shader, glm::mat4 &model);
+    float getBoundingRadius(); 
+
 
 private:
     AssetsManager *assetsManager;
