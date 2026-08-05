@@ -97,7 +97,7 @@ void Game::setup()
     carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
     carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
 
-    Model *floorModel = assetsManager->loadModel("../assets/Models/checkered-tile-floor/source/Floor-Sketchfab/Floor.obj", "floor");
+    Model *floorModel = assetsManager->loadModel("../assets/Models/checkered_tile_floor/scene.gltf", "floor");
 
     JPH::BodyID floorId = physicsManager->createBox(
         glm::vec3(0.0f, -1.0f, 0.0f),
@@ -108,7 +108,7 @@ void Game::setup()
     floor.model = floorModel;
     floor.hasPhysics = true;
     floor.bodyId = floorId;
-    floor.transform.scale = glm::vec3(2.f);
+    floor.transform.scale = glm::vec3(1.f);
     entities.push_back(floor);
 
     Model *ballModel = assetsManager->loadModel("../assets/Models/ball_v1_L2.123cdd42b392-7662-4894-8373-2859764e3528/futbol.obj", "ball");
@@ -243,6 +243,7 @@ void Game::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
+    glEnable(GL_CULL_FACE);
     if (wireframeMode)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
