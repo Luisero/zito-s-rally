@@ -24,6 +24,8 @@ struct Light {
 uniform Light light; 
 
 struct Material {
+    vec4 baseColor;
+    int hasTexture;
     sampler2D texture_diffuse1;
     sampler2D texture_diffuse2;
     sampler2D texture_specular1;
@@ -33,26 +35,31 @@ uniform Material material;
 
 uniform vec3 viewPos;
 
-uniform sampler2D ourTexture;
-
 void main() {
+    // 1. Decide de onde vem a cor base (Textura ou Cor Sólida do glTF)
+    vec4 finalBaseColor;
+    if (material.hasTexture == 1) {
+        finalBaseColor = texture(material.texture_diffuse1, TexCoord);
+    } else {
+        finalBaseColor = material.baseColor;
+    }
+    
+    vec3 albedo = vec3(finalBaseColor);
+
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(light.position - FragPos);
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);  
 
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    
     float diff = max(dot(norm, lightDir), 0.0);
- //   vec3 diffuse = diff * lightColor * vec3(texture(material.texture_diffuse1, TexCoord));
 
-    float ambientStrength = 0.1;
-    vec3 ambient = light.ambient *  vec3(texture(material.texture_diffuse1, TexCoord));
-    vec3 diffuse  = light.diffuse  * diff * vec3(texture(material.texture_diffuse1, TexCoord));  
+    vec3 ambient = light.ambient * albedo;
+    vec3 diffuse = light.diffuse * diff * albedo;  
 
     vec3 specular = light.specular * spec * vec3(texture(material.texture_specular1, TexCoord));
 
-    vec3 result = ambient + diffuse ;
+    vec3 result = ambient + diffuse + specular;
 
-    FragColor = vec4(result, 1.0);
-}   
+    FragColor = vec4(result, finalBaseColor.a);
+}

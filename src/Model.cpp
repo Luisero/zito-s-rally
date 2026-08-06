@@ -1,5 +1,5 @@
 #include "../include/Model.hpp"
-#include "../include/AssetsManager.hpp" 
+#include "../include/AssetsManager.hpp"
 #include <iostream>
 
 #include <iostream>
@@ -34,7 +34,6 @@ Model::Model(char *path, AssetsManager *am)
 
 void Model::Draw(Shader &shader, glm::mat4 &model)
 {
-
     for (unsigned int i = 0; i < meshes.size(); i++)
     {
         glm::mat4 currentModel = model * meshTransforms[i];
@@ -101,18 +100,28 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
             indices.push_back(face.mIndices[j]);
     }
     // process material
+    aiColor4D diffuseColor(1.0f, 1.0f, 1.0f, 1.0f); // Branco por padrão
     if (mesh->mMaterialIndex >= 0)
     {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
         std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
-                                                           aiTextureType_DIFFUSE, "texture_diffuse");
+                                                                aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        std::vector<Texture> specularMaps = loadMaterialTextures(material,
-                                                            aiTextureType_SPECULAR, "texture_specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-    }
 
-    return Mesh(vertices, indices, textures);
+        std::vector<Texture> baseColorMaps = loadMaterialTextures(material, aiTextureType_BASE_COLOR, "texture_diffuse");
+        textures.insert(textures.end(), baseColorMaps.begin(), baseColorMaps.end());
+
+        
+        std::vector<Texture> specularMaps = loadMaterialTextures(material,
+                                                                 aiTextureType_SPECULAR, "texture_specular");
+        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+
+        if (AI_SUCCESS != aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuseColor)) {
+        aiGetMaterialColor(material, AI_MATKEY_BASE_COLOR, &diffuseColor);
+    }
+    }
+    glm::vec4 solidColor(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a);   
+    return Mesh(vertices, indices, textures, solidColor);
 }
 void Model::processNode(aiNode *node, const aiScene *scene, glm::mat4 parentTransform)
 {
@@ -145,7 +154,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
 
         Texture textureCopy = *texture;
         textureCopy.type = typeName; // mesma GLuint ID, tipo diferente pro shader
-        
+
         textures.push_back(textureCopy);
     }
     return textures;

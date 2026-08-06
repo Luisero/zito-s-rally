@@ -34,7 +34,7 @@ void GameplayScene::setup()
     game->assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
     game->assetsManager->loadImage("../assets/Textures/red_checker.png", "checker");
 
-    car = new Model("../assets/Models/survival_guitar_backpack/scene.gltf", game->assetsManager);
+    car = new Model("../assets/Models/renault_5_alpine_cup_1976/scene.gltf", game->assetsManager);
     terrain = new Model("../assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", game->assetsManager);
 
     shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
@@ -125,7 +125,6 @@ void GameplayScene::update(float deltaTime)
     // camera->toggleMode();
     // bool freeMode = (camera->mode == CameraMode::FREE);
 
-
     ImGui::Begin("Zito-s-rally control panel");
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
     ImGui::SliderFloat("Car speed", &carSpeed, -1.0f, 1.0f);
@@ -184,6 +183,8 @@ void GameplayScene::render()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glPolygonMode(GL_FRONT_AND_BACK, wireframeMode ? GL_LINE : GL_FILL);
 
     shader->use();
@@ -198,7 +199,7 @@ void GameplayScene::render()
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(2.f, 2.f, 0.f));
-    model = glm::scale(model, glm::vec3(.008f, .008f, .008f));
+    // model = glm::scale(model, glm::vec3(.008f, .008f, .008f));
     model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
     car->Draw(*shader, model);
 
@@ -219,13 +220,12 @@ void GameplayScene::render()
     glDisable(GL_DEPTH_TEST);
 }
 
-
 void GameplayScene::refreshMouseState()
 {
     bool freeMode = (camera->mode == CameraMode::FREE);
     game->window.setMouseCursorVisible(!freeMode);
     game->window.setMouseCursorGrabbed(freeMode);
-    
+
     if (freeMode)
     {
         sf::Vector2i center((int)game->window.getSize().x / 2, (int)game->window.getSize().y / 2);

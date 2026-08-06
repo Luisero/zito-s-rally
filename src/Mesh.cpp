@@ -1,12 +1,12 @@
 #include "../include/Mesh.hpp"
 #include <glad/glad.h>
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, glm::vec4 solidColor)
 {
     this->vertices = vertices;
     this->indices = indices;
     this->textures = textures;
-
+    this->solidColor = solidColor;
     setupMesh();
 }
 void Mesh::generateBuffers()
@@ -47,6 +47,10 @@ void Mesh::draw(Shader &shader)
 {
     shader.use();
 
+    shader.setVec4("material.baseColor", this->solidColor);
+
+    bool hasTextures = (textures.size()>0);
+    shader.setInt("material.hasTexture", hasTextures ? 1 : 0);
 
 
 

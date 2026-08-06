@@ -19,8 +19,9 @@ class Mesh{
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture> textures;
+    glm::vec4 solidColor = glm::vec4(1.f);
     
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, glm::vec4 solidColor);
     
 
     unsigned int VAO, VBO, EBO;
