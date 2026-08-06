@@ -1,34 +1,25 @@
 #include "../include/Game.hpp"
-#include "../include/Mesh.hpp"
-#include "../include/Shader.hpp"
-#include "../include/Texture.hpp"
-#include "../include/Model.hpp"
+#include "../include/MenuScene.hpp"
+#include "../include/GameplayScene.hpp"
 #include <iostream>
-#include <cmath>
 #include <cstdlib>
-#include <SFML/Graphics.hpp>
 
-Game::Game() {};
+Game::Game() {}
 
-int ticks = 0;
-bool wireframeMode = false;
-
-void Game::setup()
+void Game::setupWindow()
 {
-    contextSettings.depthBits = 24;   // Request 24-bit depth buffer
-    contextSettings.stencilBits = 8;  // Request 8-bit stencil buffer
-    contextSettings.majorVersion = 3; // Request OpenGL 3.x
-    contextSettings.minorVersion = 3; // Request OpenGL 3.3
+    contextSettings.depthBits = 24;
+    contextSettings.stencilBits = 8;
+    contextSettings.majorVersion = 3;
+    contextSettings.minorVersion = 3;
     contextSettings.attributeFlags = sf::ContextSettings::Default;
     window.create(
         sf::VideoMode({1280, 720}),
-        "My SFML Window",
+        "Zito's Rally",
         sf::Style::Fullscreen,
         contextSettings);
     window.setVerticalSyncEnabled(true);
 
-    // Retry loop: em fullscreen o contexto pode levar um instante
-    // para ficar de fato "current" na thread, dependendo do driver/compositor.
     bool contextReady = false;
     for (int attempt = 0; attempt < 10 && !contextReady; ++attempt)
     {
@@ -55,92 +46,42 @@ void Game::setup()
     glViewport(0, 0, 1280, 720);
 
     ImGui::SFML::Init(window);
-
-    window.pushGLStates();
-    sf::Texture loadingTex;
-    if (loadingTex.loadFromFile("../assets/Textures/loading.png"))
-    {
-        sf::Sprite loadingSprite(loadingTex);
-        loadingSprite.setScale(sf::Vector2(.65f, .65f));
-        loadingSprite.setPosition(0, 0);
-        window.draw(loadingSprite);
-    }
-    window.popGLStates();
-
-    window.display();
-
-    physicsManager = new PhysicsManager();
-
-    assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
-    assetsManager->loadImage("../assets/Textures/cobblestone.jpg", "cobble");
-    assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
-    assetsManager->loadImage("../assets/Textures/red_checker.png", "checker");
-
-    Texture *ground_dir = new Texture(assetsManager->getImage("dirt_ground"));
-    Texture *cobblestone = new Texture(assetsManager->getImage("cobble"));
-    Texture *grass = new Texture(assetsManager->getImage("grass"));
-    Texture *checker = new Texture(assetsManager->getImage("checker"));
-
-    // sf::sleep(sf::milliseconds(2000));
-
-    // car = new Model("../assets/Models/old_rusty_car/scene.gltf", assetsManager);
-    car = new Model("../assets/Models/survival_guitar_backpack/scene.gltf", assetsManager);
-    terrain = new Model("../assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", assetsManager);
-
-    shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
-
-    lightSourceShader = new Shader("../assets/Shaders/lightsource.vert", "../assets/Shaders/lightsource.frag");
-    globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
-    camera = new Camera(1280.0f / 720.0f);
-
-    // mockup car position (just a test)
-    carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
-    carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
-
-    Model *floorModel = assetsManager->loadModel("../assets/Models/checkered_tile_floor/scene.gltf", "floor");
-
-    JPH::BodyID floorId = physicsManager->createBox(
-        glm::vec3(0.0f, -1.0f, 0.0f),
-        glm::vec3(100.0f, 1.0f, 100.0f),
-        JPH::EMotionType::Static,
-        Layers::NON_MOVING);
-    Entity floor;
-    floor.model = floorModel;
-    floor.hasPhysics = true;
-    floor.bodyId = floorId;
-    floor.transform.scale = glm::vec3(1.f);
-    entities.push_back(floor);
-
-    Model *ballModel = assetsManager->loadModel("../assets/Models/ball_v1_L2.123cdd42b392-7662-4894-8373-2859764e3528/futbol.obj", "ball");
-
-    float physicsRadius = 0.4f;
-    float modelRadius = ballModel->getBoundingRadius();
-    float ballScale = physicsRadius / modelRadius;
-
-    std::cout << "Beach ball raw radius: " << modelRadius << ", escala calculada: " << ballScale << std::endl;
-
-    for (int i = -10; i < 10; i++)
-    {
-        JPH::BodyID sphereId = physicsManager->createSphere(
-            glm::vec3(-((float)i) * 1.5, 10.0f, 0.f),
-            physicsRadius,
-            JPH::EMotionType::Dynamic,
-            Layers::MOVING,
-            0.8f,
-            0.5f);
-
-        Entity ballEntity;
-        ballEntity.model = ballModel;
-        ballEntity.hasPhysics = true;
-        ballEntity.bodyId = sphereId;
-        ballEntity.transform.scale = glm::vec3(ballScale * .9f);
-        entities.push_back(ballEntity);
-    }
 }
+
+void Game::changeState(GameState newState)
+{
+    state = newState;
+
+    if (newState == GameState::MENU)
+    {
+        if (menuScene == nullptr)
+        {
+            menuScene = new MenuScene();
+            menuScene->game = this;
+            menuScene->setup();
+        }
+        currentScene = menuScene;
+    }
+    else // PLAYING
+    {
+        if (gameplayScene == nullptr)
+        {
+            gameplayScene = new GameplayScene();
+            gameplayScene->game = this;
+            gameplayScene->setup();
+        }
+        currentScene = gameplayScene;
+        if (gameplayScene != nullptr)
+        {
+            ((GameplayScene *)gameplayScene)->refreshMouseState();
+        }
+    }
+    clock.restart();
+}
+
 void Game::handleEvents()
 {
     sf::Event event;
-
     while (window.pollEvent(event))
     {
         ImGui::SFML::ProcessEvent(window, event);
@@ -151,167 +92,26 @@ void Game::handleEvents()
             window.close();
         }
 
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::C)
-        {
-            camera->toggleMode();
-            bool freeMode = (camera->mode == CameraMode::FREE);
-
-            window.setMouseCursorVisible(!freeMode);
-            window.setMouseCursorGrabbed(freeMode);
-
-            if (freeMode)
-            {
-                sf::Vector2i center((int)window.getSize().x / 2, (int)window.getSize().y / 2);
-                sf::Mouse::setPosition(center, window);
-            }
-        }
+        if (currentScene != nullptr)
+            currentScene->handleEvent(event);
     }
 }
+
 void Game::update(float deltaTime)
 {
-    ticks++;
-    physicsManager->update(deltaTime);
-    float zdistance = camera->offset.z;
-    // JPH::BodyLockRead lock(physicsManager->physics_system->GetBodyLockInterface(), entities.at(3).bodyId);
-
-    // if (lock.Succeeded())
-    // {
-    //     const JPH::Body &body = lock.GetBody();
-    //     JPH::Vec3 position = body.GetCenterOfMassPosition();
-    //     carDummyPosition = glm::vec3(position.GetX(), position.GetY(),position.GetZ());
-    // }
-
     ImGui::SFML::Update(window, sf::seconds(deltaTime));
 
-    ImGui::Begin("Zito-s-rally control panel");
-    ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
-    ImGui::SliderFloat("Car speed", &carSpeed, -1.0f, 1.0f);
-    ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 10.0f);
-    ImGui::Text("Position: X:%.2f  Y:%.2f  Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
-    if (ImGui::Button("Reset Position"))
-        carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
-    ImGui::Checkbox("Wireframe mode: ", &wireframeMode);
-    ImGui::Text("Camera: %s (C to change)",
-                camera->mode == CameraMode::FREE ? "Free" : "Chasing car");
-    ImGui::End();
-
-    if (camera->mode == CameraMode::CHASE)
-    {
-
-        carDummyPosition += carDummyForward * (deltaTime * 0.001f);
-        carDummyPosition.z += carSpeed;
-        if (zdistance == 0)
-            zdistance = 3;
-        camera->offset.z = zdistance;
-        camera->updateChase(carDummyPosition, carDummyForward, deltaTime);
-    }
-    else // CameraMode::FREE
-    {
-        if (window.hasFocus())
-        {
-            sf::Vector2i center((int)window.getSize().x / 2, (int)window.getSize().y / 2);
-            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            sf::Vector2i delta = mousePos - center;
-
-            camera->processMouseMovement((float)delta.x, -(float)delta.y); // Y invertido: mouse pra cima = olhar pra cima
-
-            sf::Mouse::setPosition(center, window);
-        }
-
-        glm::vec3 moveInput(0.0f);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            moveInput.z += 1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            moveInput.z -= 1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            moveInput.x += 1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            moveInput.x -= 1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-            moveInput.y += 1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-            moveInput.y -= 1.0f;
-
-        camera->updateFreeMove(deltaTime, moveInput);
-    }
-
-    globalLightPos.x -= sin(ticks / 100.f) * 2;
+    if (currentScene != nullptr)
+        currentScene->update(deltaTime);
 }
+
 void Game::render()
 {
-    glClearColor(0.f, 0.46f, 0.91f, 1.0f); // Dark Teal Background
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glEnable(GL_CULL_FACE);
-    if (wireframeMode)
-    {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    }
-    else
-    {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
-
-    shader->use();
-
-    shader->setMat4("view", camera->getViewMatrix());
-    shader->setMat4("projection", camera->getProjectionMatrix());
-
-    shader->setVec3("light.position", globalLightPos);
-    shader->setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-    shader->setVec3("light.diffuse", glm::vec3(.5f, .5f, .5f));
-    shader->setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-    shader->setVec3("viewPos", camera->position);
-
-    glm::mat4 model = glm::mat4(1.0f);
-
-    model = glm::translate(model, carDummyPosition);
-    model = glm::translate(model, glm::vec3(0.f, std::sin(ticks / 100.f) / 10.f, std::cos(ticks / 100.f)));
-
-    float rotationAngle = glm::radians(ticks * 0.5f);
-
-    model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 1.0f, 0.0f));
-
-    shader->setMat4("model", model);
-
-    // triangle->draw(*shader);
-
-    model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(2.f, 1.f, 0.f));
-    model = glm::scale(model, glm::vec3(.008f, .008f, .008f));
-    model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
-
-    car->Draw(*shader, model);
-
-    model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(-2.f, 1.f, 0.f));
-    model = glm::scale(model, glm::vec3(.01f, .01f, .01f));
-    model = glm::rotate(model, -glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
-
-    terrain->Draw(*shader, model);
-
-    model = glm::mat4(1.f);
-    for (auto &entity : entities)
-    {
-        shader->setMat4("model", model);
-        entity.draw(*shader, physicsManager->body_interface);
-    }
-
-    glUseProgram(0);
-
-    // 3. Desliga os Buffers e VAOs
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_DEPTH_TEST);
+    if (currentScene != nullptr)
+        currentScene->render();
 
     window.pushGLStates();
-
     ImGui::SFML::Render(window);
-
     window.popGLStates();
 
     window.display();
@@ -319,18 +119,19 @@ void Game::render()
 
 void Game::run()
 {
-    Game::setup();
+    setupWindow();
+    changeState(GameState::PLAYING);
+
     clock.restart();
 
     while (isActive)
     {
         sf::Time dt = clock.restart();
         float deltaTime = dt.asSeconds();
-        Game::handleEvents();
-        Game::update(deltaTime);
-        Game::render();
+        handleEvents();
+        update(deltaTime);
+        render();
     }
-    glDeleteProgram(shader->ID);
 
     ImGui::SFML::Shutdown();
 }

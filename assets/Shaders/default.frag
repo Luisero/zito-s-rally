@@ -42,7 +42,7 @@ void main() {
     vec3 reflectDir = reflect(-lightDir, norm);  
 
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-
+    
     float diff = max(dot(norm, lightDir), 0.0);
  //   vec3 diffuse = diff * lightColor * vec3(texture(material.texture_diffuse1, TexCoord));
 
@@ -52,7 +52,7 @@ void main() {
 
     vec3 specular = light.specular * spec * vec3(texture(material.texture_specular1, TexCoord));
 
-    vec3 result = ambient + diffuse + specular;
+    vec3 result = ambient + diffuse ;
 
     FragColor = vec4(result, 1.0);
 }   

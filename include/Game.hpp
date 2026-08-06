@@ -1,3 +1,6 @@
+#ifndef GAME_HPP
+#define GAME_HPP
+
 #include <glad/glad.h>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -5,44 +8,36 @@
 #include <SFML/System/Clock.hpp>
 #include <imgui.h>
 #include <imgui-SFML.h>
-#include "./Mesh.hpp"
-#include "./Shader.hpp"
-#include "./Camera.hpp"
 #include "./AssetsManager.hpp"
-#include "./Model.hpp"
-#include "./PhysicsManager.hpp"
-#include "./Entity.hpp"
+#include "./Scene.hpp"
 
-#include <glm/glm.hpp>
-#include <vector>
+enum class GameState { MENU, PLAYING };
 
 class Game
 {
 public:
     Game();
-    void setup();
     void run();
-    void update(float deltaTime);
-    void handleEvents();
-    void render();
+    void changeState(GameState newState);
 
     sf::ContextSettings contextSettings;
     sf::RenderWindow window;
     sf::Clock clock;
-    float deltaTime, carSpeed;
-    
+
     AssetsManager *assetsManager = new AssetsManager();
-    std::vector<Entity> entities;
-    Model *car, *terrain, *ballModel;
-    Mesh *triangle, *floor, *cube;
-    Shader *shader, *lightSourceShader;
-    Camera *camera;
-    glm::vec3 carDummyPosition;
-    glm::vec3 carDummyForward;
-    glm::vec3 globalLightPos;
-    
+
+    GameState state = GameState::MENU;
+    bool isActive = true;
 
 private:
-    bool isActive = true;
-    PhysicsManager *physicsManager;
+    void setupWindow();
+    void handleEvents();
+    void update(float deltaTime);
+    void render();
+
+    Scene *currentScene = nullptr;
+    Scene *menuScene = nullptr;
+    Scene *gameplayScene = nullptr;
 };
+
+#endif
