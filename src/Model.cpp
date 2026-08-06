@@ -48,7 +48,7 @@ void Model::Draw(Shader &shader, glm::mat4 &model)
 void Model::loadModel(std::string path)
 {
     Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_FixInfacingNormals);
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << "\n";
@@ -111,16 +111,16 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         std::vector<Texture> baseColorMaps = loadMaterialTextures(material, aiTextureType_BASE_COLOR, "texture_diffuse");
         textures.insert(textures.end(), baseColorMaps.begin(), baseColorMaps.end());
 
-        
         std::vector<Texture> specularMaps = loadMaterialTextures(material,
                                                                  aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
-        if (AI_SUCCESS != aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuseColor)) {
-        aiGetMaterialColor(material, AI_MATKEY_BASE_COLOR, &diffuseColor);
+        if (AI_SUCCESS != aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuseColor))
+        {
+            aiGetMaterialColor(material, AI_MATKEY_BASE_COLOR, &diffuseColor);
+        }
     }
-    }
-    glm::vec4 solidColor(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a);   
+    glm::vec4 solidColor(diffuseColor.r, diffuseColor.g, diffuseColor.b, diffuseColor.a);
     return Mesh(vertices, indices, textures, solidColor);
 }
 void Model::processNode(aiNode *node, const aiScene *scene, glm::mat4 parentTransform)
