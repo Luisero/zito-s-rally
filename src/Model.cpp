@@ -37,8 +37,11 @@ void Model::Draw(Shader &shader, glm::mat4 &model)
 
     for (unsigned int i = 0; i < meshes.size(); i++)
     {
+        glm::mat4 currentModel = model * meshTransforms[i];
+        shader.setMat4("model", currentModel);
+        glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(currentModel)));
+        shader.setMat3("normalMatrix", normalMatrix);
 
-        shader.setMat4("model", model * meshTransforms[i]);
         meshes[i].draw(shader);
     }
 }

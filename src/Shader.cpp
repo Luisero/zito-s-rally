@@ -118,3 +118,7 @@ void Shader::checkCompileErrors(unsigned int shader, std::string type) {
         }
     }
 }
+
+void Shader::setMat3(const std::string &name, const glm::mat3 &mat) const {
+    glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+}

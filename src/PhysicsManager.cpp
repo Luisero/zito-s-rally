@@ -91,11 +91,12 @@ void PhysicsManager::update(float deltaTime)
     }
 
     physics_system->Update(deltaTime, collisionSteps, temp_allocator, job_system);
-    // --- DEBUG TEMPORÁRIO PARA VER A BOLA CAINDO ---
-    if (sphere != nullptr) {
-        JPH::Vec3 position = body_interface->GetCenterOfMassPosition(sphere->GetID());
-        std::cout << "Bola Pos Y: " << position.GetY() << std::endl;
-    }
+   /*
+   if (sphere != nullptr) {
+    JPH::Vec3 position = body_interface->GetCenterOfMassPosition(sphere->GetID());
+    
+}
+*/
 }
 
 
