@@ -1,0 +1,4043 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 801,
+      "max": [
+        0.245609849691391,
+        0.48647162318229675,
+        -1.0889637470245361
+      ],
+      "min": [
+        -0.7543074488639832,
+        -0.18177157640457153,
+        -2.308335781097412
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9612,
+      "componentType": 5126,
+      "count": 801,
+      "max": [
+        1.0,
+        0.999981164932251,
+        0.9363404512405396
+      ],
+      "min": [
+        -1.0,
+        -0.9998294711112976,
+        -0.9995929598808289
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 801,
+      "max": [
+        0.9488447308540344,
+        0.49276354908943176
+      ],
+      "min": [
+        0.0072564780712127686,
+        0.0022677024826407433
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 6408,
+      "componentType": 5126,
+      "count": 801,
+      "max": [
+        0.9488447308540344,
+        0.49276354908943176
+      ],
+      "min": [
+        0.0072564780712127686,
+        0.0022677024826407433
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 2031,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 19224,
+      "componentType": 5126,
+      "count": 3849,
+      "max": [
+        0.3662869334220886,
+        0.4723036587238312,
+        -0.05378487706184387
+      ],
+      "min": [
+        -0.8697739243507385,
+        -0.2511936128139496,
+        -2.878124237060547
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 65412,
+      "componentType": 5126,
+      "count": 3849,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 12816,
+      "componentType": 5126,
+      "count": 3849,
+      "max": [
+        0.9941385388374329,
+        0.7445465326309204
+      ],
+      "min": [
+        0.005558475852012634,
+        0.00696041202172637
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 43608,
+      "componentType": 5126,
+      "count": 3849,
+      "max": [
+        0.9941385388374329,
+        0.7445465326309204
+      ],
+      "min": [
+        0.005558475852012634,
+        0.00696041202172637
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 74400,
+      "componentType": 5126,
+      "count": 3849,
+      "max": [
+        0.9941385388374329,
+        0.7445465326309204
+      ],
+      "min": [
+        0.005558475852012634,
+        0.00696041202172637
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 8124,
+      "componentType": 5125,
+      "count": 12210,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 111600,
+      "componentType": 5126,
+      "count": 16,
+      "max": [
+        0.24713163077831268,
+        0.4498164653778076,
+        -1.8318102359771729
+      ],
+      "min": [
+        -0.7505062818527222,
+        0.23478037118911743,
+        -1.9796078205108643
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 111792,
+      "componentType": 5126,
+      "count": 16,
+      "max": [
+        0.9427103996276855,
+        0.3984861373901367,
+        -0.003318609669804573
+      ],
+      "min": [
+        -0.942710816860199,
+        0.3319277763366699,
+        -0.03347350284457207
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 105192,
+      "componentType": 5126,
+      "count": 16,
+      "max": [
+        0.4746786952018738,
+        0.12374947965145111
+      ],
+      "min": [
+        0.42869529128074646,
+        0.027205592021346092
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 56964,
+      "componentType": 5125,
+      "count": 36,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 111984,
+      "componentType": 5126,
+      "count": 306,
+      "max": [
+        0.5162401795387268,
+        0.06286341696977615,
+        -0.018900180235505104
+      ],
+      "min": [
+        -0.8291853070259094,
+        -0.08103980869054794,
+        -0.27178385853767395
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 115656,
+      "componentType": 5126,
+      "count": 306,
+      "max": [
+        0.9968873858451843,
+        1.0,
+        0.9997457265853882
+      ],
+      "min": [
+        -0.9968872666358948,
+        -1.0,
+        -0.9999995827674866
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 105320,
+      "componentType": 5126,
+      "count": 306,
+      "max": [
+        0.4588087201118469,
+        0.21322108805179596
+      ],
+      "min": [
+        0.20085038244724274,
+        0.015588108450174332
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 107768,
+      "componentType": 5126,
+      "count": 306,
+      "max": [
+        0.4588087201118469,
+        0.21322108805179596
+      ],
+      "min": [
+        0.20085038244724274,
+        0.015588108450174332
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 110216,
+      "componentType": 5126,
+      "count": 306,
+      "max": [
+        0.4588087201118469,
+        0.21322108805179596
+      ],
+      "min": [
+        0.20085038244724274,
+        0.015588108450174332
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 57108,
+      "componentType": 5125,
+      "count": 1050,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 119328,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.19545498490333557,
+        0.05503624677658081,
+        -0.10329347848892212
+      ],
+      "min": [
+        -0.6989424228668213,
+        -0.05097520723938942,
+        -0.1113356351852417
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 119880,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.15120065212249756,
+        0.15003398060798645,
+        0.999998927116394
+      ],
+      "min": [
+        -0.15120092034339905,
+        -0.1482684463262558,
+        0.9880710244178772
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 112664,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.731551468372345,
+        0.12674948573112488
+      ],
+      "min": [
+        0.6156691312789917,
+        0.010539601556956768
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 61308,
+      "componentType": 5125,
+      "count": 132,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 120432,
+      "componentType": 5126,
+      "count": 20,
+      "max": [
+        0.4081166684627533,
+        0.005000369623303413,
+        0.017374545335769653
+      ],
+      "min": [
+        -0.7522675395011902,
+        -0.005000106990337372,
+        -0.14848700165748596
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 120672,
+      "componentType": 5126,
+      "count": 20,
+      "max": [
+        0.04115084186196327,
+        5.565434548771009e-07,
+        0.999916136264801
+      ],
+      "min": [
+        -0.44371968507766724,
+        -1.86661139878197e-07,
+        0.8961657285690308
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 113032,
+      "componentType": 5126,
+      "count": 20,
+      "max": [
+        0.9909737706184387,
+        0.8862450122833252
+      ],
+      "min": [
+        0.7586979866027832,
+        0.5035843849182129
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 113192,
+      "componentType": 5126,
+      "count": 20,
+      "max": [
+        0.9909737706184387,
+        0.8862450122833252
+      ],
+      "min": [
+        0.7586979866027832,
+        0.5035843849182129
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 61836,
+      "componentType": 5125,
+      "count": 42,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 120912,
+      "componentType": 5126,
+      "count": 333,
+      "max": [
+        3.2468059062957764,
+        1.2289326190948486,
+        0.06399106979370117
+      ],
+      "min": [
+        -0.665708065032959,
+        -0.4634755253791809,
+        -0.6092233657836914
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 124908,
+      "componentType": 5126,
+      "count": 333,
+      "max": [
+        0.9936538338661194,
+        0.9966359734535217,
+        0.9995178580284119
+      ],
+      "min": [
+        -0.35153141617774963,
+        -0.9966360926628113,
+        -0.6717933416366577
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 113352,
+      "componentType": 5126,
+      "count": 333,
+      "max": [
+        0.9906700253486633,
+        0.9673305153846741
+      ],
+      "min": [
+        0.017874395474791527,
+        0.028394484892487526
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 116016,
+      "componentType": 5126,
+      "count": 333,
+      "max": [
+        0.9906700253486633,
+        0.9673305153846741
+      ],
+      "min": [
+        0.017874395474791527,
+        0.028394484892487526
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 62004,
+      "componentType": 5125,
+      "count": 954,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 128904,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        0.19098329544067383,
+        0.5007465481758118,
+        0.3336784243583679
+      ],
+      "min": [
+        -1.0462048053741455,
+        -0.2509898543357849,
+        -2.5068516731262207
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 151536,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        0.9999999403953552,
+        0.9999974370002747,
+        0.8817682266235352
+      ],
+      "min": [
+        -0.9999998807907104,
+        -0.9997227191925049,
+        -0.9989991188049316
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 118680,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        0.933627188205719,
+        0.9853014349937439
+      ],
+      "min": [
+        0.07687323540449142,
+        0.0289824940264225
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 133768,
+      "componentType": 5126,
+      "count": 1886,
+      "max": [
+        0.933627188205719,
+        0.9853014349937439
+      ],
+      "min": [
+        0.07687323540449142,
+        0.0289824940264225
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 65820,
+      "componentType": 5125,
+      "count": 8256,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 174168,
+      "componentType": 5126,
+      "count": 65,
+      "max": [
+        0.2032279074192047,
+        0.46526652574539185,
+        -1.0889508724212646
+      ],
+      "min": [
+        -0.7066023349761963,
+        0.2517158091068268,
+        -1.3370332717895508
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 174948,
+      "componentType": 5126,
+      "count": 65,
+      "max": [
+        0.7152614593505859,
+        0.7600228190422058,
+        0.7374653816223145
+      ],
+      "min": [
+        -0.7152374982833862,
+        0.5767949223518372,
+        0.39459940791130066
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 148856,
+      "componentType": 5126,
+      "count": 65,
+      "max": [
+        0.31052789092063904,
+        0.4656500220298767
+      ],
+      "min": [
+        0.03252950310707092,
+        0.3498260974884033
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 98844,
+      "componentType": 5125,
+      "count": 234,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 175728,
+      "componentType": 5126,
+      "count": 70,
+      "max": [
+        0.22082464396953583,
+        0.4598233699798584,
+        -2.00246000289917
+      ],
+      "min": [
+        -0.7243082523345947,
+        0.2506614327430725,
+        -2.3083479404449463
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 176568,
+      "componentType": 5126,
+      "count": 70,
+      "max": [
+        0.847308337688446,
+        0.8222749829292297,
+        -0.17038121819496155
+      ],
+      "min": [
+        -0.8388731479644775,
+        0.5030297040939331,
+        -0.6221503019332886
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 149376,
+      "componentType": 5126,
+      "count": 70,
+      "max": [
+        0.3250507712364197,
+        0.3097439110279083
+      ],
+      "min": [
+        0.028411172330379486,
+        0.19085682928562164
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 99780,
+      "componentType": 5125,
+      "count": 294,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 177408,
+      "componentType": 5126,
+      "count": 34,
+      "max": [
+        0.1443760246038437,
+        0.09034032374620438,
+        -2.878124475479126
+      ],
+      "min": [
+        -0.647863507270813,
+        0.001288086175918579,
+        -2.883401870727539
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 177816,
+      "componentType": 5126,
+      "count": 34,
+      "max": [
+        0.1122257262468338,
+        0.11769980937242508,
+        -0.9930492043495178
+      ],
+      "min": [
+        -0.11222569644451141,
+        -0.11769973486661911,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 149936,
+      "componentType": 5126,
+      "count": 34,
+      "max": [
+        0.6114733815193176,
+        0.11177214980125427
+      ],
+      "min": [
+        0.5046520829200745,
+        0.0031547427643090487
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 100956,
+      "componentType": 5125,
+      "count": 96,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 178224,
+      "componentType": 5126,
+      "count": 34,
+      "max": [
+        0.2190786600112915,
+        0.09791779518127441,
+        -2.869145393371582
+      ],
+      "min": [
+        -0.7225661277770996,
+        0.05314993858337402,
+        -2.874446392059326
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 178632,
+      "componentType": 5126,
+      "count": 34,
+      "max": [
+        0.21918705105781555,
+        0.2304012030363083,
+        -0.973095715045929
+      ],
+      "min": [
+        -0.21918703615665436,
+        -0.22858843207359314,
+        -0.9999996423721313
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 150208,
+      "componentType": 5126,
+      "count": 34,
+      "max": [
+        0.7998247742652893,
+        0.1178584098815918
+      ],
+      "min": [
+        0.7344090938568115,
+        0.05401657149195671
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 101340,
+      "componentType": 5125,
+      "count": 96,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 179040,
+      "componentType": 5126,
+      "count": 258,
+      "max": [
+        -0.024289285764098167,
+        0.2311660647392273,
+        0.19227933883666992
+      ],
+      "min": [
+        -0.8309322595596313,
+        0.1055503562092781,
+        -0.6844948530197144
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 182136,
+      "componentType": 5126,
+      "count": 258,
+      "max": [
+        0.5990986824035645,
+        0.99998939037323,
+        0.7304706573486328
+      ],
+      "min": [
+        -0.5990990400314331,
+        -0.9999203681945801,
+        -0.6687526702880859
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 150480,
+      "componentType": 5126,
+      "count": 258,
+      "max": [
+        0.8444710373878479,
+        0.7542144060134888
+      ],
+      "min": [
+        0.11941834539175034,
+        0.10129611939191818
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 152544,
+      "componentType": 5126,
+      "count": 258,
+      "max": [
+        0.8444710373878479,
+        0.7542144060134888
+      ],
+      "min": [
+        0.11941834539175034,
+        0.10129611939191818
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 101724,
+      "componentType": 5125,
+      "count": 1008,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 185232,
+      "componentType": 5126,
+      "count": 31,
+      "max": [
+        0.24827107787132263,
+        0.45288652181625366,
+        -1.2815254926681519
+      ],
+      "min": [
+        0.16972339153289795,
+        0.23485279083251953,
+        -1.8208595514297485
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 185604,
+      "componentType": 5126,
+      "count": 31,
+      "max": [
+        0.9457415342330933,
+        0.46381545066833496,
+        0.07444470375776291
+      ],
+      "min": [
+        0.8857504725456238,
+        0.32491979002952576,
+        -0.0054517039097845554
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 154608,
+      "componentType": 5126,
+      "count": 31,
+      "max": [
+        0.174438014626503,
+        0.13794192671775818
+      ],
+      "min": [
+        0.02359233982861042,
+        0.03428521752357483
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 105756,
+      "componentType": 5125,
+      "count": 93,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 185976,
+      "componentType": 5126,
+      "count": 31,
+      "max": [
+        -0.6730982661247253,
+        0.4528864026069641,
+        -1.2815253734588623
+      ],
+      "min": [
+        -0.7516458034515381,
+        0.23485270142555237,
+        -1.8208588361740112
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 186348,
+      "componentType": 5126,
+      "count": 31,
+      "max": [
+        -0.8857355117797852,
+        0.46384403109550476,
+        0.07444962114095688
+      ],
+      "min": [
+        -0.9457417726516724,
+        0.3249191641807556,
+        -0.0054503874853253365
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 154856,
+      "componentType": 5126,
+      "count": 31,
+      "max": [
+        0.174438014626503,
+        0.1379418522119522
+      ],
+      "min": [
+        0.02359233982861042,
+        0.03428516536951065
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 106128,
+      "componentType": 5125,
+      "count": 93,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 186720,
+      "componentType": 5126,
+      "count": 264,
+      "max": [
+        0.06268218159675598,
+        0.26867416501045227,
+        -1.4139018058776855
+      ],
+      "min": [
+        -0.14191275835037231,
+        0.09495916962623596,
+        -1.486642599105835
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 189888,
+      "componentType": 5126,
+      "count": 264,
+      "max": [
+        0.9993106722831726,
+        0.9772759675979614,
+        0.9949696660041809
+      ],
+      "min": [
+        -0.9993148446083069,
+        -0.9775004386901855,
+        -0.9995086193084717
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 155104,
+      "componentType": 5126,
+      "count": 264,
+      "max": [
+        0.6659465432167053,
+        0.32118430733680725
+      ],
+      "min": [
+        0.18654058873653412,
+        0.17403607070446014
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 157216,
+      "componentType": 5126,
+      "count": 264,
+      "max": [
+        0.6659465432167053,
+        0.32118430733680725
+      ],
+      "min": [
+        0.18654058873653412,
+        0.17403607070446014
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 106500,
+      "componentType": 5125,
+      "count": 888,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 193056,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        -0.3421662151813507,
+        0.5598644614219666,
+        0.004290614277124405
+      ],
+      "min": [
+        -0.642166256904602,
+        0.4098644554615021,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 194208,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.8277473449707031,
+        0.8206135630607605,
+        1.0
+      ],
+      "min": [
+        -0.8277504444122314,
+        -0.820611298084259,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 159328,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.9990516901016235,
+        1.0
+      ],
+      "min": [
+        0.3997470736503601,
+        0.183744877576828
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 160096,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.9990516901016235,
+        1.0
+      ],
+      "min": [
+        0.3997470736503601,
+        0.183744877576828
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 160864,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.9990516901016235,
+        1.0
+      ],
+      "min": [
+        0.3997470736503601,
+        0.183744877576828
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 110052,
+      "componentType": 5125,
+      "count": 240,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 195360,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        2.05287504196167,
+        -0.9483420848846436,
+        -0.0009851455688476563
+      ],
+      "min": [
+        -0.3598017692565918,
+        -1.017420768737793,
+        -0.03324127197265625
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 195744,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        0.07122041285037994,
+        -0.09531085193157196,
+        0.9945330023765564
+      ],
+      "min": [
+        -0.06507008522748947,
+        -0.12161638587713242,
+        0.9901138544082642
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 161632,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        0.7394698858261108,
+        0.7866328954696655
+      ],
+      "min": [
+        0.09669142216444016,
+        0.11549998074769974
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 161888,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        0.7394698858261108,
+        0.7866328954696655
+      ],
+      "min": [
+        0.09669142216444016,
+        0.11549998074769974
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 162144,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        0.7394698858261108,
+        0.7866328954696655
+      ],
+      "min": [
+        0.09669142216444016,
+        0.11549998074769974
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 111012,
+      "componentType": 5125,
+      "count": 48,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 196128,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        -0.3421662151813507,
+        0.5598644614219666,
+        0.004290614277124405
+      ],
+      "min": [
+        -0.642166256904602,
+        0.4098644554615021,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 197280,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.8277473449707031,
+        0.8206135630607605,
+        1.0
+      ],
+      "min": [
+        -0.8277504444122314,
+        -0.820611298084259,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 162400,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.9990516901016235,
+        1.0
+      ],
+      "min": [
+        0.3997470736503601,
+        0.183744877576828
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 163168,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.9990516901016235,
+        1.0
+      ],
+      "min": [
+        0.3997470736503601,
+        0.183744877576828
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 163936,
+      "componentType": 5126,
+      "count": 96,
+      "max": [
+        0.9990516901016235,
+        1.0
+      ],
+      "min": [
+        0.3997470736503601,
+        0.183744877576828
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 111204,
+      "componentType": 5125,
+      "count": 240,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 198432,
+      "componentType": 5126,
+      "count": 4,
+      "max": [
+        1.1126872301101685,
+        -1.2350411415100098,
+        -0.20668594539165497
+      ],
+      "min": [
+        0.9080759882926941,
+        -1.2964242696762085,
+        -0.20668594539165497
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 198480,
+      "componentType": 5126,
+      "count": 4,
+      "max": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "min": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 164704,
+      "componentType": 5126,
+      "count": 4,
+      "max": [
+        0.5970993041992188,
+        0.7866328954696655
+      ],
+      "min": [
+        0.5050232410430908,
+        0.7557854652404785
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 164736,
+      "componentType": 5126,
+      "count": 4,
+      "max": [
+        0.5970993041992188,
+        0.7866328954696655
+      ],
+      "min": [
+        0.5050232410430908,
+        0.7557854652404785
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 164768,
+      "componentType": 5126,
+      "count": 4,
+      "max": [
+        0.5970993041992188,
+        0.7866328954696655
+      ],
+      "min": [
+        0.5050232410430908,
+        0.7557854652404785
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 112164,
+      "componentType": 5125,
+      "count": 6,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 198528,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        -0.3249080777168274,
+        0.1998012512922287,
+        0.0006390213966369629
+      ],
+      "min": [
+        -0.5302006602287292,
+        0.1812194436788559,
+        -0.064098060131073
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 199080,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.41784632205963135,
+        0.997798502445221,
+        0.7976987361907959
+      ],
+      "min": [
+        -0.4178529381752014,
+        0.5916620492935181,
+        0.06631958484649658
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 164800,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.3836115896701813,
+        0.45452696084976196
+      ],
+      "min": [
+        0.02977082133293152,
+        0.12874600291252136
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 165168,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.3836115896701813,
+        0.45452696084976196
+      ],
+      "min": [
+        0.02977082133293152,
+        0.12874600291252136
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 165536,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.3836115896701813,
+        0.45452696084976196
+      ],
+      "min": [
+        0.02977082133293152,
+        0.12874600291252136
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 112188,
+      "componentType": 5125,
+      "count": 132,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 199632,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.19545522332191467,
+        0.05503654107451439,
+        -0.11133549362421036
+      ],
+      "min": [
+        -0.6989421844482422,
+        -0.050974905490875244,
+        -0.12208914011716843
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 200184,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.2003835141658783,
+        0.19680531322956085,
+        0.9999985098838806
+      ],
+      "min": [
+        -0.2003840059041977,
+        -0.19859421253204346,
+        0.978991687297821
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 165904,
+      "componentType": 5126,
+      "count": 46,
+      "max": [
+        0.8002257943153381,
+        0.11739600449800491
+      ],
+      "min": [
+        0.7345151901245117,
+        0.053876493126153946
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 112716,
+      "componentType": 5125,
+      "count": 132,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 200736,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.3342670798301697,
+        0.1265430748462677,
+        0.3342670798301697
+      ],
+      "min": [
+        -0.3342669904232025,
+        -0.1182340532541275,
+        -0.3342670500278473
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 212448,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        1.0,
+        0.9999992251396179,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 166272,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 174080,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 113244,
+      "componentType": 5125,
+      "count": 3144,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 224160,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.3342670798301697,
+        0.1265430748462677,
+        0.3342670798301697
+      ],
+      "min": [
+        -0.3342669904232025,
+        -0.1182340532541275,
+        -0.3342670500278473
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 235872,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        1.0,
+        0.9999992251396179,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 181888,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 189696,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 125820,
+      "componentType": 5125,
+      "count": 3144,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 247584,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.3342670798301697,
+        0.1265430748462677,
+        0.3342670798301697
+      ],
+      "min": [
+        -0.3342669904232025,
+        -0.1182340532541275,
+        -0.3342670500278473
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 259296,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        1.0,
+        0.9999992251396179,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 197504,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 205312,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 138396,
+      "componentType": 5125,
+      "count": 3144,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 271008,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.3342670798301697,
+        0.1265430748462677,
+        0.3342670798301697
+      ],
+      "min": [
+        -0.3342669904232025,
+        -0.1182340532541275,
+        -0.3342670500278473
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 282720,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        1.0,
+        0.9999992251396179,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 213120,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 220928,
+      "componentType": 5126,
+      "count": 976,
+      "max": [
+        0.9928462505340576,
+        0.9913946390151978
+      ],
+      "min": [
+        0.0049575865268707275,
+        0.007186064030975103
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 150972,
+      "componentType": 5125,
+      "count": 3144,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Daniel Zhabotinsky (https://sketchfab.com/DanielZhabotinsky)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/sanremo-70-low-poly-model-b2261c471645417a8b7e5882d541c248",
+      "title": "Sanremo '70 - Low poly model"
+    },
+    "generator": "Sketchfab-16.74.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 163548,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 228736,
+      "byteOffset": 163548,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 294432,
+      "byteOffset": 392284,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 686716,
+      "uri": "scene.bin"
+    }
+  ],
+  "extensionsUsed": [
+    "KHR_materials_specular",
+    "KHR_texture_transform",
+    "KHR_materials_clearcoat"
+  ],
+  "images": [
+    {
+      "uri": "textures/UCB_Interiors_2_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/UCB_Interiors_2_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/UCB_BOTTOM_LT_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/UCB_BOTTOM_LT_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/UCB_BOTTOM_LT_specularf0.png"
+    },
+    {
+      "uri": "textures/UCB_Lights_and_Glass_Transperent_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/UCB_GenMaskTrim_baseColor.png"
+    },
+    {
+      "uri": "textures/UCB_GenMaskTrim_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/UCB_GenMaskTrim_specularf0.png"
+    },
+    {
+      "uri": "textures/Sanremo70_Bodymat_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/Sanremo70_Bodymat_specularf0.png"
+    },
+    {
+      "uri": "textures/Numberplates_Misk_U_baseColor.png"
+    },
+    {
+      "uri": "textures/Carbadges_misc_U_baseColor.png"
+    },
+    {
+      "uri": "textures/RB1c_Tire_1k_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/RB1c_Tire_1k_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/RB1c_Tire_1k_specularf0.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "UCB_Interiors_2",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularColorFactor": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "specularFactor": 1.0,
+          "specularTexture": {
+            "index": 4
+          }
+        }
+      },
+      "name": "UCB_BOTTOM_LT",
+      "occlusionTexture": {
+        "index": 3
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2
+        },
+        "metallicRoughnessTexture": {
+          "index": 3
+        }
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "UCB_Lights_and_Glass_Transperent",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1.0,
+          1.0,
+          1.0,
+          0.8
+        ],
+        "baseColorTexture": {
+          "index": 5
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.06042642820938637
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularColorFactor": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "specularFactor": 1.0,
+          "specularTexture": {
+            "index": 8
+          }
+        }
+      },
+      "name": "UCB_GenMaskTrim",
+      "occlusionTexture": {
+        "index": 7
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 6
+        },
+        "metallicFactor": 0.0,
+        "metallicRoughnessTexture": {
+          "index": 7
+        },
+        "roughnessFactor": 0.3944419629682575
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 0.6616543907753544,
+          "clearcoatRoughnessFactor": 0.04
+        },
+        "KHR_materials_specular": {
+          "specularColorFactor": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "specularFactor": 1.0,
+          "specularTexture": {
+            "index": 10
+          }
+        }
+      },
+      "name": "Sanremo70_Bodymat",
+      "occlusionTexture": {
+        "index": 9
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9473065367331996,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "metallicRoughnessTexture": {
+          "extensions": {
+            "KHR_texture_transform": {
+              "scale": [
+                20.000000000000004,
+                20.000000000000004
+              ]
+            }
+          },
+          "index": 9
+        },
+        "roughnessFactor": 0.10901050599249489
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "UCB_Lights_and_Glass",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 5
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.07257244765516349
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "Numberplates_Misk_U",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 11
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.10702864035024488
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "Carbadges_misc_U",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 12
+        },
+        "metallicFactor": 0.7345305074500171,
+        "roughnessFactor": 0.10702864035024488
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularColorFactor": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "specularFactor": 1.0,
+          "specularTexture": {
+            "index": 15
+          }
+        }
+      },
+      "name": "RB1c_Tire_1k",
+      "occlusionTexture": {
+        "index": 14
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 13
+        },
+        "metallicFactor": 0.9,
+        "metallicRoughnessTexture": {
+          "index": 14
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Sanremo70_Interior_UCB_Interiors_2_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2,
+            "TEXCOORD_1": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Bottom_UCB_BOTTOM_LT_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TEXCOORD_0": 7,
+            "TEXCOORD_1": 8,
+            "TEXCOORD_2": 9
+          },
+          "indices": 10,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Glass_Body_UCB_Lights_and_Glass_Transperent_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 12,
+            "POSITION": 11,
+            "TEXCOORD_0": 13
+          },
+          "indices": 14,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Bumper_Front_UCB_BOTTOM_LT_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 16,
+            "POSITION": 15,
+            "TEXCOORD_0": 17,
+            "TEXCOORD_1": 18,
+            "TEXCOORD_2": 19
+          },
+          "indices": 20,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Headlights_Glass_UCB_Lights_and_Glass_Transperent_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 22,
+            "POSITION": 21,
+            "TEXCOORD_0": 23
+          },
+          "indices": 24,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Hood_Trim_UCB_GenMaskTrim_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 26,
+            "POSITION": 25,
+            "TEXCOORD_0": 27,
+            "TEXCOORD_1": 28
+          },
+          "indices": 29,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Trim_UCB_GenMaskTrim_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 31,
+            "POSITION": 30,
+            "TEXCOORD_0": 32,
+            "TEXCOORD_1": 33
+          },
+          "indices": 34,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Body_Sanremo70_Bodymat_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 36,
+            "POSITION": 35,
+            "TEXCOORD_0": 37,
+            "TEXCOORD_1": 38
+          },
+          "indices": 39,
+          "material": 4,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Windshield_UCB_Lights_and_Glass_Transperent_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 41,
+            "POSITION": 40,
+            "TEXCOORD_0": 42
+          },
+          "indices": 43,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Glass_Rear_UCB_Lights_and_Glass_Transperent_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 45,
+            "POSITION": 44,
+            "TEXCOORD_0": 46
+          },
+          "indices": 47,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Brakelights_UCB_Lights_and_Glass_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 49,
+            "POSITION": 48,
+            "TEXCOORD_0": 50
+          },
+          "indices": 51,
+          "material": 5,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Reverse_UCB_Lights_and_Glass_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 53,
+            "POSITION": 52,
+            "TEXCOORD_0": 54
+          },
+          "indices": 55,
+          "material": 5,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Hood_Sanremo70_Bodymat_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 57,
+            "POSITION": 56,
+            "TEXCOORD_0": 58,
+            "TEXCOORD_1": 59
+          },
+          "indices": 60,
+          "material": 4,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Glass_Driver_UCB_Lights_and_Glass_Transperent_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 62,
+            "POSITION": 61,
+            "TEXCOORD_0": 63
+          },
+          "indices": 64,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Glass_Passenger_UCB_Lights_and_Glass_Transperent_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 66,
+            "POSITION": 65,
+            "TEXCOORD_0": 67
+          },
+          "indices": 68,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Steering_Wheels_UCB_Interiors_2_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 70,
+            "POSITION": 69,
+            "TEXCOORD_0": 71,
+            "TEXCOORD_1": 72
+          },
+          "indices": 73,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Numberplate_Front_Numberplates_Misk_U_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 75,
+            "POSITION": 74,
+            "TEXCOORD_0": 76,
+            "TEXCOORD_1": 77,
+            "TEXCOORD_2": 78
+          },
+          "indices": 79,
+          "material": 6,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Badges_Rear_Carbadges_misc_U_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 81,
+            "POSITION": 80,
+            "TEXCOORD_0": 82,
+            "TEXCOORD_1": 83,
+            "TEXCOORD_2": 84
+          },
+          "indices": 85,
+          "material": 7,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Numberplate_Rear_Numberplates_Misk_U_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 87,
+            "POSITION": 86,
+            "TEXCOORD_0": 88,
+            "TEXCOORD_1": 89,
+            "TEXCOORD_2": 90
+          },
+          "indices": 91,
+          "material": 6,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Badges_Front_Carbadges_misc_U_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 93,
+            "POSITION": 92,
+            "TEXCOORD_0": 94,
+            "TEXCOORD_1": 95,
+            "TEXCOORD_2": 96
+          },
+          "indices": 97,
+          "material": 7,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Hood_inner_UCB_BOTTOM_LT_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 99,
+            "POSITION": 98,
+            "TEXCOORD_0": 100,
+            "TEXCOORD_1": 101,
+            "TEXCOORD_2": 102
+          },
+          "indices": 103,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_Headlights_UCB_Lights_and_Glass_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 105,
+            "POSITION": 104,
+            "TEXCOORD_0": 106
+          },
+          "indices": 107,
+          "material": 5,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_WheelStock_FL_RB1c_Tire_1k_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 109,
+            "POSITION": 108,
+            "TEXCOORD_0": 110,
+            "TEXCOORD_1": 111
+          },
+          "indices": 112,
+          "material": 8,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_WheelStock_RL_RB1c_Tire_1k_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 114,
+            "POSITION": 113,
+            "TEXCOORD_0": 115,
+            "TEXCOORD_1": 116
+          },
+          "indices": 117,
+          "material": 8,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_WheelStock_FR_RB1c_Tire_1k_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 119,
+            "POSITION": 118,
+            "TEXCOORD_0": 120,
+            "TEXCOORD_1": 121
+          },
+          "indices": 122,
+          "material": 8,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Sanremo70_WheelStock_RR_RB1c_Tire_1k_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 124,
+            "POSITION": 123,
+            "TEXCOORD_0": 125,
+            "TEXCOORD_1": 126
+          },
+          "indices": 127,
+          "material": 8,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "91ff24d90c2b46a0887150396a5383f4.fbx"
+    },
+    {
+      "children": [
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21,
+        24,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48,
+        51,
+        54,
+        57,
+        60,
+        63,
+        66,
+        69,
+        72,
+        75,
+        78
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        1.6530079701424515e-08,
+        -6.011614717863087e-19,
+        -1.386183977127075,
+        0.0,
+        0.009749305658624405,
+        1.454692357670425,
+        1.1625931430245153e-10,
+        0.0,
+        1.4546923576704245,
+        -0.009749305658624407,
+        1.734703404718362e-08,
+        0.0,
+        -0.3485223054885864,
+        0.7310903668403625,
+        -7.75747757870704e-05,
+        1.0
+      ],
+      "name": "Sanremo70_Interior"
+    },
+    {
+      "children": [
+        5
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.2543488144874573,
+        -0.1523500382900238,
+        1.6986497640609741,
+        1.0
+      ],
+      "name": "Object_4"
+    },
+    {
+      "mesh": 0,
+      "name": "Sanremo70_Interior_UCB_Interiors_2_0"
+    },
+    {
+      "children": [
+        7
+      ],
+      "matrix": [
+        1.6530079701424515e-08,
+        -6.011614717863087e-19,
+        -1.386183977127075,
+        0.0,
+        0.009749305658624405,
+        1.454692357670425,
+        1.1625931430245153e-10,
+        0.0,
+        1.4546923576704245,
+        -0.009749305658624407,
+        1.734703404718362e-08,
+        0.0,
+        -0.01044762134552002,
+        0.6681494116783142,
+        2.3933193915581796e-07,
+        1.0
+      ],
+      "name": "Sanremo70_Bottom"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.25174349546432495,
+        -0.1105550229549408,
+        1.4659545421600342,
+        1.0
+      ],
+      "name": "Object_7"
+    },
+    {
+      "mesh": 1,
+      "name": "Sanremo70_Bottom_UCB_BOTTOM_LT_0"
+    },
+    {
+      "children": [
+        10
+      ],
+      "matrix": [
+        1.6530079701424515e-08,
+        -6.011614717863087e-19,
+        -1.386183977127075,
+        0.0,
+        0.009749305658624405,
+        1.454692357670425,
+        1.1625931430245153e-10,
+        0.0,
+        1.4546923576704245,
+        -0.009749305658624407,
+        1.734703404718362e-08,
+        0.0,
+        -0.6478966474533081,
+        1.009552001953125,
+        -7.728039054200053e-05,
+        1.0
+      ],
+      "name": "Sanremo70_Glass_Body"
+    },
+    {
+      "children": [
+        11
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.25168731808662415,
+        -0.3422984480857849,
+        1.9057090282440186,
+        1.0
+      ],
+      "name": "Object_10"
+    },
+    {
+      "mesh": 2,
+      "name": "Sanremo70_Glass_Body_UCB_Lights_and_Glass_Transperent_0"
+    },
+    {
+      "children": [
+        13
+      ],
+      "matrix": [
+        6.72549588307587e-08,
+        -9.596707516511055e-19,
+        -1.1064250469207744,
+        0.0,
+        0.01113040589943345,
+        0.9276822087873419,
+        6.765708994015155e-10,
+        0.0,
+        1.1063454183966344,
+        -0.013274021486118573,
+        6.725011852787255e-08,
+        0.0,
+        1.9515438079833984,
+        0.3108953535556793,
+        -0.012314356863498688,
+        1.0
+      ],
+      "name": "Sanremo70_Bumper_Front"
+    },
+    {
+      "children": [
+        14
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.1564725637435913,
+        0.00908820703625679,
+        0.14534205198287964,
+        1.0
+      ],
+      "name": "Object_13"
+    },
+    {
+      "mesh": 3,
+      "name": "Sanremo70_Bumper_Front_UCB_BOTTOM_LT_0"
+    },
+    {
+      "children": [
+        16
+      ],
+      "matrix": [
+        1.6530079701424515e-08,
+        -6.011614717863087e-19,
+        -1.386183977127075,
+        0.0,
+        0.009749305658624405,
+        1.454692357670425,
+        1.1625931430245153e-10,
+        0.0,
+        1.4546923576704245,
+        -0.009749305658624407,
+        1.734703404718362e-08,
+        0.0,
+        1.964897632598877,
+        0.49703457951545715,
+        3.3486264783277875e-07,
+        1.0
+      ],
+      "name": "Sanremo70_Headlights_Glass"
+    },
+    {
+      "children": [
+        17
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.25174373388290405,
+        -0.002030522795394063,
+        0.10731466114521027,
+        1.0
+      ],
+      "name": "Object_16"
+    },
+    {
+      "mesh": 4,
+      "name": "Sanremo70_Headlights_Glass_UCB_Lights_and_Glass_Transperent_0"
+    },
+    {
+      "children": [
+        19
+      ],
+      "matrix": [
+        -0.9999999999999887,
+        -1.2246469849340659e-16,
+        1.5099580265055077e-07,
+        0.0,
+        2.7072476149951914e-07,
+        -7.962204466001397e-16,
+        1.7929290533065594,
+        0.0,
+        -1.2246464555384738e-16,
+        1.0,
+        3.3306690738754696e-16,
+        0.0,
+        1.254597544670105,
+        0.767953097820282,
+        -7.745962648186833e-05,
+        1.0
+      ],
+      "name": "Sanremo70_Hood_Trim"
+    },
+    {
+      "children": [
+        20
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.17207539081573486,
+        -1.3131737830462953e-07,
+        0.06555622816085815,
+        1.0
+      ],
+      "name": "Object_19"
+    },
+    {
+      "mesh": 5,
+      "name": "Sanremo70_Hood_Trim_UCB_GenMaskTrim_0"
+    },
+    {
+      "children": [
+        22
+      ],
+      "matrix": [
+        -0.9999775452379756,
+        0.006701419238459155,
+        1.5099240852382498e-07,
+        0.0,
+        1.5099579909810465e-07,
+        0.0,
+        0.9999999999999886,
+        0.0,
+        0.006701419238459079,
+        0.999977545237987,
+        -1.011885908397403e-09,
+        0.0,
+        -0.11936390399932861,
+        0.5148981213569641,
+        5.17074568051612e-07,
+        1.0
+      ],
+      "name": "Sanremo70_Trim"
+    },
+    {
+      "children": [
+        23
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -1.2905489206314087,
+        -0.38272854685783386,
+        0.2726161479949951,
+        1.0
+      ],
+      "name": "Object_22"
+    },
+    {
+      "mesh": 6,
+      "name": "Sanremo70_Trim_UCB_GenMaskTrim_0"
+    },
+    {
+      "children": [
+        25
+      ],
+      "matrix": [
+        1.6530079701424515e-08,
+        -6.011614717863087e-19,
+        -1.386183977127075,
+        0.0,
+        0.009749305658624405,
+        1.454692357670425,
+        1.1625931430245153e-10,
+        0.0,
+        1.4546923576704245,
+        -0.009749305658624407,
+        1.734703404718362e-08,
+        0.0,
+        -0.025852441787719727,
+        0.7013023495674133,
+        2.1087635104777291e-07,
+        1.0
+      ],
+      "name": "Sanremo70_Body"
+    },
+    {
+      "children": [
+        26
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.42761075496673584,
+        -0.12487835437059402,
+        1.086586594581604,
+        1.0
+      ],
+      "name": "Object_25"
+    },
+    {
+      "mesh": 7,
+      "name": "Sanremo70_Body_Sanremo70_Bodymat_0"
+    },
+    {
+      "children": [
+        28
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        0.359951376914978,
+        1.0263540744781494,
+        -7.733868551440537e-05,
+        1.0
+      ],
+      "name": "Sanremo70_Windshield"
+    },
+    {
+      "children": [
+        29
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.251687228679657,
+        -0.3584912121295929,
+        1.2129920721054077,
+        1.0
+      ],
+      "name": "Object_28"
+    },
+    {
+      "mesh": 8,
+      "name": "Sanremo70_Windshield_UCB_Lights_and_Glass_Transperent_0"
+    },
+    {
+      "children": [
+        31
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        -1.0109997987747192,
+        1.030815839767456,
+        -1.789161842680187e-06,
+        1.0
+      ],
+      "name": "Sanremo70_Glass_Rear"
+    },
+    {
+      "children": [
+        32
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.25174179673194885,
+        -0.35524237155914307,
+        2.1554040908813477,
+        1.0
+      ],
+      "name": "Object_31"
+    },
+    {
+      "mesh": 9,
+      "name": "Sanremo70_Glass_Rear_UCB_Lights_and_Glass_Transperent_0"
+    },
+    {
+      "children": [
+        34
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        -2.0691895484924316,
+        0.5877650380134583,
+        6.168500021885848e-08,
+        1.0
+      ],
+      "name": "Sanremo70_Brakelights"
+    },
+    {
+      "children": [
+        35
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.25174373388290405,
+        -0.045814212411642075,
+        2.880762815475464,
+        1.0
+      ],
+      "name": "Object_34"
+    },
+    {
+      "mesh": 10,
+      "name": "Sanremo70_Brakelights_UCB_Lights_and_Glass_0"
+    },
+    {
+      "children": [
+        37
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        -2.0558552742004395,
+        0.6309105753898621,
+        6.051928380657046e-08,
+        1.0
+      ],
+      "name": "Sanremo70_Reverse"
+    },
+    {
+      "children": [
+        38
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.25174373388290405,
+        -0.07553386688232422,
+        2.871795892715454,
+        1.0
+      ],
+      "name": "Object_37"
+    },
+    {
+      "mesh": 11,
+      "name": "Sanremo70_Reverse_UCB_Lights_and_Glass_0"
+    },
+    {
+      "children": [
+        40
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        1.1972097158432007,
+        0.7563582062721252,
+        4.615807256413973e-07,
+        1.0
+      ],
+      "name": "Sanremo70_Hood"
+    },
+    {
+      "children": [
+        41
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.4276108145713806,
+        -0.1683582365512848,
+        0.24610775709152222,
+        1.0
+      ],
+      "name": "Object_40"
+    },
+    {
+      "mesh": 12,
+      "name": "Sanremo70_Hood_Sanremo70_Bodymat_0"
+    },
+    {
+      "children": [
+        43
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        -0.132168710231781,
+        1.0083813667297363,
+        -0.6386707425117493,
+        1.0
+      ],
+      "name": "Sanremo70_Glass_Driver"
+    },
+    {
+      "children": [
+        44
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -0.2089972198009491,
+        -0.3438696265220642,
+        1.5511925220489502,
+        1.0
+      ],
+      "name": "Object_43"
+    },
+    {
+      "mesh": 13,
+      "name": "Sanremo70_Glass_Driver_UCB_Lights_and_Glass_Transperent_0"
+    },
+    {
+      "children": [
+        46
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        -0.13216811418533325,
+        1.0083813667297363,
+        0.638516366481781,
+        1.0
+      ],
+      "name": "Sanremo70_Glass_Passenger"
+    },
+    {
+      "children": [
+        47
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.7123720645904541,
+        -0.34386956691741943,
+        1.551192045211792,
+        1.0
+      ],
+      "name": "Object_46"
+    },
+    {
+      "mesh": 14,
+      "name": "Sanremo70_Glass_Passenger_UCB_Lights_and_Glass_Transperent_0"
+    },
+    {
+      "children": [
+        49
+      ],
+      "matrix": [
+        2.0208427494622565e-08,
+        -7.349346714120329e-19,
+        -1.694643974304199,
+        0.0,
+        0.011918772117088002,
+        1.778398032884472,
+        1.4212993654930347e-10,
+        0.0,
+        1.7783980328844717,
+        -0.011918772117088002,
+        2.1207184694370656e-08,
+        0.0,
+        0.012394759804010391,
+        0.7715383172035217,
+        -0.3086355924606323,
+        1.0
+      ],
+      "name": "Sanremo70_Steering_Wheels"
+    },
+    {
+      "children": [
+        50
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.03961528465151787,
+        -0.18181666731834412,
+        1.4502722024917603,
+        1.0
+      ],
+      "name": "Object_49"
+    },
+    {
+      "mesh": 15,
+      "name": "Sanremo70_Steering_Wheels_UCB_Interiors_2_0"
+    },
+    {
+      "children": [
+        52
+      ],
+      "matrix": [
+        0.15350726232766476,
+        -2.619343769660887e-10,
+        -0.9881475195600431,
+        0.0,
+        0.1715902385284906,
+        0.9848077133175543,
+        0.02665629066440628,
+        0.0,
+        0.9731352991513571,
+        -0.1736484027863476,
+        0.15117513603549093,
+        0.0,
+        2.0381946563720703,
+        0.2698941230773926,
+        0.41106605529785156,
+        1.0
+      ],
+      "name": "Sanremo70_Numberplate_Front"
+    },
+    {
+      "children": [
+        53
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.4921662211418152,
+        -0.4848644733428955,
+        -0.002145321574062109,
+        1.0
+      ],
+      "name": "Object_52"
+    },
+    {
+      "mesh": 16,
+      "name": "Sanremo70_Numberplate_Front_Numberplates_Misk_U_0"
+    },
+    {
+      "children": [
+        55
+      ],
+      "matrix": [
+        2.8064876296855472e-08,
+        0.0,
+        0.46170100569724953,
+        0.0,
+        -7.522064262351675e-08,
+        0.4617010056972442,
+        4.572348777048098e-15,
+        0.0,
+        -0.46170100569724337,
+        -7.522064262351691e-08,
+        2.8064876296855472e-08,
+        0.0,
+        -2.051492214202881,
+        0.7094457745552063,
+        -0.013810575008392334,
+        1.0
+      ],
+      "name": "Sanremo70_Badges_Rear"
+    },
+    {
+      "children": [
+        56
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -0.8465366363525391,
+        0.9828813076019287,
+        0.017113352194428444,
+        1.0
+      ],
+      "name": "Object_55"
+    },
+    {
+      "mesh": 17,
+      "name": "Sanremo70_Badges_Rear_Carbadges_misc_U_0"
+    },
+    {
+      "children": [
+        58
+      ],
+      "matrix": [
+        6.078582448498793e-08,
+        -2.6469779601696886e-23,
+        0.9999999999999982,
+        0.0,
+        -1.6292068488171323e-07,
+        0.9999999999999867,
+        9.903268172249337e-15,
+        0.0,
+        -0.9999999999999849,
+        -1.6292068488171352e-07,
+        6.078582448498793e-08,
+        0.0,
+        -2.0542984008789063,
+        0.5693979859352112,
+        2.0939478417858481e-07,
+        1.0
+      ],
+      "name": "Sanremo70_Numberplate_Rear"
+    },
+    {
+      "children": [
+        59
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.4921662211418152,
+        -0.4848644733428955,
+        -0.0021452810615301132,
+        1.0
+      ],
+      "name": "Object_58"
+    },
+    {
+      "mesh": 18,
+      "name": "Sanremo70_Numberplate_Rear_Numberplates_Misk_U_0"
+    },
+    {
+      "children": [
+        61
+      ],
+      "matrix": [
+        7.522064265178825e-08,
+        -1.527640482836002e-24,
+        -0.4617010056972442,
+        0.0,
+        2.018159200665682e-08,
+        0.4617010056972499,
+        3.287998728762456e-15,
+        0.0,
+        0.4617010056972438,
+        -2.0181592006657084e-08,
+        7.522064265178825e-08,
+        0.0,
+        1.952695369720459,
+        0.43644529581069946,
+        -0.000878266291692853,
+        1.0
+      ],
+      "name": "Sanremo70_Badges_Front"
+    },
+    {
+      "children": [
+        62
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -1.0103815793991089,
+        1.2657326459884644,
+        0.20663630962371826,
+        1.0
+      ],
+      "name": "Object_61"
+    },
+    {
+      "mesh": 19,
+      "name": "Sanremo70_Badges_Front_Carbadges_misc_U_0"
+    },
+    {
+      "children": [
+        64
+      ],
+      "matrix": [
+        1.6530079547527178e-08,
+        0.0,
+        -1.3861839771270752,
+        0.0,
+        0.00974931231473725,
+        1.4546933113215497,
+        1.1625939367302276e-10,
+        0.0,
+        1.4546933113215497,
+        -0.00974931231473725,
+        1.734704525787445e-08,
+        0.0,
+        1.5092800855636597,
+        0.7864927649497986,
+        -7.77073873905465e-05,
+        1.0
+      ],
+      "name": "Sanremo70_Hood_inner"
+    },
+    {
+      "children": [
+        65
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.4275543987751007,
+        -0.1905103325843811,
+        0.03172953426837921,
+        1.0
+      ],
+      "name": "Object_64"
+    },
+    {
+      "mesh": 20,
+      "name": "Sanremo70_Hood_inner_UCB_BOTTOM_LT_0"
+    },
+    {
+      "children": [
+        67
+      ],
+      "matrix": [
+        1.653007985532185e-08,
+        -1.2023229435726174e-18,
+        -1.386183977127075,
+        0.0,
+        0.009749305791003814,
+        1.4546923576695376,
+        1.1625931682599719e-10,
+        0.0,
+        1.4546923576695376,
+        -0.009749305791003816,
+        1.7347034208690542e-08,
+        0.0,
+        1.9512271881103516,
+        0.4971260726451874,
+        3.956624823331367e-07,
+        1.0
+      ],
+      "name": "Sanremo70_Headlights"
+    },
+    {
+      "children": [
+        68
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.25174349546432495,
+        -0.0020308196544647217,
+        0.11671221256256104,
+        1.0
+      ],
+      "name": "Object_67"
+    },
+    {
+      "mesh": 21,
+      "name": "Sanremo70_Headlights_UCB_Lights_and_Glass_0"
+    },
+    {
+      "children": [
+        70
+      ],
+      "matrix": [
+        -0.8497539758682154,
+        -1.0406485320187545e-16,
+        1.2830928666065197e-07,
+        0.0,
+        1.3639904585409904e-07,
+        -4.011591183937117e-16,
+        0.9033300280570882,
+        0.0,
+        -1.0406481946267477e-16,
+        0.8497539758682251,
+        2.8302492878270194e-16,
+        0.0,
+        1.2888387441635132,
+        0.2840447425842285,
+        -0.7065189480781555,
+        1.0
+      ],
+      "name": "Sanremo70_WheelStock_FL"
+    },
+    {
+      "children": [
+        71
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -4.577636758540393e-08,
+        -0.004154510796070099,
+        -1.525878978725359e-08,
+        1.0
+      ],
+      "name": "Object_70"
+    },
+    {
+      "mesh": 22,
+      "name": "Sanremo70_WheelStock_FL_RB1c_Tire_1k_0"
+    },
+    {
+      "children": [
+        73
+      ],
+      "matrix": [
+        -0.8497539758682154,
+        -1.0406485320187545e-16,
+        1.2830928666065197e-07,
+        0.0,
+        1.3639904585409904e-07,
+        -4.011591183937117e-16,
+        0.9033300280570882,
+        0.0,
+        -1.0406481946267477e-16,
+        0.8497539758682251,
+        2.8302492878270194e-16,
+        0.0,
+        -1.2043389081954956,
+        0.2840447425842285,
+        -0.7065187096595764,
+        1.0
+      ],
+      "name": "Sanremo70_WheelStock_RL"
+    },
+    {
+      "children": [
+        74
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -4.577636758540393e-08,
+        -0.004154510796070099,
+        -1.525878978725359e-08,
+        1.0
+      ],
+      "name": "Object_73"
+    },
+    {
+      "mesh": 23,
+      "name": "Sanremo70_WheelStock_RL_RB1c_Tire_1k_0"
+    },
+    {
+      "children": [
+        76
+      ],
+      "matrix": [
+        -0.8497539758682153,
+        -1.0406486444827568e-16,
+        1.2830928666065197e-07,
+        0.0,
+        -1.363990458540774e-07,
+        5.097129707943816e-07,
+        -0.9033300280569443,
+        0.0,
+        -7.229572884533458e-14,
+        -0.8497539758680898,
+        -4.79482149415222e-07,
+        0.0,
+        1.2888392210006714,
+        0.2840447723865509,
+        0.7065194249153137,
+        1.0
+      ],
+      "name": "Sanremo70_WheelStock_FR"
+    },
+    {
+      "children": [
+        77
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -4.577636758540393e-08,
+        -0.004154510796070099,
+        -1.525878978725359e-08,
+        1.0
+      ],
+      "name": "Object_76"
+    },
+    {
+      "mesh": 24,
+      "name": "Sanremo70_WheelStock_FR_RB1c_Tire_1k_0"
+    },
+    {
+      "children": [
+        79
+      ],
+      "matrix": [
+        -0.8497539758682153,
+        -1.0406486444827568e-16,
+        1.2830928666065197e-07,
+        0.0,
+        -1.363990458540774e-07,
+        5.097129707943816e-07,
+        -0.9033300280569443,
+        0.0,
+        -7.229572884533458e-14,
+        -0.8497539758680898,
+        -4.79482149415222e-07,
+        0.0,
+        -1.2043384313583374,
+        0.2840447723865509,
+        0.7065194249153137,
+        1.0
+      ],
+      "name": "Sanremo70_WheelStock_RR"
+    },
+    {
+      "children": [
+        80
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        -4.577636758540393e-08,
+        -0.004154510796070099,
+        -1.525878978725359e-08,
+        1.0
+      ],
+      "name": "Object_79"
+    },
+    {
+      "mesh": 25,
+      "name": "Sanremo70_WheelStock_RR_RB1c_Tire_1k_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    },
+    {
+      "sampler": 0,
+      "source": 6
+    },
+    {
+      "sampler": 0,
+      "source": 7
+    },
+    {
+      "sampler": 0,
+      "source": 8
+    },
+    {
+      "sampler": 0,
+      "source": 9
+    },
+    {
+      "sampler": 0,
+      "source": 10
+    },
+    {
+      "sampler": 0,
+      "source": 11
+    },
+    {
+      "sampler": 0,
+      "source": 12
+    },
+    {
+      "sampler": 0,
+      "source": 13
+    },
+    {
+      "sampler": 0,
+      "source": 14
+    },
+    {
+      "sampler": 0,
+      "source": 15
+    }
+  ]
+}

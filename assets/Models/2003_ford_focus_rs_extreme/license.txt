@@ -1,0 +1,11 @@
+Model Information:
+* title:	2003 Ford Focus RS Extreme
+* source:	https://sketchfab.com/3d-models/2003-ford-focus-rs-extreme-d26d067dea8a40de8bc1afcac0f3815b
+* author:	SIU Car Garage (https://sketchfab.com/Game_mode)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "2003 Ford Focus RS Extreme" (https://sketchfab.com/3d-models/2003-ford-focus-rs-extreme-d26d067dea8a40de8bc1afcac0f3815b) by SIU Car Garage (https://sketchfab.com/Game_mode) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)

@@ -34,11 +34,11 @@ void GameplayScene::setup()
     game->assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
     game->assetsManager->loadImage("../assets/Textures/red_checker.png", "checker");
 
-    car = new Model("../assets/Models/renault_5_alpine_cup_1976/scene.gltf", game->assetsManager);
+    car = new Model("../assets/Models/sanremo_70_-_low_poly_model/scene.gltf", game->assetsManager);
     terrain = new Model("../assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", game->assetsManager);
 
-    shader = new Shader("../assets/Shaders/default.vert", "../assets/Shaders/default.frag");
-    lightSourceShader = new Shader("../assets/Shaders/lightsource.vert", "../assets/Shaders/lightsource.frag");
+    shader = new Shader("../assets/Shaders/default.vert.glsl", "../assets/Shaders/default.frag.glsl");
+    //lightSourceShader = new Shader("../assets/Shaders/lightsource.vert.glsl", "../assets/Shaders/lightsource.frag");
 
     globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
     camera = new Camera(1280.0f / 720.0f);
