@@ -9,11 +9,11 @@ GameplayScene::~GameplayScene()
     delete shader;
     delete skyBoxShader;
     delete camera;
-    delete skyBox; 
-    delete car;      
+    delete skyBox;
+    delete car;
     delete terrain;
 }
-
+float shootCooldown = 0.0f;
 void GameplayScene::setup()
 {
 
@@ -44,7 +44,7 @@ void GameplayScene::setup()
 
     skyBox = new SkyBox(std::string("./assets/SkyBoxes/SkyBox/"));
 
-    //lightSourceShader = new Shader("../assets/Shaders/lightsource.vert.glsl", "../assets/Shaders/lightsource.frag");
+   
 
     globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
     camera = new Camera(1280.0f / 720.0f);
@@ -120,6 +120,42 @@ void GameplayScene::handleEvent(sf::Event &event)
     {
         game->changeState(GameState::MENU);
     }
+
+
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && camera->mode == CameraMode::FREE )
+    {
+        if (shootCooldown <= 0.0f)
+        {
+            Model *ballModel = game->assetsManager->getModel("ball");
+
+            float physicsRadius = 0.4f;
+            float ballScale = physicsRadius / ballModel->getBoundingRadius();
+
+            JPH::BodyID sphereId = physicsManager->createSphere(
+                camera->position,
+                physicsRadius, JPH::EMotionType::Dynamic, Layers::MOVING, 0.8f, 0.5f);
+
+            glm::vec3 shootDirection = camera->front; 
+        
+            
+            float shootSpeed = 40.0f; 
+            
+            physicsManager->body_interface->SetLinearVelocity(
+                sphereId, 
+                JPH::Vec3(shootDirection.x * shootSpeed, shootDirection.y * shootSpeed, shootDirection.z * shootSpeed)
+            );
+
+            Entity ballEntity;
+            ballEntity.model = ballModel;
+            ballEntity.hasPhysics = true;
+            ballEntity.bodyId = sphereId;
+            ballEntity.transform.scale = glm::vec3(ballScale * .9f);
+            
+            entities.push_back(ballEntity);
+
+            shootCooldown = 0.5f;
+        }
+    }
 }
 
 void GameplayScene::update(float deltaTime)
@@ -127,7 +163,10 @@ void GameplayScene::update(float deltaTime)
     ticks++;
     physicsManager->update(deltaTime);
     float zdistance = camera->offset.z;
-
+    if (shootCooldown > 0.0f)
+    {
+        shootCooldown -= deltaTime;
+    }
     // camera->toggleMode();
     // bool freeMode = (camera->mode == CameraMode::FREE);
 
@@ -196,7 +235,6 @@ void GameplayScene::render()
     shader->use();
     shader->setMat4("view", camera->getViewMatrix());
     shader->setMat4("projection", camera->getProjectionMatrix());
-  
 
     shader->setVec3("light.position", globalLightPos);
     shader->setVec3("light.ambient", glm::vec3(0.4f, 0.4f, 0.4f));
@@ -220,11 +258,9 @@ void GameplayScene::render()
     for (auto &entity : entities)
         entity.draw(*shader, physicsManager->body_interface);
 
-
-        
-    glDepthFunc(GL_LEQUAL); 
-    skyBoxShader->use();  
-    glm::mat4 view = glm::mat4(glm::mat3(camera->getViewMatrix())); 
+    glDepthFunc(GL_LEQUAL);
+    skyBoxShader->use();
+    glm::mat4 view = glm::mat4(glm::mat3(camera->getViewMatrix()));
     skyBoxShader->setMat4("view", view);
     skyBoxShader->setMat4("projection", camera->getProjectionMatrix());
     skyBox->Draw(*skyBoxShader);
