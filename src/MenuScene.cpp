@@ -9,7 +9,7 @@ void MenuScene::setup()
 {
     game->window.setMouseCursorVisible(true);
     backgroundTex = new sf::Texture();
-    if (backgroundTex->loadFromFile("../assets/Textures/loading.png"))
+    if (backgroundTex->loadFromFile("./assets/Textures/loading.png"))
     {
         backgroundSprite = new sf::Sprite(*backgroundTex);
         backgroundSprite->setScale(sf::Vector2(.7f, .7f));

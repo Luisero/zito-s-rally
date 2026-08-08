@@ -19,7 +19,7 @@ void GameplayScene::setup()
 
     game->window.pushGLStates();
     sf::Texture loadingTex;
-    if (loadingTex.loadFromFile("../assets/Textures/loading.png"))
+    if (loadingTex.loadFromFile("./assets/Textures/loading.png"))
     {
         sf::Sprite loadingSprite(loadingTex);
         loadingSprite.setScale(sf::Vector2(.7f, .7f));
@@ -31,18 +31,18 @@ void GameplayScene::setup()
     game->window.display();
     physicsManager = new PhysicsManager();
 
-    game->assetsManager->loadImage("../assets/Textures/dirt_ground.jpeg", "dirt_ground");
-    game->assetsManager->loadImage("../assets/Textures/cobblestone.jpg", "cobble");
-    game->assetsManager->loadImage("../assets/Textures/grass.jpg", "grass");
-    game->assetsManager->loadImage("../assets/Textures/red_checker.png", "checker");
+    game->assetsManager->loadImage("./assets/Textures/dirt_ground.jpeg", "dirt_ground");
+    game->assetsManager->loadImage("./assets/Textures/cobblestone.jpg", "cobble");
+    game->assetsManager->loadImage("./assets/Textures/grass.jpg", "grass");
+    game->assetsManager->loadImage("./assets/Textures/red_checker.png", "checker");
 
-    car = new Model("../assets/Models/sanremo_70_-_low_poly_model/scene.gltf", game->assetsManager);
-    terrain = new Model("../assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", game->assetsManager);
+    car = new Model("./assets/Models/sanremo_70_-_low_poly_model/scene.gltf", game->assetsManager);
+    terrain = new Model("./assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", game->assetsManager);
 
-    shader = new Shader("../assets/Shaders/default.vert.glsl", "../assets/Shaders/default.frag.glsl");
-    skyBoxShader = new Shader("../assets/Shaders/skybox.vert.glsl", "../assets/Shaders/skybox.frag.glsl");
+    shader = new Shader("./assets/Shaders/default.vert.glsl", "./assets/Shaders/default.frag.glsl");
+    skyBoxShader = new Shader("./assets/Shaders/skybox.vert.glsl", "./assets/Shaders/skybox.frag.glsl");
 
-    skyBox = new SkyBox(std::string("../assets/SkyBoxes/SkyBox/"));
+    skyBox = new SkyBox(std::string("./assets/SkyBoxes/SkyBox/"));
 
     //lightSourceShader = new Shader("../assets/Shaders/lightsource.vert.glsl", "../assets/Shaders/lightsource.frag");
 
@@ -52,7 +52,7 @@ void GameplayScene::setup()
     carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
     carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
 
-    Model *floorModel = game->assetsManager->loadModel("../assets/Models/checkered_tile_floor/scene.gltf", "floor");
+    Model *floorModel = game->assetsManager->loadModel("./assets/Models/checkered_tile_floor/scene.gltf", "floor");
     JPH::BodyID floorId = physicsManager->createBox(
         glm::vec3(0.0f, -1.0f, 0.0f),
         glm::vec3(100.0f, 1.0f, 100.0f),
@@ -65,8 +65,8 @@ void GameplayScene::setup()
     floorEntity.transform.position = glm::vec3(0, 1.f, 0.);
     entities.push_back(floorEntity);
 
-    Model *ballModel = game->assetsManager->loadModel("../assets/Models/sphere___low_poly/scene.gltf", "ball");
-    Model *boxModel = game->assetsManager->loadModel("../assets/Models/Crate/Crate1.3ds", "box");
+    Model *ballModel = game->assetsManager->loadModel("./assets/Models/sphere___low_poly/scene.gltf", "ball");
+    Model *boxModel = game->assetsManager->loadModel("./assets/Models/Crate/Crate1.3ds", "box");
 
     float physicsRadius = 0.4f;
     float ballScale = physicsRadius / ballModel->getBoundingRadius();
