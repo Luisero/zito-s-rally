@@ -7,9 +7,11 @@ GameplayScene::~GameplayScene()
 {
     delete physicsManager;
     delete shader;
-    delete lightSourceShader;
+    delete skyBoxShader;
     delete camera;
-    delete triangle;
+    delete skyBox; 
+    delete car;      
+    delete terrain;
 }
 
 void GameplayScene::setup()
@@ -38,6 +40,10 @@ void GameplayScene::setup()
     terrain = new Model("../assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", game->assetsManager);
 
     shader = new Shader("../assets/Shaders/default.vert.glsl", "../assets/Shaders/default.frag.glsl");
+    skyBoxShader = new Shader("../assets/Shaders/skybox.vert.glsl", "../assets/Shaders/skybox.frag.glsl");
+
+    skyBox = new SkyBox(std::string("../assets/SkyBoxes/SkyBox/"));
+
     //lightSourceShader = new Shader("../assets/Shaders/lightsource.vert.glsl", "../assets/Shaders/lightsource.frag");
 
     globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
@@ -190,6 +196,8 @@ void GameplayScene::render()
     shader->use();
     shader->setMat4("view", camera->getViewMatrix());
     shader->setMat4("projection", camera->getProjectionMatrix());
+  
+
     shader->setVec3("light.position", globalLightPos);
     shader->setVec3("light.ambient", glm::vec3(0.4f, 0.4f, 0.4f));
     shader->setVec3("light.diffuse", glm::vec3(.6f, .6f, .6f));
@@ -211,6 +219,16 @@ void GameplayScene::render()
 
     for (auto &entity : entities)
         entity.draw(*shader, physicsManager->body_interface);
+
+
+        
+    glDepthFunc(GL_LEQUAL); 
+    skyBoxShader->use();  
+    glm::mat4 view = glm::mat4(glm::mat3(camera->getViewMatrix())); 
+    skyBoxShader->setMat4("view", view);
+    skyBoxShader->setMat4("projection", camera->getProjectionMatrix());
+    skyBox->Draw(*skyBoxShader);
+    glDepthFunc(GL_LESS);
 
     glUseProgram(0);
     glBindVertexArray(0);

@@ -8,6 +8,7 @@
 #include "./Model.hpp"
 #include "./PhysicsManager.hpp"
 #include "./Entity.hpp"
+#include "./Skybox.hpp"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -26,9 +27,11 @@ private:
     std::vector<Entity> entities;
     Model *car, *terrain;
     Mesh *triangle;
-    Shader *shader, *lightSourceShader;
+    Shader *shader, *skyBoxShader;
     Camera *camera;
     PhysicsManager *physicsManager;
+    SkyBox *skyBox;
+
 
     glm::vec3 carDummyPosition;
     glm::vec3 carDummyForward;

@@ -39,7 +39,7 @@ static void TraceImpl(const char *inFMT, ...)
 static bool AssertFailedImpl(const char *inExpression, const char *inMessage, const char *inFile, uint inLine)
 {
     // Print to the TTY
-    cout << inFile << ":" << inLine << ": (" << inExpression << ") " << (inMessage != nullptr ? inMessage : "") << endl;
+    std::cout << inFile << ":" << inLine << ": (" << inExpression << ") " << (inMessage != nullptr ? inMessage : "") << std:: endl;
 
     // Breakpoint
     return true;
@@ -137,7 +137,7 @@ public:
 
     virtual void OnContactAdded(const Body &inBody1, const Body &inBody2, const ContactManifold &inManifold, ContactSettings &ioSettings) override
     {
-        std::cout << "A contact was added" << std::endl;
+        //std::cout << "A contact was added" << std::endl;
     }
 
     virtual void OnContactPersisted(const Body &inBody1, const Body &inBody2, const ContactManifold &inManifold, ContactSettings &ioSettings) override
