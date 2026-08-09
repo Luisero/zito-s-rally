@@ -147,3 +147,23 @@ void Vehicle::draw(Shader& shader)
     modelMatrix = glm::translate(modelMatrix, glm::vec3(0,-1.3f,0.f));
     chassisModel->Draw(shader, modelMatrix);
 }
+
+
+int Vehicle::getCurrentGear() const
+{
+    if (vehicleConstraint) {
+        JPH::WheeledVehicleController* controller = static_cast<JPH::WheeledVehicleController*>(vehicleConstraint->GetController());
+        return controller->GetTransmission().GetCurrentGear();
+    }
+    return 0;
+}
+
+float Vehicle::getCurrentRPM() const
+{
+    if (vehicleConstraint) {
+        JPH::WheeledVehicleController* controller = static_cast<JPH::WheeledVehicleController*>(vehicleConstraint->GetController());
+        return controller->GetEngine().GetCurrentRPM();
+        
+    }
+    return 0.0f;
+}

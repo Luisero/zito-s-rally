@@ -56,7 +56,7 @@ void GameplayScene::setup()
     Model *floorModel = game->assetsManager->loadModel("./assets/Models/checkered_tile_floor/scene.gltf", "floor");
     JPH::BodyID floorId = physicsManager->createBox(
         glm::vec3(0.0f, -1.0f, 0.0f),
-        glm::vec3(100.0f, 1.0f, 100.0f),
+        glm::vec3(1000.0f, 1.0f, 1000.0f),
         JPH::EMotionType::Static,
         Layers::NON_MOVING);
     Entity floorEntity;
@@ -64,6 +64,7 @@ void GameplayScene::setup()
     floorEntity.hasPhysics = true;
     floorEntity.bodyId = floorId;
     floorEntity.transform.position = glm::vec3(0, 1.f, 0.);
+    floorEntity.transform.scale = glm::vec3(10.f,1.f,10.f);
     entities.push_back(floorEntity);
 
     Model *ballModel = game->assetsManager->loadModel("./assets/Models/sphere___low_poly/scene.gltf", "ball");
@@ -87,14 +88,22 @@ void GameplayScene::setup()
 
         for (int j = 0; j < 40; j += 2)
         {
+
+            glm::vec3 boxSize(0.5f, 0.5f, 0.5f);
+
             JPH::BodyID boxId = physicsManager->createBox(
                 glm::vec3((float)j, 10.f + i, (float)i),
-                glm::vec3(1.f, 1.f, 1.f), JPH::EMotionType::Dynamic, Layers::MOVING);
+                boxSize,
+                JPH::EMotionType::Dynamic,
+                Layers::MOVING);
 
             Entity boxEntity;
             boxEntity.model = boxModel;
             boxEntity.hasPhysics = true;
             boxEntity.bodyId = boxId;
+
+            boxEntity.transform.scale = boxSize;
+
             entities.push_back(boxEntity);
         }
     }
@@ -162,17 +171,15 @@ void GameplayScene::update(float deltaTime)
     physicsManager->update(deltaTime);
     float zdistance = camera->offset.z;
     JPH::Vec3 joltCarPos = physicsManager->body_interface->GetPosition(vehicle->getChassisId());
-    
+
     JPH::Mat44 joltCarTransform = physicsManager->body_interface->GetWorldTransform(vehicle->getChassisId());
-   
-    JPH::Vec3 joltCarFwd = joltCarTransform.GetAxisZ(); 
+
+    JPH::Vec3 joltCarFwd = joltCarTransform.GetAxisZ();
 
     carDummyPosition = glm::vec3(joltCarPos.GetX(), joltCarPos.GetY(), joltCarPos.GetZ());
-    
+
     carDummyForward = glm::normalize(glm::vec3(joltCarFwd.GetX(), joltCarFwd.GetY(), joltCarFwd.GetZ()));
 
-    
-  
     if (shootCooldown > 0.0f)
     {
         shootCooldown -= deltaTime;
@@ -183,7 +190,6 @@ void GameplayScene::update(float deltaTime)
 
     ImGui::Begin("Zito-s-rally control panel");
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
-    ImGui::Text("Real Car Pos: X:%.2f Y:%.2f Z:%.2f", joltCarPos.GetX(), joltCarPos.GetY(), joltCarPos.GetZ());
     ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 10.0f);
     ImGui::Text("Position: X:%.2f Y:%.2f Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
     if (ImGui::Button("Reset Position"))
@@ -192,12 +198,42 @@ void GameplayScene::update(float deltaTime)
     ImGui::Text("Camera: %s (C to change, ESC to menu)",
                 camera->mode == CameraMode::FREE ? "Free" : "Chasing car");
 
+    ImGui::End();
 
+    int gear = vehicle->getCurrentGear();
+    float rpm = vehicle->getCurrentRPM();
+    ImGui::Begin("Car logs");
+    ImGui::Text("Real Car Pos: X:%.2f Y:%.2f Z:%.2f", joltCarPos.GetX(), joltCarPos.GetY(), joltCarPos.GetZ());
+    std::string gearText = "N";
+    if (gear == -1)
+        gearText = "R (Reverse)";
+    else if (gear == 0)
+        gearText = "N (Neutral)";
+    else
+        gearText = std::to_string(gear ) + "-th gear";
+
+    ImGui::Text("Actual gear: %s", gearText.c_str());
+    ImGui::Text("Engine RPM: %.0f", rpm);
+
+    // Array estático para guardar o histórico do gráfico
+    static float torqueHistory[100] = {0.0f};
+
+    // Empurra todo o histórico 1 posição para trás para dar espaço ao novo frame
+    for (int i = 0; i < 99; ++i)
+    {
+        torqueHistory[i] = torqueHistory[i + 1];
+    }
+    // Grava o RPM atual na última posição (O Torque do motor é baseado no RPM)
+    torqueHistory[99] = rpm;
+
+    // Desenha o Gráfico!
+    // Argumentos: Nome, array, tamanho, offset, texto, min, max (que colocamos 6000 no construtor), tamanho na tela
+    ImGui::PlotLines("RPM/Torque curve", torqueHistory, 100, 0, nullptr, 0.0f, 6000.0f, ImVec2(0, 80));
     ImGui::End();
 
     if (camera->mode == CameraMode::CHASE)
     {
-        
+
         if (zdistance == 0)
             zdistance = 3;
         camera->offset.z = zdistance;
@@ -230,7 +266,7 @@ void GameplayScene::update(float deltaTime)
         camera->updateFreeMove(deltaTime, moveInput);
     }
 
-    globalLightPos.x -= sin(ticks / 100.f) / 2;
+    // globalLightPos.x -= sin(ticks / 100.f) / 2;
 
     float forward = 0.0f;
     float right = 0.0f;
@@ -277,10 +313,10 @@ void GameplayScene::render()
     shader->setFloat("time", (float)ticks);
 
     glm::mat4 model = glm::mat4(1.0f);
-   // model = glm::translate(model, glm::vec3(2.f, 2.f, 0.f));
+    // model = glm::translate(model, glm::vec3(2.f, 2.f, 0.f));
     // model = glm::scale(model, glm::vec3(.008f, .008f, .008f));
-   // model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
-   // car->Draw(*shader, model);
+    // model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
+    // car->Draw(*shader, model);
     vehicle->draw(*shader);
 
     model = glm::mat4(1.0f);

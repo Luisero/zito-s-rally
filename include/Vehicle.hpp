@@ -28,6 +28,8 @@ public:
     void draw(Shader& shader);
 
     JPH::BodyID getChassisId() const { return chassisId; }
+    int getCurrentGear() const;
+    float getCurrentRPM() const;
 
 private:
     PhysicsManager* physicsManager;
