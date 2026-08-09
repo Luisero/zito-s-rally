@@ -36,7 +36,8 @@ void GameplayScene::setup()
     game->assetsManager->loadImage("./assets/Textures/grass.jpg", "grass");
     game->assetsManager->loadImage("./assets/Textures/red_checker.png", "checker");
 
-    car = new Model("./assets/Models/sanremo_70_-_low_poly_model/scene.gltf", game->assetsManager);
+    car = game->assetsManager->loadModel("./assets/Models/renault_5_alpine_cup_1976/scene.gltf", "car");
+
     terrain = new Model("./assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf", game->assetsManager);
 
     shader = new Shader("./assets/Shaders/default.vert.glsl", "./assets/Shaders/default.frag.glsl");
@@ -44,7 +45,7 @@ void GameplayScene::setup()
 
     skyBox = new SkyBox(std::string("./assets/SkyBoxes/SkyBox/"));
 
-   
+    vehicle = new Vehicle(physicsManager, glm::vec3(-4.f, 2.f, 0.f), car);
 
     globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
     camera = new Camera(1280.0f / 720.0f);
@@ -121,8 +122,7 @@ void GameplayScene::handleEvent(sf::Event &event)
         game->changeState(GameState::MENU);
     }
 
-
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && camera->mode == CameraMode::FREE )
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && camera->mode == CameraMode::FREE)
     {
         if (shootCooldown <= 0.0f)
         {
@@ -135,22 +135,20 @@ void GameplayScene::handleEvent(sf::Event &event)
                 camera->position,
                 physicsRadius, JPH::EMotionType::Dynamic, Layers::MOVING, 0.8f, 0.5f);
 
-            glm::vec3 shootDirection = camera->front; 
-        
-            
-            float shootSpeed = 40.0f; 
-            
+            glm::vec3 shootDirection = camera->front;
+
+            float shootSpeed = 40.0f;
+
             physicsManager->body_interface->SetLinearVelocity(
-                sphereId, 
-                JPH::Vec3(shootDirection.x * shootSpeed, shootDirection.y * shootSpeed, shootDirection.z * shootSpeed)
-            );
+                sphereId,
+                JPH::Vec3(shootDirection.x * shootSpeed, shootDirection.y * shootSpeed, shootDirection.z * shootSpeed));
 
             Entity ballEntity;
             ballEntity.model = ballModel;
             ballEntity.hasPhysics = true;
             ballEntity.bodyId = sphereId;
             ballEntity.transform.scale = glm::vec3(ballScale * .9f);
-            
+
             entities.push_back(ballEntity);
 
             shootCooldown = 0.5f;
@@ -163,16 +161,29 @@ void GameplayScene::update(float deltaTime)
     ticks++;
     physicsManager->update(deltaTime);
     float zdistance = camera->offset.z;
+    JPH::Vec3 joltCarPos = physicsManager->body_interface->GetPosition(vehicle->getChassisId());
+    
+    JPH::Mat44 joltCarTransform = physicsManager->body_interface->GetWorldTransform(vehicle->getChassisId());
+   
+    JPH::Vec3 joltCarFwd = joltCarTransform.GetAxisZ(); 
+
+    carDummyPosition = glm::vec3(joltCarPos.GetX(), joltCarPos.GetY(), joltCarPos.GetZ());
+    
+    carDummyForward = glm::normalize(glm::vec3(joltCarFwd.GetX(), joltCarFwd.GetY(), joltCarFwd.GetZ()));
+
+    
+  
     if (shootCooldown > 0.0f)
     {
         shootCooldown -= deltaTime;
     }
+
     // camera->toggleMode();
     // bool freeMode = (camera->mode == CameraMode::FREE);
 
     ImGui::Begin("Zito-s-rally control panel");
     ImGui::Text("FPS: %.1f", 1.0f / deltaTime);
-    ImGui::SliderFloat("Car speed", &carSpeed, -1.0f, 1.0f);
+    ImGui::Text("Real Car Pos: X:%.2f Y:%.2f Z:%.2f", joltCarPos.GetX(), joltCarPos.GetY(), joltCarPos.GetZ());
     ImGui::SliderFloat("Camera distance", &zdistance, 3.0f, 10.0f);
     ImGui::Text("Position: X:%.2f Y:%.2f Z:%.2f", carDummyPosition.x, carDummyPosition.y, carDummyPosition.z);
     if (ImGui::Button("Reset Position"))
@@ -180,12 +191,13 @@ void GameplayScene::update(float deltaTime)
     ImGui::Checkbox("Wireframe mode: ", &wireframeMode);
     ImGui::Text("Camera: %s (C to change, ESC to menu)",
                 camera->mode == CameraMode::FREE ? "Free" : "Chasing car");
+
+
     ImGui::End();
 
     if (camera->mode == CameraMode::CHASE)
     {
-        carDummyPosition += carDummyForward * (deltaTime * 0.001f);
-        carDummyPosition.z += carSpeed;
+        
         if (zdistance == 0)
             zdistance = 3;
         camera->offset.z = zdistance;
@@ -219,6 +231,27 @@ void GameplayScene::update(float deltaTime)
     }
 
     globalLightPos.x -= sin(ticks / 100.f) / 2;
+
+    float forward = 0.0f;
+    float right = 0.0f;
+    float brake = 0.0f;
+    float handBrake = 0.0f;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        forward = 1.0f; // Acelera
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        forward = -1.0f; // Ré
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        right = 1.0f; // Vira à direita
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        right = -1.0f; // Vira à esquerda
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        handBrake = 1.0f; // Puxa o freio de mão
+
+    // Envia os comandos para o veículo
+    vehicle->setInput(forward, right, brake, handBrake);
 }
 
 void GameplayScene::render()

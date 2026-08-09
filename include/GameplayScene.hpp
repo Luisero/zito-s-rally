@@ -9,6 +9,7 @@
 #include "./PhysicsManager.hpp"
 #include "./Entity.hpp"
 #include "./Skybox.hpp"
+#include "./Vehicle.hpp"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -31,6 +32,7 @@ private:
     Camera *camera;
     PhysicsManager *physicsManager;
     SkyBox *skyBox;
+    Vehicle *vehicle;
 
 
     glm::vec3 carDummyPosition;
