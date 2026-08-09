@@ -66,6 +66,12 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos, Model *chas
         // Steering & Traction settings
         wheel->mMaxSteerAngle = is_front ? DegreesToRadians(35.0f) : 0.0f;
 
+        wheel->mMaxBrakeTorque = 1500.0f; 
+        
+        // O freio de mão atua APENAS nas traseiras 
+        wheel->mMaxHandBrakeTorque = is_front ? 0.0f : 4000.0f;
+        
+
         vehicle_settings.mWheels.push_back(wheel);
     }
 
