@@ -1,8 +1,18 @@
 #include "../include/Vehicle.hpp"
 
-Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos, Model *chassisModels)
+glm::mat4 Vehicle::JPHMat44ToGlm(const JPH::Mat44& joltMat)
+{
+    glm::mat4 glmMat;
+
+    joltMat.StoreFloat4x4(reinterpret_cast<JPH::Float4*>(&glmMat[0][0]));
+    return glmMat;
+}
+
+Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos, Model *chassisModel)
 {
     this->physicsManager = physicsManager;
+    this->chassisModel = chassisModel;
+    this->wheelModel = nullptr;         
     Vec3 chassis_half_extents(1.0f, 0.4f, 2.0f);
 
     Ref<Shape> box_shape = new BoxShape(chassis_half_extents);
@@ -18,7 +28,7 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos, Model *chas
 
     BodyInterface &body_interface = physicsManager->physics_system->GetBodyInterface();
     chassisId = body_interface.CreateAndAddBody(chassis_settings, EActivation::Activate);
-
+    this->chassisId = chassisId;
     // 3. Define the Vehicle Constraint Settings
     VehicleConstraintSettings vehicle_settings;
     vehicle_settings.mDrawConstraintSize = 0.1f;
@@ -121,4 +131,19 @@ void Vehicle::setInput(float forward, float right, float brake, float handBrake)
 
     }
     
+}
+
+void Vehicle::draw(Shader& shader)
+{
+    if (chassisModel == nullptr) return;
+
+    JPH::Mat44 joltTransform = physicsManager->physics_system->GetBodyInterface().GetWorldTransform(chassisId);
+    
+    glm::mat4 modelMatrix = JPHMat44ToGlm(joltTransform);
+
+   
+   
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(0.9f));
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0,-1.3f,0.f));
+    chassisModel->Draw(shader, modelMatrix);
 }

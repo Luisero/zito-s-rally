@@ -277,10 +277,11 @@ void GameplayScene::render()
     shader->setFloat("time", (float)ticks);
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(2.f, 2.f, 0.f));
+   // model = glm::translate(model, glm::vec3(2.f, 2.f, 0.f));
     // model = glm::scale(model, glm::vec3(.008f, .008f, .008f));
-    model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
-    car->Draw(*shader, model);
+   // model = glm::rotate(model, glm::radians(ticks * .55f), glm::vec3(.0f, 1.f, 0.f));
+   // car->Draw(*shader, model);
+    vehicle->draw(*shader);
 
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(-2.f, 2.f, 0.f));
