@@ -25,7 +25,7 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
   BodyCreationSettings chassis_settings(
       chassis_shape, Vec3(startPos.x, startPos.y, startPos.z),
       Quat::sIdentity(), EMotionType::Dynamic, Layers::MOVING);
-  chassis_settings.mMassPropertiesOverride.mMass = 850.0f; // 1500 kg
+  chassis_settings.mMassPropertiesOverride.mMass = 1200.0f;
   chassis_settings.mOverrideMassProperties =
       EOverrideMassProperties::CalculateInertia;
 
@@ -69,22 +69,23 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
     // Steering & Traction settings
     wheel->mMaxSteerAngle = is_front ? DegreesToRadians(35.0f) : 0.0f;
 
-    wheel->mMaxBrakeTorque = 2800.0f;
+    wheel->mMaxBrakeTorque = 5000.0f;
 
     // O freio de mão atua APENAS nas traseiras
     wheel->mMaxHandBrakeTorque = is_front ? 0.0f : 8000.0f;
 
     wheel->mLateralFriction.Clear();
-    wheel->mLateralFriction.AddPoint(.0f, 1.f);
-    wheel->mLateralFriction.AddPoint(3.f, 1.0f);
-    wheel->mLateralFriction.AddPoint(10.f, 0.6f);
-    wheel->mLateralFriction.AddPoint(30.f, 0.5f);
+    wheel->mLateralFriction.AddPoint(0.f, 1.0f);
+    wheel->mLateralFriction.AddPoint(2.f, 0.9f);
+    wheel->mLateralFriction.AddPoint(6.f, 0.8f);
+    wheel->mLateralFriction.AddPoint(20.f, 0.75f);
+    wheel->mLateralFriction.AddPoint(30.f, 0.7f);
 
     wheel->mLongitudinalFriction.Clear();
-    wheel->mLongitudinalFriction.AddPoint(0.f, 0.f);
+    wheel->mLongitudinalFriction.AddPoint(0.f, 1.f);
     wheel->mLongitudinalFriction.AddPoint(.2f, 1.f);
-    wheel->mLongitudinalFriction.AddPoint(.6f, .6f);
-    wheel->mLongitudinalFriction.AddPoint(1.f, 0.5f);
+    wheel->mLongitudinalFriction.AddPoint(.6f, .9f);
+    wheel->mLongitudinalFriction.AddPoint(1.f, 0.9f);
 
     vehicle_settings.mWheels.push_back(wheel);
   }
@@ -95,9 +96,8 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
   vehicle_settings.mController = controller_settings;
 
   // Engine settings
-  controller_settings->mEngine.mMaxTorque = 400.0f; // Nm
+  controller_settings->mEngine.mMaxTorque = 600.0f; // Nm
   controller_settings->mEngine.mMaxRPM = 6800.0f;
-
   controller_settings->mTransmission.mMode = JPH::ETransmissionMode::Auto;
   controller_settings->mTransmission.mGearRatios = {2.66f, 1.78f, 1.3f, 1.0f,
                                                     0.74f};
@@ -111,8 +111,9 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
   rear_diff.mLeftWheel = 2;
   rear_diff.mRightWheel = 3;
 
+  front_diff.mEngineTorqueRatio = .5f;
   controller_settings->mDifferentials.push_back(front_diff);
-  // controller_settings->mDifferentials.push_back(rear_diff);
+  controller_settings->mDifferentials.push_back(rear_diff);
 
   // 5. Construct and Bind Constraint to World
   JPH::BodyLockWrite lock(
@@ -137,13 +138,53 @@ void Vehicle::setInput(float forward, float right, float brake,
                        float handBrake) {
   JPH::BodyLockWrite lock(
       physicsManager->physics_system->GetBodyLockInterface(), chassisId);
+
   if (lock.Succeeded()) {
-    JPH::Body &chassis = lock.GetBody();
-    WheeledVehicleController *controller =
-        static_cast<WheeledVehicleController *>(
+    JPH::WheeledVehicleController *controller =
+        static_cast<JPH::WheeledVehicleController *>(
             vehicleConstraint->GetController());
 
-    controller->SetDriverInput(forward, right, brake, handBrake);
+    // Enquanto o freio de mão está puxado, o motor não deve competir com a
+    // trava traseira
+    float effectiveForward = forward;
+    if (handBrake > 0.5f) {
+      effectiveForward *= 0.0f; // Corta o acelerador
+    }
+
+    // ==========================================================
+    // SISTEMA DE DRIFT: Reduzir atrito lateral das rodas traseiras
+    // ==========================================================
+    // Índices 2 e 3 correspondem às rodas traseiras (Traseira-Esquerda e
+    // Traseira-Direita)
+    for (int i = 2; i < 4; ++i) {
+      // 1. Pega as configurações base da roda atual
+      const JPH::WheelSettingsWV *constSettings =
+          static_cast<const JPH::WheelSettingsWV *>(
+              vehicleConstraint->GetWheels()[i]->GetSettings());
+
+      // 2. Removemos o 'const' para podermos alterar a curva em tempo real
+      JPH::WheelSettingsWV *settings =
+          const_cast<JPH::WheelSettingsWV *>(constSettings);
+
+      // 3. Limpamos a curva de atrito atual
+      settings->mLateralFriction.Clear();
+
+      if (handBrake > 0.1f) {
+        // Se o freio de mão estiver puxado, o atrito lateral cai drasticamente
+        // (ex: 0.25f) Isso faz a traseira escorregar como se estivesse no gelo
+        settings->mLateralFriction.AddPoint(0.0f, 0.1f);
+      } else {
+        settings->mLateralFriction.Clear();
+        settings->mLateralFriction.AddPoint(0.f, 1.0f);
+        settings->mLateralFriction.AddPoint(2.f, 0.9f);
+        settings->mLateralFriction.AddPoint(6.f, 0.8f);
+        settings->mLateralFriction.AddPoint(20.f, 0.75f);
+        settings->mLateralFriction.AddPoint(30.f, 0.7f);
+      }
+    }
+    // ==========================================================
+
+    controller->SetDriverInput(effectiveForward, right, brake, handBrake);
   }
 }
 

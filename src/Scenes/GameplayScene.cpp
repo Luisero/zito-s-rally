@@ -60,7 +60,7 @@ void GameplayScene::setup() {
   carDummyPosition = glm::vec3(0.0f, 1.0f, 0.0f);
   carDummyForward = glm::vec3(0.0f, 0.0f, 1.0f);
 
-  Model *floorModel = game->assetsManager->loadModel(
+  /*Model *floorModel = game->assetsManager->loadModel(
       "./assets/Models/checkered_tile_floor/scene.gltf", "floor");
   JPH::BodyID floorId = physicsManager->createBox(
       glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(1000.0f, 1.0f, 1000.0f),
@@ -69,9 +69,9 @@ void GameplayScene::setup() {
   floorEntity.model = floorModel;
   floorEntity.hasPhysics = true;
   floorEntity.bodyId = floorId;
-  floorEntity.transform.position = glm::vec3(0, 1.f, 0.);
-  floorEntity.transform.scale = glm::vec3(10.f, 1.f, 10.f);
-  entities.push_back(floorEntity);
+  floorEntity.transform.position = glm::vec3(0, -1.f, 0.);
+  floorEntity.transform.scale = glm::vec3(.5f, .5f, .5f);
+  //entities.push_back(floorEntity);*/
 
   Model *ballModel = game->assetsManager->loadModel(
       "./assets/Models/sphere___low_poly/scene.gltf", "ball");
@@ -111,6 +111,19 @@ void GameplayScene::setup() {
       entities.push_back(boxEntity);
     }
   }
+
+  Model *trackModel = game->assetsManager->loadModel(
+      "./assets/Models/rally_stage/england_rally_01.obj", "track");
+
+  JPH::BodyID trackCollisionId = physicsManager->createMeshBody(
+      trackModel, glm::vec3(100.0f, -10.0f, 0.0f), 0.9f);
+
+  Entity trackEntity;
+  trackEntity.model = trackModel;
+  trackEntity.hasPhysics = true;
+  trackEntity.bodyId = trackCollisionId;
+
+  entities.push_back(trackEntity);
 }
 
 void GameplayScene::handleEvent(sf::Event &event) {
@@ -212,7 +225,22 @@ void GameplayScene::update(float deltaTime) {
               camera->mode == CameraMode::FREE ? "Free" : "Chasing car");
 
   ImGui::End();
-
+  if (sf::Joystick::isConnected(0)) {
+    ImGui::Begin("Joystick Debug");
+    ImGui::Text("Eixo X (Analogico Esq): %.1f",
+                sf::Joystick::getAxisPosition(0, sf::Joystick::X));
+    ImGui::Text("Eixo Y: %.1f",
+                sf::Joystick::getAxisPosition(0, sf::Joystick::Y));
+    ImGui::Text("Eixo Z: %.1f",
+                sf::Joystick::getAxisPosition(0, sf::Joystick::Z));
+    ImGui::Text("Eixo R: %.1f",
+                sf::Joystick::getAxisPosition(0, sf::Joystick::R));
+    ImGui::Text("Eixo U: %.1f",
+                sf::Joystick::getAxisPosition(0, sf::Joystick::U));
+    ImGui::Text("Eixo V: %.1f",
+                sf::Joystick::getAxisPosition(0, sf::Joystick::V));
+    ImGui::End();
+  }
   int gear = vehicle->getCurrentGear();
   float rpm = vehicle->getCurrentRPM();
   ImGui::Begin("Car logs");
@@ -229,19 +257,14 @@ void GameplayScene::update(float deltaTime) {
   ImGui::Text("Actual gear: %s", gearText.c_str());
   ImGui::Text("Engine RPM: %.0f", rpm);
 
-  // Array estático para guardar o histórico do gráfico
   static float torqueHistory[100] = {0.0f};
 
-  // Empurra todo o histórico 1 posição para trás para dar espaço ao novo frame
   for (int i = 0; i < 99; ++i) {
     torqueHistory[i] = torqueHistory[i + 1];
   }
-  // Grava o RPM atual na última posição (O Torque do motor é baseado no RPM)
+
   torqueHistory[99] = rpm;
 
-  // Desenha o Gráfico!
-  // Argumentos: Nome, array, tamanho, offset, texto, min, max (que colocamos
-  // 6000 no construtor), tamanho na tela
   ImGui::PlotLines("RPM/Torque curve", torqueHistory, 100, 0, nullptr, 0.0f,
                    6000.0f, ImVec2(0, 80));
   ImGui::End();
@@ -280,8 +303,6 @@ void GameplayScene::update(float deltaTime) {
     camera->updateFreeMove(deltaTime, moveInput);
   }
 
-  // globalLightPos.x -= sin(ticks / 100.f) / 2;
-
   float forward = 0.0f;
   float right = 0.0f;
   float brake = 0.0f;
@@ -289,20 +310,47 @@ void GameplayScene::update(float deltaTime) {
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
       sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    forward = 1.0f; // Acelera
+    forward = 1.0f;
   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
            sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    forward = -1.0f; // Ré
+    forward = -1.0f;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
       sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    right = 1.0f; // Vira à direita
+    right = 1.0f;
   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
            sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    right = -1.0f; // Vira à esquerda
+    right = -1.0f;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    handBrake = 1.0f; // Puxa o freio de mão
+    handBrake = 1.0f;
+
+  if (sf::Joystick::isConnected(0)) {
+
+    float axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+    if (std::abs(axisX) > 15.0f) {
+      right = axisX / 100.0f;
+    }
+
+    float rtAxis = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
+    // Converte de [-100 a 100] para [0.0 a 1.0]
+    float accelTrigger = (rtAxis + 100.0f) / 200.0f;
+
+    float ltAxis = sf::Joystick::getAxisPosition(0, sf::Joystick::Z);
+
+    float brakeTrigger = (ltAxis + 100.0f) / 200.0f;
+
+    if (accelTrigger > 0.05f) {
+      forward = accelTrigger;
+    } else if (brakeTrigger > 0.05f) {
+      forward = -brakeTrigger;
+      brake = brakeTrigger;
+    }
+
+    if (sf::Joystick::isButtonPressed(0, 1)) {
+      handBrake = 1.0f;
+    }
+  }
 
   // Envia os comandos para o veículo
   vehicle->setInput(forward, right, brake, handBrake);

@@ -1,5 +1,5 @@
 #include "../include/PhysicsManager.hpp"
-
+#include "../include/Model.hpp"
 PhysicsManager::PhysicsManager()
 {
     RegisterDefaultAllocator();
@@ -151,6 +151,43 @@ JPH::BodyID PhysicsManager::createBox(glm::vec3 position, glm::vec3 halfExtents,
         ? EActivation::DontActivate
         : EActivation::Activate;
     body_interface->AddBody(body->GetID(), activation);
+
+    return body->GetID();
+}
+
+
+JPH::BodyID PhysicsManager::createMeshBody(Model *model, glm::vec3 position, float friction)
+{
+    JPH::VertexList vertices;
+    JPH::IndexedTriangleList triangles;
+    model->getCollisionData(vertices, triangles);
+
+    if (vertices.empty() || triangles.empty())
+    {
+        std::cerr << "ERROR: model has no geometry for collision" << std::endl;
+        return JPH::BodyID(); // inválido
+    }
+
+    MeshShapeSettings shapeSettings(vertices, triangles);
+    ShapeSettings::ShapeResult shapeResult = shapeSettings.Create();
+    if (shapeResult.HasError())
+    {
+        std::cerr << "ERROR creating mesh shape: " << shapeResult.GetError() << std::endl;
+        return JPH::BodyID();
+    }
+    ShapeRefC shape = shapeResult.Get();
+
+    BodyCreationSettings settings(
+        shape,
+        RVec3(position.x, position.y, position.z),
+        Quat::sIdentity(),
+        EMotionType::Static, 
+        Layers::NON_MOVING
+    );
+    settings.mFriction = friction;
+
+    Body* body = body_interface->CreateBody(settings);
+    body_interface->AddBody(body->GetID(), EActivation::DontActivate);
 
     return body->GetID();
 }

@@ -9,7 +9,7 @@ Camera::Camera(float aspect) {
   fov = glm::radians(60.0f);
   aspectRatio = aspect;
   nearPlane = 0.1f;
-  farPlane = 100.0f;
+  farPlane = 1000.0f;
 
   yaw = -90.0f;
   pitch = 0.0f;

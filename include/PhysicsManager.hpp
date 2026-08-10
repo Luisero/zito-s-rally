@@ -7,6 +7,7 @@
 #include <Jolt/Core/JobSystemThreadPool.h>
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/PhysicsSystem.h>
+#include <Jolt/Physics/Collision/Shape/MeshShape.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
 #include <Jolt/Physics/Collision/Shape/SphereShape.h>
 #include <Jolt/Physics/Body/BodyCreationSettings.h>
@@ -20,6 +21,8 @@
 JPH_SUPPRESS_WARNINGS
 
 using namespace JPH;
+class Model; // forward declaration
+
 
 using namespace JPH::literals;
 static void TraceImpl(const char *inFMT, ...)
@@ -200,6 +203,8 @@ public:
     JPH::BodyID createBox(glm::vec3 position, glm::vec3 halfExtents,
                           JPH::EMotionType motionType, JPH::ObjectLayer layer,
                           float restitution = 0.0f, float friction = 0.5f);
+    JPH::BodyID createMeshBody(Model *model, glm::vec3 position,
+                               float friction = 0.8f);
 
 private:
     const uint cMaxBodies = 65536;

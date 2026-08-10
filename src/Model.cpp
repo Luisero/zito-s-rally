@@ -56,9 +56,48 @@ void Model::loadModel(std::string path)
     }
     directory = path.substr(0, path.find_last_of('/'));
 
+    preloadTextures(scene); // decodifica todas as imagens em paralelo antes de montar as meshes
+
     processNode(scene->mRootNode, scene, glm::mat4(1.f));
 }
 
+void Model::preloadTextures(const aiScene *scene)
+{
+    static const aiTextureType typesToScan[] = {
+        aiTextureType_DIFFUSE, aiTextureType_BASE_COLOR, aiTextureType_SPECULAR
+    };
+
+    std::vector<std::string> paths;
+    for (unsigned int m = 0; m < scene->mNumMaterials; m++)
+    {
+        aiMaterial *material = scene->mMaterials[m];
+        for (aiTextureType type : typesToScan)
+        {
+            for (unsigned int t = 0; t < material->GetTextureCount(type); t++)
+            {
+                aiString str;
+                material->GetTexture(type, t, &str);
+                paths.push_back(directory + "/" + str.C_Str());
+            }
+        }
+    }
+
+    if (paths.empty())
+        return;
+
+    std::vector<std::future<void>> futures;
+    futures.reserve(paths.size());
+
+    for (const std::string &path : paths)
+    {
+        futures.push_back(std::async(std::launch::async, [this, path]() {
+            assetsManager->loadImage(path, path); // thread-safe, sem GL
+        }));
+    }
+
+    for (auto &f : futures)
+        f.wait(); // espera todas terminarem antes de seguir pro processamento das meshes
+}
 Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 {
     std::vector<Vertex> vertices;
@@ -196,4 +235,32 @@ float Model::getBoundingRadius()
     }
 
     return radius;
+}
+
+
+void Model::getCollisionData(JPH::VertexList &outVertices,
+                             JPH::IndexedTriangleList &outTriangles)
+{
+    for (unsigned int m = 0; m < meshes.size(); m++)
+    {
+        unsigned int baseIndex = (unsigned int)outVertices.size();
+
+        // aplica a transform do nó em cada vértice, igual fizemos no getBoundingRadius
+        for (const auto &vertex : meshes[m].vertices)
+        {
+            glm::vec4 worldPos = meshTransforms[m] * glm::vec4(vertex.Position, 1.0f);
+            outVertices.push_back(JPH::Float3(worldPos.x, worldPos.y, worldPos.z));
+        }
+
+        // os índices desse mesh precisam ser deslocados pelo baseIndex,
+        // já que estamos concatenando vários meshes num único buffer de vértices
+        const auto &indices = meshes[m].indices;
+        for (size_t i = 0; i + 2 < indices.size(); i += 3)
+        {
+            outTriangles.push_back(JPH::IndexedTriangle(
+                baseIndex + indices[i],
+                baseIndex + indices[i + 1],
+                baseIndex + indices[i + 2]));
+        }
+    }
 }

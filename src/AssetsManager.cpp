@@ -15,8 +15,11 @@ AssetsManager::~AssetsManager()
 
 void AssetsManager::loadImage(std::string path, std::string key)
 {
-    if (this->images.find(key) != this->images.end())
-        return; // já carregada, evita I/O repetido
+    {
+        std::lock_guard<std::mutex> lock(mutex);
+        if (this->images.find(key) != this->images.end())
+            return; 
+    }
 
     int width, height, nrChannels;
     unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
@@ -28,11 +31,22 @@ void AssetsManager::loadImage(std::string path, std::string key)
     }
 
     Image *image = new Image(data, width, height, nrChannels);
-    this->images.insert({key, image});
+
+    std::lock_guard<std::mutex> lock(mutex);
+    if (this->images.find(key) == this->images.end())
+    {
+        this->images.insert({key, image});
+    }
+    else
+    {
+        stbi_image_free(data);
+        delete image;
+    }
 }
 
-Image *AssetsManager::getImage(std::string key)
+Image* AssetsManager::getImage(std::string key)
 {
+    std::lock_guard<std::mutex> lock(mutex);
     auto it = this->images.find(key);
     if (it == this->images.end())
     {
@@ -42,22 +56,27 @@ Image *AssetsManager::getImage(std::string key)
     return it->second;
 }
 
-Texture *AssetsManager::loadTexture(std::string path, std::string key)
+Texture* AssetsManager::loadTexture(std::string path, std::string key)
 {
-    auto it = this->textures.find(key);
-    if (it != this->textures.end())
-        return it->second; // já está na GPU, nem decodifica nem faz upload de novo
+    {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto it = this->textures.find(key);
+        if (it != this->textures.end())
+            return it->second; // já está na GPU
+    } // <- lock liberado aqui, ANTES de chamar loadImage
 
-    this->loadImage(path, key); // mesma key, reaproveita o cache de Image também
-    Image *image = this->getImage(key);
+    this->loadImage(path, key); // agora pode travar o mutex sem problema
+
+    Image *image = this->getImage(key); // getImage também precisa do mesmo cuidado, veja abaixo
     if (image == nullptr)
         return nullptr;
 
-    Texture *texture = new Texture(image);
+    Texture *texture = new Texture(image); // chamadas GL — só pode rodar na thread principal
+
+    std::lock_guard<std::mutex> lock(mutex);
     this->textures.insert({key, texture});
     return texture;
 }
-
 Texture *AssetsManager::getTexture(std::string key)
 {
     auto it = this->textures.find(key);

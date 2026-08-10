@@ -43,6 +43,9 @@ void main() {
     } else {
         finalBaseColor = material.baseColor;
     }
+    if (finalBaseColor.a < 0.5) {
+        discard; 
+    }
 
     vec3 albedo = vec3(finalBaseColor);
 
