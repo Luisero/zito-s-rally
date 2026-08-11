@@ -39,8 +39,9 @@ void GameplayScene::setup() {
                                  "checker");
 
   car = game->assetsManager->loadModel(
-      "./assets/Models/renault_5_alpine_cup_1976/scene.gltf", "car");
-
+      "./assets/Models/wheelesscar/scene.gltf", "car");
+  Model *wheelModel = game->assetsManager->loadModel(
+      "assets/Models/jaguar_20_spoke_wheel/scene.gltf", "wheelModel");
   terrain = new Model(
       "./assets/Models/lil_cow_-_harvest_moon_back_to_nature/scene.gltf",
       game->assetsManager);
@@ -52,7 +53,8 @@ void GameplayScene::setup() {
 
   skyBox = new SkyBox(std::string("./assets/SkyBoxes/SkyBox/"));
 
-  vehicle = new Vehicle(physicsManager, glm::vec3(-4.f, 2.f, 0.f), car);
+  vehicle =
+      new Vehicle(physicsManager, glm::vec3(-4.f, 2.f, 0.f), car, wheelModel);
 
   globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
   camera = new Camera(1280.0f / 720.0f);

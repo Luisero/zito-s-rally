@@ -17,9 +17,8 @@ public:
 
   glm::vec3 offset; // usado só no modo CHASE
 
-  // offset local do capô em relação ao carro: x = lateral, y = altura, z =
-  // frente/trás
-  glm::vec3 hoodOffset = glm::vec3(0.0f, 0.9f, 0.6f);
+  
+  glm::vec3 hoodOffset = glm::vec3(-0.f, 0.7f, 0.4f);
 
   float fov;
   float aspectRatio;

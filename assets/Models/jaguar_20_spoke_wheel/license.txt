@@ -1,0 +1,11 @@
+Model Information:
+* title:	Jaguar 20 Spoke Wheel
+* source:	https://sketchfab.com/3d-models/jaguar-20-spoke-wheel-b133644163d54c94a2598abcc9262491
+* author:	Fishboe (https://sketchfab.com/ministephen)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Jaguar 20 Spoke Wheel" (https://sketchfab.com/3d-models/jaguar-20-spoke-wheel-b133644163d54c94a2598abcc9262491) by Fishboe (https://sketchfab.com/ministephen) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

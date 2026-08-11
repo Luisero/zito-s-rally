@@ -8,10 +8,10 @@ glm::mat4 Vehicle::JPHMat44ToGlm(const JPH::Mat44 &joltMat) {
 }
 
 Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
-                 Model *chassisModel) {
+                 Model *chassisModel, Model *wheelModel) {
   this->physicsManager = physicsManager;
   this->chassisModel = chassisModel;
-  this->wheelModel = nullptr;
+  this->wheelModel = wheelModel;
   Vec3 chassis_half_extents(1.0f, 0.4f, 2.0f);
 
   Ref<Shape> box_shape = new BoxShape(chassis_half_extents);
@@ -78,8 +78,8 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
     wheel->mLateralFriction.AddPoint(0.f, 1.0f);
     wheel->mLateralFriction.AddPoint(2.f, 0.9f);
     wheel->mLateralFriction.AddPoint(6.f, 0.8f);
-    wheel->mLateralFriction.AddPoint(20.f, 0.75f);
-    wheel->mLateralFriction.AddPoint(30.f, 0.7f);
+    wheel->mLateralFriction.AddPoint(20.f, 0.8f);
+    wheel->mLateralFriction.AddPoint(30.f, 0.75f);
 
     wheel->mLongitudinalFriction.Clear();
     wheel->mLongitudinalFriction.AddPoint(0.f, 1.f);
@@ -111,7 +111,7 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
   rear_diff.mLeftWheel = 2;
   rear_diff.mRightWheel = 3;
 
-  front_diff.mEngineTorqueRatio = .5f;
+  front_diff.mEngineTorqueRatio = 0.4f;
   controller_settings->mDifferentials.push_back(front_diff);
   controller_settings->mDifferentials.push_back(rear_diff);
 
@@ -147,15 +147,8 @@ void Vehicle::setInput(float forward, float right, float brake,
     // Enquanto o freio de mão está puxado, o motor não deve competir com a
     // trava traseira
     float effectiveForward = forward;
-    if (handBrake > 0.5f) {
-      effectiveForward *= 0.0f; // Corta o acelerador
-    }
-
-    // ==========================================================
-    // SISTEMA DE DRIFT: Reduzir atrito lateral das rodas traseiras
-    // ==========================================================
-    // Índices 2 e 3 correspondem às rodas traseiras (Traseira-Esquerda e
-    // Traseira-Direita)
+   
+   
     for (int i = 2; i < 4; ++i) {
       // 1. Pega as configurações base da roda atual
       const JPH::WheelSettingsWV *constSettings =
@@ -198,11 +191,43 @@ void Vehicle::draw(Shader &shader) {
 
   glm::mat4 modelMatrix = JPHMat44ToGlm(joltTransform);
 
-  modelMatrix = glm::scale(modelMatrix, glm::vec3(0.9f));
-  modelMatrix = glm::translate(modelMatrix, glm::vec3(0, -1.3f, 0.f));
+  modelMatrix = glm::scale(modelMatrix, glm::vec3(1.f));
+  modelMatrix = glm::translate(modelMatrix, glm::vec3(0, -1.f, 0.f));
   chassisModel->Draw(shader, modelMatrix);
+
+  this->drawWheels(shader);
 }
 
+void Vehicle::drawWheels(Shader &shader) {
+  if (wheelModel == nullptr || vehicleConstraint == nullptr)
+    return;
+
+  const JPH::WheelSettingsWV* wheelBaseSettings = static_cast<const JPH::WheelSettingsWV*>(vehicleConstraint->GetWheels()[0]->GetSettings());
+  float physicsRadius = wheelBaseSettings->mRadius; 
+
+  float modelRadius = wheelModel->getBoundingRadius();
+  
+  if (modelRadius <= 0.001f) modelRadius = 1.0f; 
+
+  float scaleFactor = physicsRadius / modelRadius;
+
+  const JPH::Array<JPH::Wheel *> &wheels = vehicleConstraint->GetWheels();
+  for (unsigned int i = 0; i < wheels.size(); i++) {
+   
+    JPH::Mat44 joltWheelTransform = vehicleConstraint->GetWheelWorldTransform(i,
+        JPH::Vec3::sAxisX(), JPH::Vec3::sAxisY());
+
+    glm::mat4 wheelMatrix = JPHMat44ToGlm(joltWheelTransform);
+
+    bool isLeft = (i % 2 == 0); 
+    if (isLeft) {
+      wheelMatrix = glm::rotate(wheelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    }
+
+    wheelMatrix = glm::rotate(wheelMatrix, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));    wheelMatrix = glm::scale(wheelMatrix, glm::vec3(scaleFactor));
+    wheelModel->Draw(shader, wheelMatrix);
+  }
+}
 int Vehicle::getCurrentGear() const {
   if (vehicleConstraint) {
     JPH::WheeledVehicleController *controller =
@@ -222,3 +247,4 @@ float Vehicle::getCurrentRPM() const {
   }
   return 0.0f;
 }
+
