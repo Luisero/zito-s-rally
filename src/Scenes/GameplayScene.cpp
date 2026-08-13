@@ -4,9 +4,11 @@
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <cmath>
 #include <iostream>
-GameplayScene::~GameplayScene() {
+GameplayScene::~GameplayScene()
+{
   delete physicsManager;
   delete shader;
   delete skyBoxShader;
@@ -16,11 +18,13 @@ GameplayScene::~GameplayScene() {
   delete terrain;
 }
 float shootCooldown = 0.0f;
-void GameplayScene::setup() {
+void GameplayScene::setup()
+{
 
   game->window.pushGLStates();
   sf::Texture loadingTex;
-  if (loadingTex.loadFromFile("./assets/Textures/loading.png")) {
+  if (loadingTex.loadFromFile("./assets/Textures/loading.png"))
+  {
     sf::Sprite loadingSprite(loadingTex);
     loadingSprite.setScale(sf::Vector2(.7f, .7f));
     loadingSprite.setPosition(0, -10);
@@ -37,6 +41,20 @@ void GameplayScene::setup() {
   game->assetsManager->loadImage("./assets/Textures/grass.jpg", "grass");
   game->assetsManager->loadImage("./assets/Textures/red_checker.png",
                                  "checker");
+
+  sf::Music music;
+
+  // Load the song from file
+  if (!music.openFromFile("assets/Songs/Colin McRae Rally 2 in-Game 3 - Jonathan Colling (youtube).mp3"))
+  {
+    std::cout << "ERROR loading song";
+  }
+  music.setVolume(40);
+  // Play the song
+  music.play();
+
+  // Loop the music (optional)
+  music.setLoop(true);
 
   car = game->assetsManager->loadModel(
       "./assets/Models/wheelesscar/scene.gltf", "car");
@@ -83,7 +101,8 @@ void GameplayScene::setup() {
   float physicsRadius = 0.4f;
   float ballScale = physicsRadius / ballModel->getBoundingRadius();
 
-  for (int i = -10; i < 10; i += 2) {
+  for (int i = -10; i < 10; i += 2)
+  {
     JPH::BodyID sphereId = physicsManager->createSphere(
         glm::vec3(-((float)i) * 1.5, 20.0f, 0.f), physicsRadius,
         JPH::EMotionType::Dynamic, Layers::MOVING, 0.8f, 0.5f);
@@ -95,7 +114,8 @@ void GameplayScene::setup() {
     ballEntity.transform.scale = glm::vec3(ballScale * .9f);
     entities.push_back(ballEntity);
 
-    for (int j = 0; j < 40; j += 2) {
+    for (int j = 0; j < 40; j += 2)
+    {
 
       glm::vec3 boxSize(0.5f, 0.5f, 0.5f);
 
@@ -128,34 +148,41 @@ void GameplayScene::setup() {
   entities.push_back(trackEntity);
 }
 
-void GameplayScene::handleEvent(sf::Event &event) {
+void GameplayScene::handleEvent(sf::Event &event)
+{
   if (event.type == sf::Event::KeyPressed &&
-      event.key.code == sf::Keyboard::C) {
+      event.key.code == sf::Keyboard::C)
+  {
     camera->toggleMode();
     bool freeMode = (camera->mode == CameraMode::FREE);
 
     game->window.setMouseCursorVisible(!freeMode);
     game->window.setMouseCursorGrabbed(freeMode);
 
-    if (freeMode) {
+    if (freeMode)
+    {
       sf::Vector2i center((int)game->window.getSize().x / 2,
                           (int)game->window.getSize().y / 2);
       sf::Mouse::setPosition(center, game->window);
     }
   }
   if (event.type == sf::Event::KeyPressed &&
-      event.key.code == sf::Keyboard::H) {
+      event.key.code == sf::Keyboard::H)
+  {
     camera->mode = CameraMode::HOOD;
   }
 
   if (event.type == sf::Event::KeyPressed &&
-      event.key.code == sf::Keyboard::Escape) {
+      event.key.code == sf::Keyboard::Escape)
+  {
     game->changeState(GameState::MENU);
   }
 
   if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
-      camera->mode == CameraMode::FREE) {
-    if (shootCooldown <= 0.0f) {
+      camera->mode == CameraMode::FREE)
+  {
+    if (shootCooldown <= 0.0f)
+    {
       Model *ballModel = game->assetsManager->getModel("ball");
 
       float physicsRadius = 0.4f;
@@ -187,7 +214,8 @@ void GameplayScene::handleEvent(sf::Event &event) {
   }
 }
 
-void GameplayScene::update(float deltaTime) {
+void GameplayScene::update(float deltaTime)
+{
   ticks++;
   physicsManager->update(deltaTime);
   float zdistance = camera->offset.z;
@@ -208,7 +236,8 @@ void GameplayScene::update(float deltaTime) {
       glm::vec3(joltCarFwd.GetX(), joltCarFwd.GetY(), joltCarFwd.GetZ()));
   glm::vec3 carDummyUp = glm::normalize(
       glm::vec3(joltCarUp.GetX(), joltCarUp.GetY(), joltCarUp.GetZ()));
-  if (shootCooldown > 0.0f) {
+  if (shootCooldown > 0.0f)
+  {
     shootCooldown -= deltaTime;
   }
 
@@ -227,7 +256,8 @@ void GameplayScene::update(float deltaTime) {
               camera->mode == CameraMode::FREE ? "Free" : "Chasing car");
 
   ImGui::End();
-  if (sf::Joystick::isConnected(0)) {
+  if (sf::Joystick::isConnected(0))
+  {
     ImGui::Begin("Joystick Debug");
     ImGui::Text("Eixo X (Analogico Esq): %.1f",
                 sf::Joystick::getAxisPosition(0, sf::Joystick::X));
@@ -261,7 +291,8 @@ void GameplayScene::update(float deltaTime) {
 
   static float torqueHistory[100] = {0.0f};
 
-  for (int i = 0; i < 99; ++i) {
+  for (int i = 0; i < 99; ++i)
+  {
     torqueHistory[i] = torqueHistory[i + 1];
   }
 
@@ -271,16 +302,22 @@ void GameplayScene::update(float deltaTime) {
                    6000.0f, ImVec2(0, 80));
   ImGui::End();
 
-  if (camera->mode == CameraMode::CHASE) {
+  if (camera->mode == CameraMode::CHASE)
+  {
 
     if (zdistance == 0)
       zdistance = 3;
     camera->offset.z = zdistance;
     camera->updateChase(carDummyPosition, carDummyForward, deltaTime);
-  } else if (camera->mode == CameraMode::HOOD) {
+  }
+  else if (camera->mode == CameraMode::HOOD)
+  {
     camera->updateHood(carDummyPosition, carDummyForward, carDummyUp);
-  } else {
-    if (game->window.hasFocus()) {
+  }
+  else
+  {
+    if (game->window.hasFocus())
+    {
       sf::Vector2i center((int)game->window.getSize().x / 2,
                           (int)game->window.getSize().y / 2);
       sf::Vector2i mousePos = sf::Mouse::getPosition(game->window);
@@ -327,10 +364,12 @@ void GameplayScene::update(float deltaTime) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     handBrake = 1.0f;
 
-  if (sf::Joystick::isConnected(0)) {
+  if (sf::Joystick::isConnected(0))
+  {
 
     float axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-    if (std::abs(axisX) > 15.0f) {
+    if (std::abs(axisX) > 15.0f)
+    {
       right = axisX / 100.0f;
     }
 
@@ -342,14 +381,18 @@ void GameplayScene::update(float deltaTime) {
 
     float brakeTrigger = (ltAxis + 100.0f) / 200.0f;
 
-    if (accelTrigger > 0.05f) {
+    if (accelTrigger > 0.05f)
+    {
       forward = accelTrigger;
-    } else if (brakeTrigger > 0.05f) {
+    }
+    else if (brakeTrigger > 0.05f)
+    {
       forward = -brakeTrigger;
       brake = brakeTrigger;
     }
 
-    if (sf::Joystick::isButtonPressed(0, 1)) {
+    if (sf::Joystick::isButtonPressed(0, 1))
+    {
       handBrake = 1.0f;
     }
   }
@@ -358,7 +401,8 @@ void GameplayScene::update(float deltaTime) {
   vehicle->setInput(forward, right, brake, handBrake);
 }
 
-void GameplayScene::render() {
+void GameplayScene::render()
+{
   glClearColor(0.f, 0.46f, 0.91f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_DEPTH_TEST);
@@ -412,12 +456,14 @@ void GameplayScene::render() {
   glDisable(GL_DEPTH_TEST);
 }
 
-void GameplayScene::refreshMouseState() {
+void GameplayScene::refreshMouseState()
+{
   bool freeMode = (camera->mode == CameraMode::FREE);
   game->window.setMouseCursorVisible(!freeMode);
   game->window.setMouseCursorGrabbed(freeMode);
 
-  if (freeMode) {
+  if (freeMode)
+  {
     sf::Vector2i center((int)game->window.getSize().x / 2,
                         (int)game->window.getSize().y / 2);
     sf::Mouse::setPosition(center, game->window);
