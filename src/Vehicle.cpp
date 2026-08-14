@@ -64,8 +64,8 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
     wheel->mSuspensionMinLength = 0.0f;
     wheel->mSuspensionMaxLength = 0.5f;
     wheel->mSuspensionSpring.mFrequency = 2.0f; // Hardness
-    wheel->mSuspensionSpring.mDamping = 0.5f;   // Damping ratio
-
+    wheel->mSuspensionSpring.mDamping = 0.7f;   // Damping ratio
+    
     // Steering & Traction settings
     wheel->mMaxSteerAngle = is_front ? DegreesToRadians(35.0f) : 0.0f;
 
