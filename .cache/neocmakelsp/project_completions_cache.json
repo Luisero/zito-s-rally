@@ -1,5 +1,5 @@
 {
-  "date": "2026-08-09T18:51:53.498959525-03:00",
+  "date": "2026-08-16T10:51:39.351533692-03:00",
   "data": {
     "/home/luis/Programming/zito-s-rally/CMakeLists.txt": [
       {
@@ -1066,6 +1066,60 @@
       },
       {
         "label": "USE_AVX2",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_API_DIR",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt\n\n--- FMOD SETUP ---"
+      },
+      {
+        "label": "FMOD_CORE_LIB",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_STUDIO_LIB",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_CORE_DLL",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_STUDIO_DLL",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_CORE_LIB",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_STUDIO_LIB",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_CORE_DLL",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"
+      },
+      {
+        "label": "FMOD_STUDIO_DLL",
         "kind": 12,
         "detail": "Value",
         "documentation": "defined variable\nfrom: /home/luis/Programming/zito-s-rally/CMakeLists.txt"

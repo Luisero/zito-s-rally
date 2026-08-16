@@ -15,8 +15,8 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
   Vec3 chassis_half_extents(1.0f, 0.4f, 2.0f);
 
   Ref<Shape> box_shape = new BoxShape(chassis_half_extents);
-  // Offset the center of mass downward (-0.3f on Y axis)
-  OffsetCenterOfMassShapeSettings com_settings(Vec3(0.0f, -0.3f, 0.0f),
+  // Offset the center of mass downward (-0.5f on Y axis)
+  OffsetCenterOfMassShapeSettings com_settings(Vec3(0.0f, -0.5f, 0.0f),
                                                box_shape);
   Shape::ShapeResult shape_result = com_settings.Create();
   Ref<Shape> chassis_shape = shape_result.Get();
@@ -43,8 +43,8 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
   float wheel_radius = 0.4f;
   float wheel_width = 0.3f;
   float half_vehicle_width = 0.9f;
-  float half_vehicle_length = 1.5f;
-
+  float front_wheel_z = 1.7f;
+  float rear_wheel_z = -1.6f;
   // Configure 4 identical wheels
   for (int i = 0; i < 4; ++i) {
     bool is_front = (i < 2);
@@ -55,23 +55,21 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
     wheel->mWidth = wheel_width;
 
     // Position relative to chassis center
-    wheel->mPosition =
-        Vec3(is_left ? -half_vehicle_width : half_vehicle_width, -0.2f,
-             is_front ? half_vehicle_length : -half_vehicle_length);
-
+    wheel->mPosition = Vec3(is_left ? -half_vehicle_width : half_vehicle_width,
+                            -0.2f, is_front ? front_wheel_z : rear_wheel_z);
     // Suspension properties
     wheel->mSuspensionDirection = Vec3(0, -1, 0);
     wheel->mSuspensionMinLength = 0.0f;
     wheel->mSuspensionMaxLength = 0.5f;
     wheel->mSuspensionSpring.mFrequency = 2.0f; // Hardness
-    wheel->mSuspensionSpring.mDamping = 0.7f;   // Damping ratio
-    
+    wheel->mSuspensionSpring.mDamping = 0.8f;   // Damping ratio
+
     // Steering & Traction settings
     wheel->mMaxSteerAngle = is_front ? DegreesToRadians(35.0f) : 0.0f;
 
     wheel->mMaxBrakeTorque = 5000.0f;
 
-    // O freio de mão atua APENAS nas traseiras
+    // Handbrake only in rear wheel
     wheel->mMaxHandBrakeTorque = is_front ? 0.0f : 8000.0f;
 
     wheel->mLateralFriction.Clear();
@@ -136,6 +134,9 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
 
 void Vehicle::setInput(float forward, float right, float brake,
                        float handBrake) {
+  if (forward != 0.0f || right != 0.0f || brake != 0.0f || handBrake != 0.0f) {
+    physicsManager->physics_system->GetBodyInterface().ActivateBody(chassisId);
+  }
   JPH::BodyLockWrite lock(
       physicsManager->physics_system->GetBodyLockInterface(), chassisId);
 
@@ -147,8 +148,7 @@ void Vehicle::setInput(float forward, float right, float brake,
     // Enquanto o freio de mão está puxado, o motor não deve competir com a
     // trava traseira
     float effectiveForward = forward;
-   
-   
+
     for (int i = 2; i < 4; ++i) {
       // 1. Pega as configurações base da roda atual
       const JPH::WheelSettingsWV *constSettings =
@@ -163,9 +163,8 @@ void Vehicle::setInput(float forward, float right, float brake,
       settings->mLateralFriction.Clear();
 
       if (handBrake > 0.1f) {
-        // Se o freio de mão estiver puxado, o atrito lateral cai drasticamente
-        // (ex: 0.25f) Isso faz a traseira escorregar como se estivesse no gelo
-        settings->mLateralFriction.AddPoint(0.0f, 0.1f);
+
+        settings->mLateralFriction.AddPoint(0.0f, 0.25f);
       } else {
         settings->mLateralFriction.Clear();
         settings->mLateralFriction.AddPoint(0.f, 1.0f);
@@ -202,29 +201,35 @@ void Vehicle::drawWheels(Shader &shader) {
   if (wheelModel == nullptr || vehicleConstraint == nullptr)
     return;
 
-  const JPH::WheelSettingsWV* wheelBaseSettings = static_cast<const JPH::WheelSettingsWV*>(vehicleConstraint->GetWheels()[0]->GetSettings());
-  float physicsRadius = wheelBaseSettings->mRadius; 
+  const JPH::WheelSettingsWV *wheelBaseSettings =
+      static_cast<const JPH::WheelSettingsWV *>(
+          vehicleConstraint->GetWheels()[0]->GetSettings());
+  float physicsRadius = wheelBaseSettings->mRadius;
 
   float modelRadius = wheelModel->getBoundingRadius();
-  
-  if (modelRadius <= 0.001f) modelRadius = 1.0f; 
+
+  if (modelRadius <= 0.001f)
+    modelRadius = 1.0f;
 
   float scaleFactor = physicsRadius / modelRadius;
 
   const JPH::Array<JPH::Wheel *> &wheels = vehicleConstraint->GetWheels();
   for (unsigned int i = 0; i < wheels.size(); i++) {
-   
-    JPH::Mat44 joltWheelTransform = vehicleConstraint->GetWheelWorldTransform(i,
-        JPH::Vec3::sAxisX(), JPH::Vec3::sAxisY());
+
+    JPH::Mat44 joltWheelTransform = vehicleConstraint->GetWheelWorldTransform(
+        i, JPH::Vec3::sAxisX(), JPH::Vec3::sAxisY());
 
     glm::mat4 wheelMatrix = JPHMat44ToGlm(joltWheelTransform);
 
-    bool isLeft = (i % 2 == 0); 
+    bool isLeft = (i % 2 == 0);
     if (isLeft) {
-      wheelMatrix = glm::rotate(wheelMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+      wheelMatrix = glm::rotate(wheelMatrix, glm::radians(180.0f),
+                                glm::vec3(0.0f, 1.0f, 0.0f));
     }
 
-    wheelMatrix = glm::rotate(wheelMatrix, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));    wheelMatrix = glm::scale(wheelMatrix, glm::vec3(scaleFactor));
+    wheelMatrix = glm::rotate(wheelMatrix, glm::radians(90.0f),
+                              glm::vec3(0.0f, 1.0f, 0.0f));
+    wheelMatrix = glm::scale(wheelMatrix, glm::vec3(scaleFactor));
     wheelModel->Draw(shader, wheelMatrix);
   }
 }
@@ -247,4 +252,3 @@ float Vehicle::getCurrentRPM() const {
   }
   return 0.0f;
 }
-

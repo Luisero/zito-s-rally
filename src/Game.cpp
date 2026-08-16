@@ -3,6 +3,7 @@
 #include "../include/MenuScene.hpp"
 #include "SFML/Window/VideoMode.hpp"
 #include "SFML/Window/WindowStyle.hpp"
+
 #include <cstdlib>
 #include <iostream>
 

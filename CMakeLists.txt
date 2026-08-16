@@ -69,9 +69,27 @@ target_include_directories(glad PUBLIC vendor/glad/include)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
+# --- FMOD SETUP ---
+set(FMOD_API_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/fmod/api)
+
+if(WIN32)
+  set(FMOD_CORE_LIB ${FMOD_API_DIR}/core/lib/x64/fmod_vc.lib)
+  set(FMOD_STUDIO_LIB ${FMOD_API_DIR}/studio/lib/x64/fmodstudio_vc.lib)
+  set(FMOD_CORE_DLL ${FMOD_API_DIR}/core/lib/x64/fmod.dll)
+  set(FMOD_STUDIO_DLL ${FMOD_API_DIR}/studio/lib/x64/fmodstudio.dll)
+elseif(UNIX AND NOT APPLE)
+  set(FMOD_CORE_LIB ${FMOD_API_DIR}/core/lib/x86_64/libfmod.so)
+  set(FMOD_STUDIO_LIB ${FMOD_API_DIR}/studio/lib/x86_64/libfmodstudio.so)
+  set(FMOD_CORE_DLL ${FMOD_CORE_LIB})
+  set(FMOD_STUDIO_DLL ${FMOD_STUDIO_LIB})
+endif()
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PRIVATE include
+  ${FMOD_API_DIR}/core/inc
+  ${FMOD_API_DIR}/studio/inc
+)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     sfml-graphics
@@ -84,6 +102,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     glad
     OpenGL::GL
     ImGui-SFML::ImGui-SFML
+    ${FMOD_CORE_LIB}
+    ${FMOD_STUDIO_LIB}
 )
+file(COPY ${FMOD_CORE_DLL} ${FMOD_STUDIO_DLL} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
