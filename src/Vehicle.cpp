@@ -25,7 +25,7 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
   BodyCreationSettings chassis_settings(
       chassis_shape, Vec3(startPos.x, startPos.y, startPos.z),
       Quat::sIdentity(), EMotionType::Dynamic, Layers::MOVING);
-  chassis_settings.mMassPropertiesOverride.mMass = 1200.0f;
+  chassis_settings.mMassPropertiesOverride.mMass = 900.0f;
   chassis_settings.mOverrideMassProperties =
       EOverrideMassProperties::CalculateInertia;
 
@@ -61,8 +61,8 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
     wheel->mSuspensionDirection = Vec3(0, -1, 0);
     wheel->mSuspensionMinLength = 0.0f;
     wheel->mSuspensionMaxLength = 0.5f;
-    wheel->mSuspensionSpring.mFrequency = 2.0f; // Hardness
-    wheel->mSuspensionSpring.mDamping = 0.8f;   // Damping ratio
+    wheel->mSuspensionSpring.mFrequency = 2.f; // Hardness
+    wheel->mSuspensionSpring.mDamping = 0.5f;  // Damping ratio
 
     // Steering & Traction settings
     wheel->mMaxSteerAngle = is_front ? DegreesToRadians(35.0f) : 0.0f;
