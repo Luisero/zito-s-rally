@@ -101,7 +101,7 @@ void GameplayScene::setup() {
   skyBox = new SkyBox(std::string("./assets/SkyBoxes/SkyBox/"));
 
   vehicle =
-      new Vehicle(physicsManager, glm::vec3(-4.f, 2.f, 0.f), car, wheelModel);
+      new Vehicle(physicsManager, glm::vec3(0.f, 10.f, 0.f), car, wheelModel);
 
   globalLightPos = glm::vec3(2.f, 4.0f, 0.0f);
   camera = new Camera(1280.0f / 720.0f);
@@ -162,10 +162,10 @@ void GameplayScene::setup() {
   }
 
   Model *trackModel = game->assetsManager->loadModel(
-      "./assets/Models/rally_stage/england_rally_01.obj", "track");
+      "./assets/Models/sacoverde_gltf/sacoverde.gltf", "track");
 
-  JPH::BodyID trackCollisionId = physicsManager->createMeshBody(
-      trackModel, glm::vec3(100.0f, -10.0f, 0.0f), 0.9f);
+  JPH::BodyID trackCollisionId = physicsManager->createMeshBody( 
+      trackModel, glm::vec3(0.0f, -10.0f, 0.0f), 0.8f);
 
   Entity trackEntity;
   trackEntity.model = trackModel;
