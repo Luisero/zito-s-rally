@@ -129,18 +129,19 @@ void GameplayScene::setup() {
 
   float physicsRadius = 0.4f;
   float ballScale = physicsRadius / ballModel->getBoundingRadius();
+  /*
+    for (int i = -10; i < 10; i += 2) {
+      JPH::BodyID sphereId = physicsManager->createSphere(
+          glm::vec3(-((float)i) * 1.5, 20.0f, 0.f), physicsRadius,
+          JPH::EMotionType::Dynamic, Layers::MOVING, 0.8f, 0.5f);
 
-  for (int i = -10; i < 10; i += 2) {
-    JPH::BodyID sphereId = physicsManager->createSphere(
-        glm::vec3(-((float)i) * 1.5, 20.0f, 0.f), physicsRadius,
-        JPH::EMotionType::Dynamic, Layers::MOVING, 0.8f, 0.5f);
+      Entity ballEntity;
+      ballEntity.model = ballModel;
+      ballEntity.hasPhysics = true;
+      ballEntity.bodyId = sphereId;
+      ballEntity.transform.scale = glm::vec3(ballScale * .9f);
+      entities.push_back(ballEntity);
 
-    Entity ballEntity;
-    ballEntity.model = ballModel;
-    ballEntity.hasPhysics = true;
-    ballEntity.bodyId = sphereId;
-    ballEntity.transform.scale = glm::vec3(ballScale * .9f);
-    entities.push_back(ballEntity);
 
     for (int j = 0; j < 40; j += 2) {
 
@@ -157,15 +158,14 @@ void GameplayScene::setup() {
 
       boxEntity.transform.scale = boxSize;
 
-      entities.push_back(boxEntity);
+      // entities.push_back(boxEntity);
     }
-  }
-
+  */
   Model *trackModel = game->assetsManager->loadModel(
       "./assets/Models/SacoVerdev2/sacoverde.gltf", "track");
 
   JPH::BodyID trackCollisionId = physicsManager->createMeshBody(
-      trackModel, glm::vec3(0.0f, -10.0f, 0.0f), 0.8f);
+      trackModel, glm::vec3(0.0f, -10.0f, 0.0f), 0.85f);
 
   Entity trackEntity;
   trackEntity.model = trackModel;

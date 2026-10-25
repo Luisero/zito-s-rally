@@ -74,10 +74,8 @@ Vehicle::Vehicle(PhysicsManager *physicsManager, glm::vec3 startPos,
 
     wheel->mLateralFriction.Clear();
     wheel->mLateralFriction.AddPoint(0.f, 1.0f);
-    wheel->mLateralFriction.AddPoint(2.f, 0.9f);
-    wheel->mLateralFriction.AddPoint(6.f, 0.8f);
-    wheel->mLateralFriction.AddPoint(20.f, 0.8f);
-    wheel->mLateralFriction.AddPoint(30.f, 0.75f);
+    wheel->mLateralFriction.AddPoint(13.f, 0.95f);
+    wheel->mLateralFriction.AddPoint(20.f, 0.89f);
 
     wheel->mLongitudinalFriction.Clear();
     wheel->mLongitudinalFriction.AddPoint(0.f, 1.f);
