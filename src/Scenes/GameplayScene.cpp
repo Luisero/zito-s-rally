@@ -162,9 +162,9 @@ void GameplayScene::setup() {
   }
 
   Model *trackModel = game->assetsManager->loadModel(
-      "./assets/Models/sacoverde_gltf/sacoverde.gltf", "track");
+      "./assets/Models/SacoVerdev2/sacoverde.gltf", "track");
 
-  JPH::BodyID trackCollisionId = physicsManager->createMeshBody( 
+  JPH::BodyID trackCollisionId = physicsManager->createMeshBody(
       trackModel, glm::vec3(0.0f, -10.0f, 0.0f), 0.8f);
 
   Entity trackEntity;
